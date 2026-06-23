@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Residência em IA · UniSENAI SC — Projetos de Inteligência Artificial para a Indústria</title>
+<meta name="description" content="O Programa de Residência em IA do UniSENAI Santa Catarina desenvolve soluções de inteligência artificial para desafios reais da indústria. Conheça as empresas parceiras e os projetos.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#080c17;--bg-2:#0d1324;--bg-3:#121a30;
+  --ink:#eef1f8;--ink-dim:#97a3c2;--ink-faint:#5e6a86;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --magenta:#e248d6;--violet:#8b5cf6;--cyan:#38d4e8;
+  --grad:linear-gradient(90deg,#e248d6,#8b5cf6);
+  --grad-soft:linear-gradient(135deg,rgba(226,72,214,.16),rgba(139,92,246,.16));
+  --maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"\221E";color:var(--magenta);font-size:1.1em;letter-spacing:0}
+h1,h2,h3{font-family:'Sora',sans-serif;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.beam{height:1px;width:100%;background:linear-gradient(90deg,transparent,var(--cyan),transparent);position:relative;opacity:.5}
+.beam::after{content:"";position:absolute;inset:-3px 0;background:linear-gradient(90deg,transparent,rgba(56,212,232,.35),transparent);filter:blur(6px)}
+
+.topbar{background:#060912;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em}
+.topbar .wrap{display:flex;justify-content:flex-end;gap:22px;padding-top:9px;padding-bottom:9px;flex-wrap:wrap}
+.topbar a{color:var(--ink-faint);transition:color .2s}
+.topbar a:hover{color:var(--cyan)}
+
+header{position:sticky;top:0;z-index:50;background:rgba(8,12,23,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Sora',sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:.02em}
+.brand .inf{font-size:1.5rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--ink-faint);font-weight:400}
+.navlinks{display:flex;gap:30px;align-items:center}
+.navlinks a{font-size:.9rem;color:var(--ink-dim);transition:color .2s}
+.navlinks a:hover{color:var(--ink)}
+.btn{font-family:'Sora',sans-serif;font-weight:600;font-size:.88rem;padding:11px 22px;border-radius:999px;display:inline-block;background:var(--grad);color:#fff;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(226,72,214,.3)}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--cyan);box-shadow:none}
+.menu-toggle{display:none;background:none;border:0;color:var(--ink);cursor:pointer}
+
+.hero{position:relative;text-align:center;padding:30px 0 70px;overflow:hidden}
+.hero-glow{position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.22),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero-logo{max-width:900px;margin:0 auto;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.6);border:1px solid var(--line)}
+.hero-tag{font-size:1.18rem;color:var(--ink-dim);max-width:680px;margin:34px auto 0}
+.hero-tag b{color:var(--ink);font-weight:600}
+.hero-cta{display:flex;gap:14px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.hero-meta{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.1em;color:var(--ink-faint)}
+.hero-meta span{display:flex;align-items:center;gap:8px}
+.hero-meta i{width:6px;height:6px;border-radius:50%;background:var(--cyan);font-style:normal;box-shadow:0 0 10px var(--cyan)}
+
+section{padding:88px 0}
+.section-head{max-width:700px;margin-bottom:48px}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.section-head h2{font-size:clamp(1.9rem,4vw,2.8rem);margin-top:16px}
+.section-head.center .eyebrow{justify-content:center}
+.section-head p{color:var(--ink-dim);margin-top:18px;font-size:1.05rem}
+
+.sobre{background:var(--bg-2)}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bcard{background:var(--bg-3);border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s,border-color .25s}
+.bcard:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.bcard .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--grad-soft);border:1px solid var(--line-2);margin-bottom:16px;font-size:1.3rem}
+.bcard h3{font-size:1.08rem;font-weight:600;margin-bottom:8px}
+.bcard p{color:var(--ink-dim);font-size:.92rem}
+
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat .num{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,3.4rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.05;min-height:1.05em;display:flex;align-items:center;justify-content:center}
+.stat .num.is-text{font-size:clamp(1.5rem,3vw,2.1rem)}
+.stat .lab{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);margin-top:12px}
+
+.proc{background:var(--bg-2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px}
+.step{background:var(--bg-3);border:1px solid var(--line);border-radius:16px;padding:26px 24px;position:relative}
+.step .n{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--magenta);letter-spacing:.1em}
+.step h3{font-size:1.04rem;font-weight:600;margin:14px 0 8px}
+.step p{color:var(--ink-dim);font-size:.9rem}
+.step::after{content:"\2192";position:absolute;right:-19px;top:50%;transform:translateY(-50%);color:var(--ink-faint);font-size:1.1rem;z-index:2}
+.step:last-child::after{display:none}
+
+/* EMPRESAS PARCEIRAS */
+.logos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.logo-tile{background:var(--bg-3);border:1px dashed var(--line-2);border-radius:14px;min-height:104px;display:grid;place-items:center;text-align:center;padding:18px;color:var(--ink-faint);font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.12em;transition:border-color .25s,color .25s}
+.logo-tile:hover{border-color:var(--cyan);color:var(--ink-dim)}
+.logo-tile.filled{border-style:solid;border-color:var(--line)}
+.logo-tile img{max-height:48px;width:auto;filter:grayscale(1) brightness(1.4);opacity:.85}
+
+/* PROJETOS / CASES */
+.proj{background:var(--bg-2)}
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.case{background:var(--bg-3);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:transform .25s,border-color .25s;display:flex;flex-direction:column}
+.case:hover{transform:translateY(-5px);border-color:var(--line-2)}
+.case-top{height:140px;background:linear-gradient(135deg,rgba(226,72,214,.22),rgba(56,212,232,.16));display:grid;place-items:center;position:relative;border-bottom:1px solid var(--line)}
+.case-top span{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);background:rgba(8,12,23,.55);padding:6px 12px;border-radius:999px;border:1px solid var(--line-2)}
+.case-body{padding:24px;flex:1;display:flex;flex-direction:column;gap:14px}
+.case-body h3{font-size:1.12rem;font-weight:600}
+.case-row{font-size:.9rem}
+.case-row b{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:3px;font-weight:500}
+.case-row span{color:var(--ink-dim)}
+.case-result{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:.92rem;color:var(--ink)}
+
+.news{text-align:center}
+.news-card{max-width:560px;margin:34px auto 0;background:var(--bg-3);border:1px solid var(--line);border-radius:20px;padding:34px 26px}
+.news-card iframe{width:100%;max-width:480px;border:0;border-radius:12px;background:#fff;margin:0 auto;display:block}
+.news .note{font-size:.82rem;color:var(--ink-faint);margin-top:16px}
+.ctaband{background:linear-gradient(120deg,#11091f,#0b1430);text-align:center;border-top:1px solid var(--line)}
+.ctaband h2{font-size:clamp(1.8rem,4vw,2.6rem);max-width:720px;margin:0 auto}
+.ctaband p{color:var(--ink-dim);max-width:560px;margin:18px auto 30px}
+.pill{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--line-2);border-radius:999px;padding:8px 16px;margin-bottom:26px}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--cyan);font-style:normal;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(56,212,232,.5)}50%{opacity:.6;box-shadow:0 0 0 7px rgba(56,212,232,0)}}
+
+footer{background:#060912;padding:64px 0 30px;border-top:1px solid var(--line)}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;margin-bottom:44px}
+.fcol h4{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:18px}
+.fcol a{display:block;color:var(--ink-dim);font-size:.92rem;padding:5px 0;transition:color .2s}
+.fcol a:hover{color:var(--cyan)}
+.fbrand .inf{font-size:1.5rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fbrand p{color:var(--ink-dim);font-size:.9rem;max-width:300px;margin-top:14px}
+.partners{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.06em;color:var(--ink-faint)}
+.partners span{padding:6px 12px;border:1px solid var(--line);border-radius:8px}
+.fbot{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-faint)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:980px){
+  .benefits,.cases{grid-template-columns:1fr 1fr}
+  .logos{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:880px){
+  .navlinks{position:fixed;top:0;right:0;height:100vh;width:min(80vw,320px);background:var(--bg-2);flex-direction:column;align-items:flex-start;padding:90px 30px;gap:8px;transform:translateX(100%);transition:transform .3s;border-left:1px solid var(--line)}
+  .navlinks.open{transform:translateX(0)}
+  .navlinks a{padding:10px 0;font-size:1rem;width:100%}
+  .menu-toggle{display:block;z-index:60}
+  .statgrid,.steps{grid-template-columns:1fr 1fr}
+  .step::after{display:none}
+  .fgrid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .benefits,.statgrid,.steps,.cases{grid-template-columns:1fr}
+  .logos{grid-template-columns:1fr 1fr}
+  section{padding:64px 0}
+  .hero-tag{font-size:1.05rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="https://fiesc.com.br/" target="_blank" rel="noopener">FIESC</a>
+    <a href="https://sc.senai.br/" target="_blank" rel="noopener">SENAI SC</a>
+    <a href="https://unisenaisc.com.br/" target="_blank" rel="noopener">UniSENAI</a>
+    <a href="https://institutos.sc.senai.br/" target="_blank" rel="noopener">Institutos de Inovação</a>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#topo"><span class="inf">&#8734;</span><span>Residência em IA<small>UNISENAI SANTA CATARINA</small></span></a>
+      <div class="navlinks" id="nav">
+        <a href="#programa">O Programa</a>
+        <a href="#como">Como Funciona</a>
+        <a href="#empresas">Empresas</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#newsletter">Newsletter</a>
+        <a class="btn" href="#parceiro">Seja parceiro</a>
+      </div>
+      <button class="menu-toggle" id="toggle" aria-label="Abrir menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="topo">
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <img class="hero-logo" src="assets/hero.png" alt="Residência em Inteligência Artificial — UniSENAI Santa Catarina">
+    <p class="hero-tag">Leve o desafio real da sua empresa e transforme em <b>solução de Inteligência Artificial</b>. Os residentes do UniSENAI SC desenvolvem projetos aplicados, com mentoria de especialistas e a estrutura dos Institutos SENAI.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#parceiro">Quero levar um projeto</a>
+      <a class="btn btn-ghost" href="#projetos">Ver os projetos</a>
+    </div>
+    <div class="hero-meta">
+      <span><i></i>Para a indústria</span>
+      <span><i></i>Projetos aplicados de IA</span>
+      <span><i></i>Parceria SENAI · UniSENAI · FIESC</span>
+    </div>
+  </div>
+</section>
+
+<div class="beam"></div>
+
+<section class="sobre" id="programa">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">O Programa</span>
+      <h2>Inteligência Artificial aplicada ao seu negócio</h2>
+      <p>O Programa de Residência em IA do UniSENAI Santa Catarina une formação e prática: durante 12 meses, residentes desenvolvem soluções de inteligência artificial para desafios reais de empresas parceiras, com acompanhamento de especialistas e a infraestrutura dos Institutos SENAI de Inovação e Tecnologia.</p>
+    </div>
+    <div class="benefits">
+      <div class="bcard reveal"><div class="ic">&#127919;</div><h3>Solução para um desafio real</h3><p>Sua empresa traz um problema concreto e recebe uma aplicação de IA desenvolvida sob medida.</p></div>
+      <div class="bcard reveal"><div class="ic">&#129504;</div><h3>Talentos formados em IA</h3><p>Acesso a profissionais capacitados em inteligência artificial aplicada à indústria.</p></div>
+      <div class="bcard reveal"><div class="ic">&#129518;</div><h3>Mentoria especializada</h3><p>Acompanhamento de especialistas, mestres e doutores ao longo de todo o projeto.</p></div>
+      <div class="bcard reveal"><div class="ic">&#127981;</div><h3>Estrutura dos Institutos SENAI</h3><p>Laboratórios e infraestrutura de ponta para pesquisa aplicada e desenvolvimento.</p></div>
+      <div class="bcard reveal"><div class="ic">&#128202;</div><h3>Pesquisa com foco produtivo</h3><p>Desenvolvimento orientado a resultados e ao dia a dia do setor industrial.</p></div>
+      <div class="bcard reveal"><div class="ic">&#129309;</div><h3>Conexão com novos profissionais</h3><p>Aproximação com talentos qualificados para futuras contratações.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="statgrid">
+      <!-- PLACEHOLDER: confirme os números reais -->
+      <div class="stat reveal"><div class="num" data-count="0" data-suffix="+">0</div><div class="lab">empresas parceiras</div></div>
+      <div class="stat reveal"><div class="num" data-count="0" data-suffix="+">0</div><div class="lab">projetos desenvolvidos</div></div>
+      <div class="stat reveal"><div class="num" data-count="0" data-suffix="+">0</div><div class="lab">residentes em campo</div></div>
+      <div class="stat reveal"><div class="num" data-count="12" data-suffix="">0</div><div class="lab">meses por projeto</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="proc" id="como">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Como Funciona</span>
+      <h2>Da ideia ao resultado, em quatro etapas</h2>
+      <p>O caminho para sua empresa desenvolver uma solução de IA junto ao programa.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="n">01</div><h3>Apresente o desafio</h3><p>Sua empresa traz um problema real com potencial de aplicação de inteligência artificial.</p></div>
+      <div class="step reveal"><div class="n">02</div><h3>Definição do projeto</h3><p>Escopo, objetivos e entregas alinhados com a equipe técnica do programa.</p></div>
+      <div class="step reveal"><div class="n">03</div><h3>Desenvolvimento</h3><p>Residente e mentores constroem a solução ao longo da residência.</p></div>
+      <div class="step reveal"><div class="n">04</div><h3>Entrega e resultados</h3><p>Sua empresa recebe a solução aplicada e os aprendizados gerados.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="beam"></div>
+
+<section id="empresas">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Empresas Parceiras</span>
+      <h2>Quem já desenvolve com a gente</h2>
+      <p>Indústrias que trouxeram seus desafios e desenvolvem soluções de IA junto ao programa.</p>
+    </div>
+    <!-- PLACEHOLDER: troque cada tile pelo logo real -> <img src="assets/empresa-1.png" alt="Nome"> -->
+    <div class="logos">
+      <div class="logo-tile reveal">LOGO EMPRESA 01</div>
+      <div class="logo-tile reveal">LOGO EMPRESA 02</div>
+      <div class="logo-tile reveal">LOGO EMPRESA 03</div>
+      <div class="logo-tile reveal">LOGO EMPRESA 04</div>
+      <div class="logo-tile reveal">LOGO EMPRESA 05</div>
+      <div class="logo-tile reveal">LOGO EMPRESA 06</div>
+      <div class="logo-tile reveal">LOGO EMPRESA 07</div>
+      <div class="logo-tile reveal">SUA EMPRESA AQUI</div>
+    </div>
+  </div>
+</section>
+
+<section class="proj" id="projetos">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Projetos</span>
+      <h2>Soluções desenvolvidas na residência</h2>
+      <p>Exemplos de como a inteligência artificial resolve desafios reais da indústria.</p>
+    </div>
+    <!-- PLACEHOLDER: substitua pelos projetos reais -->
+    <div class="cases">
+      <div class="case reveal">
+        <div class="case-top"><span>Setor &middot; [Área]</span></div>
+        <div class="case-body">
+          <h3>[Nome do projeto 01]</h3>
+          <div class="case-row"><b>Empresa</b><span>[Nome da empresa parceira]</span></div>
+          <div class="case-row"><b>Desafio</b><span>[Qual problema a empresa precisava resolver]</span></div>
+          <div class="case-row"><b>Solução</b><span>[O que foi desenvolvido com IA]</span></div>
+          <div class="case-result">[Resultado obtido, se puder ser divulgado]</div>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="case-top"><span>Setor &middot; [Área]</span></div>
+        <div class="case-body">
+          <h3>[Nome do projeto 02]</h3>
+          <div class="case-row"><b>Empresa</b><span>[Nome da empresa parceira]</span></div>
+          <div class="case-row"><b>Desafio</b><span>[Qual problema a empresa precisava resolver]</span></div>
+          <div class="case-row"><b>Solução</b><span>[O que foi desenvolvido com IA]</span></div>
+          <div class="case-result">[Resultado obtido, se puder ser divulgado]</div>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="case-top"><span>Setor &middot; [Área]</span></div>
+        <div class="case-body">
+          <h3>[Nome do projeto 03]</h3>
+          <div class="case-row"><b>Empresa</b><span>[Nome da empresa parceira]</span></div>
+          <div class="case-row"><b>Desafio</b><span>[Qual problema a empresa precisava resolver]</span></div>
+          <div class="case-row"><b>Solução</b><span>[O que foi desenvolvido com IA]</span></div>
+          <div class="case-result">[Resultado obtido, se puder ser divulgado]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="beam"></div>
+
+<section class="news" id="newsletter">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Newsletter</span>
+      <h2>Acompanhe os projetos e novidades</h2>
+      <p>Receba por e-mail os cases, oportunidades de parceria e atualizações do programa.</p>
+    </div>
+    <div class="news-card reveal">
+      <!-- SUBSTACK: troque "SUA-PUBLICACAO" pelo nome da sua publicação (ex.: residenciaia.substack.com) -->
+      <iframe src="https://SUA-PUBLICACAO.substack.com/embed" width="100%" height="320" frameborder="0" scrolling="no" title="Cadastro na newsletter"></iframe>
+      <p class="note">Ao se inscrever, você passa a receber nossos e-mails. É possível cancelar quando quiser.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ctaband" id="parceiro">
+  <div class="wrap">
+    <span class="pill"><i></i>Parcerias abertas</span>
+    <h2>Leve o próximo projeto de IA da sua empresa</h2>
+    <p>Traga um desafio real e desenvolva uma solução de inteligência artificial com os residentes e a estrutura do UniSENAI SC.</p>
+    <a class="btn" href="https://sites.google.com/edu.sc.senai.br/residencia-ia/contato" target="_blank" rel="noopener">Falar com a equipe</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fcol fbrand">
+        <div class="brand"><span class="inf">&#8734;</span><span>Residência em IA<small>UNISENAI SANTA CATARINA</small></span></div>
+        <p>Programa de Residência em Inteligência Artificial: soluções aplicadas para os desafios da indústria.</p>
+        <div class="partners"><span>FIESC</span><span>SENAI</span><span>UniSENAI</span><span>Institutos SENAI</span></div>
+      </div>
+      <div class="fcol">
+        <h4>O Programa</h4>
+        <a href="#programa">Sobre</a>
+        <a href="#como">Como funciona</a>
+        <a href="#empresas">Empresas parceiras</a>
+        <a href="#projetos">Projetos</a>
+      </div>
+      <div class="fcol">
+        <h4>Contato</h4>
+        <a href="#parceiro">Seja uma empresa parceira</a>
+        <a href="https://sites.google.com/edu.sc.senai.br/residencia-ia/contato" target="_blank" rel="noopener">Fale conosco</a>
+        <a href="https://unisenaisc.com.br/" target="_blank" rel="noopener">UniSENAI SC</a>
+      </div>
+    </div>
+    <div class="fbot">
+      <span>&copy; 2026 UniSENAI Santa Catarina. Todos os direitos reservados.</span>
+      <span>Programa de Residência em Inteligência Artificial</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle=document.getElementById('toggle'),nav=document.getElementById('nav');
+toggle.addEventListener('click',()=>nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function animate(el){
+  const t=el.dataset.text;if(t){el.textContent=t;el.classList.add('is-text');return;}
+  const end=+el.dataset.count,pre=el.dataset.prefix||'',suf=el.dataset.suffix||'';
+  if(end===0){el.textContent=pre+'—';return;}
+  const dur=1400,t0=performance.now();
+  function tick(now){const p=Math.min((now-t0)/dur,1);const v=Math.floor((1-Math.pow(1-p,3))*end);el.textContent=pre+v.toLocaleString('pt-BR')+suf;if(p<1)requestAnimationFrame(tick);}
+  requestAnimationFrame(tick);
+}
+const sIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){animate(e.target);sIO.unobserve(e.target)}})},{threshold:.6});
+document.querySelectorAll('.num').forEach(el=>sIO.observe(el));
+</script>
+</body>
+</html>
