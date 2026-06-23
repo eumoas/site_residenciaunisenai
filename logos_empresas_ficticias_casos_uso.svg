@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <style>
+      .bg{fill:#f7f9fc}
+      .title{font-family:Arial, sans-serif;font-size:34px;font-weight:800;fill:#0b1f44;letter-spacing:1px}
+      .card{fill:#ffffff;stroke:#e1e7f0;stroke-width:1.5;rx:18;filter:url(#shadow)}
+      .logo-name{font-family:Arial, sans-serif;font-size:34px;font-weight:800;fill:#0b1f44;letter-spacing:1px}
+      .tag{font-family:Arial, sans-serif;font-size:13px;font-weight:700;letter-spacing:1px}
+      .case-title{font-family:Arial, sans-serif;font-size:20px;font-weight:800}
+      .case-sub{font-family:Arial, sans-serif;font-size:15px;fill:#0b1f44}
+      .label{font-family:Arial, sans-serif;font-size:13px;font-weight:800}
+      .body{font-family:Arial, sans-serif;font-size:15px;fill:#10223f}
+      .num{font-family:Arial, sans-serif;font-size:18px;font-weight:900}
+      .line{stroke:#cfd8e8;stroke-width:2}
+    </style>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0b1f44" flood-opacity=".12"/>
+    </filter>
+    <linearGradient id="blue" x1="0" x2="1"><stop offset="0" stop-color="#3f63ff"/><stop offset="1" stop-color="#1a6ed8"/></linearGradient>
+    <linearGradient id="green" x1="0" x2="1"><stop offset="0" stop-color="#22a96b"/><stop offset="1" stop-color="#147a58"/></linearGradient>
+    <linearGradient id="purple" x1="0" x2="1"><stop offset="0" stop-color="#7b4fe8"/><stop offset="1" stop-color="#4b2bbf"/></linearGradient>
+    <linearGradient id="orange" x1="0" x2="1"><stop offset="0" stop-color="#ff8a00"/><stop offset="1" stop-color="#e95d00"/></linearGradient>
+    <linearGradient id="teal" x1="0" x2="1"><stop offset="0" stop-color="#12b6c8"/><stop offset="1" stop-color="#087e99"/></linearGradient>
+  </defs>
+
+  <rect class="bg" width="1600" height="1000"/>
+  <line class="line" x1="260" y1="48" x2="470" y2="48"/>
+  <line class="line" x1="1130" y1="48" x2="1340" y2="48"/>
+  <text class="title" x="800" y="60" text-anchor="middle">10 LOGOS DE EMPRESAS FICTÍCIAS</text>
+
+  <!-- logo cards -->
+  <g transform="translate(35,95)">
+    <rect class="card" width="300" height="145"/>
+    <path d="M65 42 L95 25 L125 42 L125 78 L95 96 L65 78 Z" fill="url(#blue)"/>
+    <path d="M75 51 L95 40 L115 51 L95 63 Z" fill="#fff" opacity=".9"/>
+    <path d="M95 63 L95 86" stroke="#fff" stroke-width="4"/>
+    <text class="logo-name" x="150" y="78">NOVATEC</text>
+    <text class="tag" x="150" y="103" fill="#3f63ff">SOLUÇÕES INDUSTRIAIS</text>
+  </g>
+  <g transform="translate(365,95)">
+    <rect class="card" width="300" height="145"/>
+    <path d="M95 25 L125 105 H103 L95 83 L78 105 H55 L88 25 Z" fill="url(#green)"/>
+    <text class="logo-name" x="65" y="108">ALTIUM</text>
+    <text class="tag" x="67" y="130" fill="#147a58">ENGENHARIA INTELIGENTE</text>
+  </g>
+  <g transform="translate(695,95)">
+    <rect class="card" width="300" height="145"/>
+    <circle cx="90" cy="72" r="32" fill="#2b3b4c"/>
+    <circle cx="90" cy="72" r="19" fill="#fff"/>
+    <path d="M118 52 L145 72 L118 92 Z" fill="url(#orange)"/>
+    <text class="logo-name" x="155" y="76">MECAVIS</text>
+    <text class="tag" x="155" y="104" fill="#e95d00">AUTOMAÇÃO E ROBÓTICA</text>
+  </g>
+  <g transform="translate(1025,95)">
+    <rect class="card" width="300" height="145"/>
+    <ellipse cx="93" cy="65" rx="48" ry="32" fill="url(#blue)"/>
+    <circle cx="93" cy="65" r="18" fill="#fff"/>
+    <circle cx="93" cy="65" r="8" fill="#0b1f44"/>
+    <text class="logo-name" x="60" y="112">OPTIVIS</text>
+    <text class="tag" x="59" y="132" fill="#1a6ed8">VISÃO QUE TRANSFORMA</text>
+  </g>
+  <g transform="translate(1290,95)">
+    <rect class="card" width="275" height="145"/>
+    <path d="M78 33 H145 C135 55 120 63 94 63 H75 C61 63 55 78 70 85 H128 C143 85 151 100 137 112 H56 C68 90 83 82 106 82 H126 C139 82 143 67 127 64 H70 C55 64 50 47 78 33Z" fill="url(#purple)"/>
+    <text class="logo-name" x="55" y="112">SYNAPSE</text>
+    <text class="tag" x="65" y="132" fill="#4b2bbf">DADOS QUE CONECTAM</text>
+  </g>
+
+  <g transform="translate(35,265)">
+    <rect class="card" width="300" height="145"/>
+    <path d="M95 25 C55 42 54 84 91 103 C77 77 93 58 120 45 C112 76 104 99 70 122" fill="none" stroke="#18824d" stroke-width="5"/>
+    <text class="logo-name" x="135" y="78">BIOFORGE</text>
+    <text class="tag" x="135" y="103" fill="#18824d">BIOINOVAÇÃO INDUSTRIAL</text>
+  </g>
+  <g transform="translate(365,265)">
+    <rect class="card" width="300" height="145"/>
+    <path d="M48 60 C85 25 112 95 155 55" fill="none" stroke="#1a6ed8" stroke-width="11"/>
+    <path d="M48 82 C85 47 112 117 155 77" fill="none" stroke="#1a6ed8" stroke-width="9" opacity=".75"/>
+    <path d="M48 104 C85 69 112 139 155 99" fill="none" stroke="#1a6ed8" stroke-width="7" opacity=".55"/>
+    <text class="logo-name" x="160" y="80">FLUXION</text>
+    <text class="tag" x="164" y="106" fill="#1a6ed8">EFICIÊNCIA EM MOVIMENTO</text>
+  </g>
+  <g transform="translate(695,265)">
+    <rect class="card" width="300" height="145"/>
+    <path d="M95 35 L125 105 H105 L96 84 L74 105 H52 Z" fill="#f2b705"/>
+    <text class="logo-name" x="145" y="82">VALORIS</text>
+    <text class="tag" x="145" y="108" fill="#e2a000">ANÁLISE · DECISÃO · RESULTADO</text>
+  </g>
+  <g transform="translate(1025,265)">
+    <rect class="card" width="300" height="145"/>
+    <path d="M80 38 L120 61 L120 105 L80 128 L40 105 L40 61 Z" fill="none" stroke="#087e99" stroke-width="8"/>
+    <path d="M70 76 H91 L82 92 L93 110 H71 L60 92 Z" fill="#087e99"/>
+    <text class="logo-name" x="135" y="79" font-size="29">PACKTECH</text>
+    <text class="tag" x="135" y="106" fill="#087e99">TECNOLOGIA EM EMBALAGENS</text>
+  </g>
+  <g transform="translate(1290,265)">
+    <rect class="card" width="275" height="145"/>
+    <g fill="#258954">
+      <circle cx="55" cy="48" r="6"/><circle cx="78" cy="48" r="6"/><circle cx="101" cy="48" r="6"/><circle cx="124" cy="48" r="6"/>
+      <circle cx="55" cy="72" r="6"/><circle cx="78" cy="72" r="6"/><circle cx="101" cy="72" r="6"/><circle cx="124" cy="72" r="6"/>
+      <circle cx="55" cy="96" r="6"/><circle cx="78" cy="96" r="6"/><circle cx="101" cy="96" r="6"/><circle cx="124" cy="96" r="6"/>
+    </g>
+    <text class="logo-name" x="145" y="80">ENERGIX</text>
+    <text class="tag" x="145" y="106" fill="#258954">ENERGIA PARA O FUTURO</text>
+  </g>
+
+  <line class="line" x1="280" y1="462" x2="470" y2="462"/>
+  <line class="line" x1="1130" y1="462" x2="1320" y2="462"/>
+  <text class="title" x="800" y="475" text-anchor="middle">6 CASOS DE USO: PROBLEMA E SOLUÇÃO</text>
+
+  <!-- case cards -->
+  <g transform="translate(55,505)">
+    <rect class="card" width="460" height="210"/>
+    <rect x="25" y="25" width="72" height="72" rx="14" fill="url(#purple)"/>
+    <path d="M44 75 H81 V51 H72 L68 43 H57 L53 51 H44 Z" fill="none" stroke="#fff" stroke-width="4"/>
+    <circle cx="62" cy="64" r="9" fill="none" stroke="#fff" stroke-width="4"/>
+    <text class="num" x="125" y="42" fill="#6b45d8">1.</text>
+    <text class="case-title" x="150" y="42" fill="#6b45d8">INSPEÇÃO DE QUALIDADE</text>
+    <text class="case-sub" x="125" y="66">Visão Computacional</text>
+    <text class="label" x="125" y="94" fill="#6b45d8">PROBLEMA</text>
+    <text class="body" x="125" y="118">Defeitos em produtos passam</text>
+    <text class="body" x="125" y="138">despercebidos na inspeção manual,</text>
+    <text class="body" x="125" y="158">gerando retrabalho e devoluções.</text>
+    <text class="label" x="25" y="172" fill="#6b45d8">SOLUÇÃO</text>
+    <text class="body" x="25" y="194">IA visual para detectar defeitos em tempo real.</text>
+  </g>
+
+  <g transform="translate(570,505)">
+    <rect class="card" width="460" height="210"/>
+    <rect x="25" y="25" width="72" height="72" rx="14" fill="url(#blue)"/>
+    <path d="M61 42 L86 56 L86 84 L61 98 L36 84 L36 56 Z M61 42 V98 M36 56 L86 84 M86 56 L36 84" fill="none" stroke="#fff" stroke-width="3"/>
+    <text class="num" x="125" y="42" fill="#1a6ed8">2.</text>
+    <text class="case-title" x="150" y="42" fill="#1a6ed8">MANUTENÇÃO PREDITIVA</text>
+    <text class="case-sub" x="125" y="66">Modelagem Preditiva / IoT</text>
+    <text class="label" x="125" y="94" fill="#1a6ed8">PROBLEMA</text>
+    <text class="body" x="125" y="118">Falhas inesperadas causam paradas</text>
+    <text class="body" x="125" y="138">não planejadas e altos custos.</text>
+    <text class="label" x="25" y="172" fill="#1a6ed8">SOLUÇÃO</text>
+    <text class="body" x="25" y="194">Sensores e ML antecipam falhas críticas.</text>
+  </g>
+
+  <g transform="translate(1085,505)">
+    <rect class="card" width="460" height="210"/>
+    <rect x="25" y="25" width="72" height="72" rx="14" fill="url(#green)"/>
+    <path d="M42 78 H52 V88 H42 Z M59 66 H69 V88 H59 Z M76 53 H86 V88 H76 Z M42 50 L58 42 L69 47 L86 32" fill="none" stroke="#fff" stroke-width="4"/>
+    <text class="num" x="125" y="42" fill="#18824d">3.</text>
+    <text class="case-title" x="150" y="42" fill="#18824d">OTIMIZAÇÃO DE PROCESSOS</text>
+    <text class="case-sub" x="125" y="66">Modelagem / Otimização</text>
+    <text class="label" x="125" y="94" fill="#18824d">PROBLEMA</text>
+    <text class="body" x="125" y="118">Processos operam com baixo rendimento</text>
+    <text class="body" x="125" y="138">e alto consumo de recursos.</text>
+    <text class="label" x="25" y="172" fill="#18824d">SOLUÇÃO</text>
+    <text class="body" x="25" y="194">Modelos indicam melhores parâmetros.</text>
+  </g>
+
+  <g transform="translate(55,745)">
+    <rect class="card" width="460" height="210"/>
+    <rect x="25" y="25" width="72" height="72" rx="14" fill="url(#orange)"/>
+    <path d="M61 42 L83 55 L83 80 L61 93 L39 80 L39 55 Z M39 55 L61 68 L83 55 M61 68 V93" fill="none" stroke="#fff" stroke-width="4"/>
+    <text class="num" x="125" y="42" fill="#e95d00">4.</text>
+    <text class="case-title" x="150" y="42" fill="#e95d00">PREVISÃO DE DEMANDA</text>
+    <text class="case-sub" x="125" y="66">Machine Learning / Séries Temporais</text>
+    <text class="label" x="125" y="94" fill="#e95d00">PROBLEMA</text>
+    <text class="body" x="125" y="118">Previsões imprecisas geram excesso</text>
+    <text class="body" x="125" y="138">ou falta de estoque.</text>
+    <text class="label" x="25" y="172" fill="#e95d00">SOLUÇÃO</text>
+    <text class="body" x="25" y="194">Modelo considera histórico e sazonalidade.</text>
+  </g>
+
+  <g transform="translate(570,745)">
+    <rect class="card" width="460" height="210"/>
+    <rect x="25" y="25" width="72" height="72" rx="14" fill="url(#teal)"/>
+    <path d="M45 82 C60 40 82 48 78 75 M45 82 L73 82 M58 50 L50 42 M75 54 L86 45 M78 75 L89 85" fill="none" stroke="#fff" stroke-width="4"/>
+    <circle cx="58" cy="50" r="5" fill="#fff"/><circle cx="78" cy="75" r="5" fill="#fff"/>
+    <text class="num" x="125" y="42" fill="#087e99">5.</text>
+    <text class="case-title" x="150" y="42" fill="#087e99">CONTROLE DE PROCESSOS</text>
+    <text class="case-sub" x="125" y="66">Controle Preditivo / Simulação</text>
+    <text class="label" x="125" y="94" fill="#087e99">PROBLEMA</text>
+    <text class="body" x="125" y="118">Variações afetam qualidade e aumentam</text>
+    <text class="body" x="125" y="138">desperdício de matéria-prima.</text>
+    <text class="label" x="25" y="172" fill="#087e99">SOLUÇÃO</text>
+    <text class="body" x="25" y="194">Controle preditivo mantém variáveis no alvo.</text>
+  </g>
+
+  <g transform="translate(1085,745)">
+    <rect class="card" width="460" height="210"/>
+    <rect x="25" y="25" width="72" height="72" rx="14" fill="url(#purple)"/>
+    <path d="M62 88 C39 70 48 48 85 37 C85 68 75 83 62 88 Z M62 88 C61 72 68 58 80 46" fill="none" stroke="#fff" stroke-width="4"/>
+    <text class="num" x="125" y="42" fill="#6b45d8">6.</text>
+    <text class="case-title" x="150" y="42" fill="#6b45d8">EFICIÊNCIA ENERGÉTICA</text>
+    <text class="case-sub" x="125" y="66">Análise de Dados / Machine Learning</text>
+    <text class="label" x="125" y="94" fill="#6b45d8">PROBLEMA</text>
+    <text class="body" x="125" y="118">Alto consumo e dificuldade em identificar</text>
+    <text class="body" x="125" y="138">oportunidades de economia.</text>
+    <text class="label" x="25" y="172" fill="#6b45d8">SOLUÇÃO</text>
+    <text class="body" x="25" y="194">IA recomenda ações de economia energética.</text>
+  </g>
+</svg>
