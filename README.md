@@ -1,6 +1,6 @@
 # Residência Inteligência Artificial · Hub de Inovação Industrial
 
-Site institucional da Residência em IA (UniSENAI SC) com um diagnóstico de prontidão para IA industrial gerado por Claude.
+Site institucional da Residência em IA (UniSENAI SC) com um diagnóstico de prontidão para IA industrial.
 
 ## Requisitos
 
