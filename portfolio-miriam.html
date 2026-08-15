@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miriam — Visão Computacional & IA</title>
+<!-- Portfólio original preservado ao promover o Hub para a página inicial. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --washi:#F4F1EA;
+    --washi-2:#EBE6DB;
+    --panel:#FBFAF6;
+    --sumi:#1E1B26;
+    --sumi-soft:#565163;
+    --sumi-faint:#8E8899;
+    --plum:#7E5AA6;
+    --plum-soft:#A98BCB;
+    --ai:#4A63A0;
+    --hairline:#D9D3C6;
+    --hairline-soft:#E6E1D6;
+    --mincho:'Zen Old Mincho', serif;
+    --gothic:'Zen Kaku Gothic New', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--washi);
+    color:var(--sumi);
+    font-family:var(--gothic);
+    font-weight:300;
+    font-size:16px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--plum-soft);color:#fff;}
+  :focus-visible{outline:1.5px solid var(--plum);outline-offset:4px;}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 40px;}
+  @media (max-width:640px){.wrap{padding:0 26px;}}
+
+  .kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--plum);
+  }
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,241,234,0.82);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline-soft);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;}
+  .nav-mark{font-family:var(--mincho);font-size:17px;letter-spacing:0.14em;}
+  .nav-mark span{color:var(--plum);}
+  .nav-links{display:flex;gap:34px;}
+  .nav-links a{
+    text-decoration:none;color:var(--sumi-soft);
+    font-family:var(--mono);font-size:11px;letter-spacing:0.14em;
+    text-transform:uppercase;transition:color .25s;
+  }
+  .nav-links a:hover{color:var(--plum);}
+  @media (max-width:640px){.nav-links{display:none;}}
+
+  /* HERO */
+  header.hero{padding:130px 0 110px;position:relative;}
+  .hero .kicker{margin-bottom:40px;display:block;}
+  .hero-name{
+    font-family:var(--mincho);font-weight:500;
+    font-size:clamp(56px,11vw,132px);line-height:0.92;
+    letter-spacing:0.02em;margin:0;
+  }
+  .hero-sub{
+    margin:44px 0 0;max-width:440px;
+    font-size:17px;color:var(--sumi-soft);font-weight:300;line-height:1.9;
+  }
+  /* camada técnica */
+  .detect-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--plum);margin-bottom:20px;
+  }
+  .detect-tag::before{
+    content:"";width:7px;height:7px;background:var(--plum);border-radius:50%;
+    box-shadow:0 0 0 3px rgba(126,90,166,0.18);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+  .detect-frame{position:relative;display:inline-block;padding:14px 26px;overflow:hidden;}
+  .detect-frame .c{position:absolute;width:18px;height:18px;pointer-events:none;}
+  .detect-frame .c.tl{top:0;left:0;border-top:2px solid var(--plum);border-left:2px solid var(--plum);}
+  .detect-frame .c.tr{top:0;right:0;border-top:2px solid var(--plum);border-right:2px solid var(--plum);}
+  .detect-frame .c.bl{bottom:0;left:0;border-bottom:2px solid var(--plum);border-left:2px solid var(--plum);}
+  .detect-frame .c.br{bottom:0;right:0;border-bottom:2px solid var(--plum);border-right:2px solid var(--plum);}
+  .detect-frame .scanline{
+    position:absolute;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--ai),transparent);
+    opacity:0.55;animation:scan 4.5s ease-in-out infinite;
+  }
+  @keyframes scan{0%{top:6%;}50%{top:94%;}100%{top:6%;}}
+  @media (prefers-reduced-motion: reduce){
+    .scanline,.detect-tag::before{animation:none;}
+    .scanline{display:none;}
+  }
+  .detect-meta{
+    display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;
+    font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--sumi-faint);
+  }
+  .detect-meta b{color:var(--ai);font-weight:400;}
+
+  /* marcas de registro nos cantos do hero */
+  header.hero::before,header.hero::after{
+    content:"+";position:absolute;font-family:var(--mono);font-size:16px;color:var(--plum-soft);
+  }
+  header.hero::before{top:34px;left:40px;}
+  header.hero::after{top:34px;right:40px;}
+  @media (max-width:640px){header.hero::before,header.hero::after{display:none;}}
+
+  .hero-links{display:flex;gap:26px;margin-top:56px;flex-wrap:wrap;}
+  .hero-links a{
+    text-decoration:none;font-family:var(--mono);font-size:12px;
+    letter-spacing:0.08em;color:var(--sumi);
+    border-bottom:1px solid var(--hairline);padding-bottom:3px;
+    transition:border-color .25s,color .25s;
+  }
+  .hero-links a:hover{border-color:var(--plum);color:var(--plum);}
+  .hero-links a .muted{color:var(--sumi-faint);}
+
+  /* SECTION — editorial rail grid */
+  section{padding:88px 0;border-top:1px solid var(--hairline-soft);}
+  .rail{display:grid;grid-template-columns:190px 1fr;gap:56px;}
+  @media (max-width:760px){.rail{grid-template-columns:1fr;gap:28px;}}
+  .rail-head{position:relative;}
+  .rail-idx{font-family:var(--mono);font-size:12px;color:var(--plum);letter-spacing:0.1em;}
+  .rail-idx::before{content:"+ ";color:var(--plum-soft);}
+  .rail-title{
+    font-family:var(--mincho);font-weight:500;font-size:27px;
+    margin:10px 0 0;letter-spacing:0.04em;line-height:1.3;
+  }
+
+  /* SOBRE */
+  .about-block{margin-bottom:34px;}
+  .about-block:last-child{margin-bottom:0;}
+  .about-block .lbl{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.16em;
+    text-transform:uppercase;color:var(--sumi-faint);margin-bottom:8px;
+  }
+  .about-block.tech .lbl{color:var(--plum);}
+  .about-block.policy .lbl{color:var(--ai);}
+  .about-block p{margin:0;color:var(--sumi-soft);font-weight:300;}
+
+  /* FORMAÇÃO */
+  .edu-row{
+    display:grid;grid-template-columns:1fr auto;gap:16px;align-items:baseline;
+    padding:20px 0;border-bottom:1px solid var(--hairline-soft);
+  }
+  .edu-row:first-child{padding-top:0;}
+  .edu-row:last-child{border-bottom:none;}
+  .edu-row h3{font-family:var(--mincho);font-weight:400;font-size:19px;margin:0;letter-spacing:0.03em;}
+  .edu-row .meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right;}
+  .edu-row .inst{color:var(--sumi-soft);font-size:14px;}
+  .edu-row .status{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--plum);}
+  .edu-row .status.done{color:var(--sumi-faint);}
+
+  /* PROJETOS — editorial list */
+  .proj{
+    display:grid;grid-template-columns:52px 1fr;gap:24px;
+    padding:30px 0;border-top:1px solid var(--hairline-soft);
+  }
+  .proj:first-child{border-top:none;padding-top:4px;}
+  .proj-num{font-family:var(--mono);font-size:13px;color:var(--plum-soft);padding-top:6px;}
+  .proj-name{
+    font-family:var(--mincho);font-weight:500;font-size:23px;margin:0 0 8px;
+    letter-spacing:0.03em;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  }
+  .proj-name .fict{font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sumi-faint);font-weight:400;}
+  .proj p{margin:0 0 14px;color:var(--sumi-soft);font-weight:300;max-width:620px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:9px;}
+  .proj-tags span{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:0.08em;
+    color:var(--sumi-soft);border:1px solid var(--hairline);
+    padding:4px 10px;border-radius:1px;
+  }
+
+  /* RECONHECIMENTO */
+  .award{display:flex;gap:22px;align-items:baseline;}
+  .award .a-mark{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--plum);white-space:nowrap;padding-top:4px;}
+  .award-body h3{font-family:var(--mincho);font-weight:500;font-size:22px;margin:0 0 6px;letter-spacing:0.03em;}
+  .award-body p{margin:0;color:var(--sumi-soft);font-weight:300;}
+
+  /* PARA ORGANIZAÇÕES */
+  .callout p{color:var(--sumi-soft);font-weight:300;margin:0 0 16px;max-width:640px;}
+  .callout strong{color:var(--sumi);font-weight:500;}
+
+  .process{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:40px 0;border-top:1px solid var(--hairline);}
+  @media (max-width:640px){.process{grid-template-columns:1fr;}}
+  .p-step{padding:26px 26px 26px 0;border-right:1px solid var(--hairline-soft);}
+  .p-step:last-child{border-right:none;}
+  @media (max-width:640px){.p-step{border-right:none;border-bottom:1px solid var(--hairline-soft);padding:22px 0;}.p-step:last-child{border-bottom:none;}}
+  .p-step .n{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;color:var(--plum);}
+  .p-step h4{font-family:var(--mincho);font-weight:500;font-size:18px;margin:12px 0 8px;letter-spacing:0.04em;}
+  .p-step p{margin:0;font-size:14px;color:var(--sumi-soft);font-weight:300;}
+
+  .free-note{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.04em;line-height:1.7;
+    color:var(--plum);border-left:2px solid var(--plum);padding-left:16px;margin-top:8px;max-width:600px;
+  }
+
+  /* FORM */
+  form{display:grid;gap:30px;margin-top:52px;}
+  .field{display:grid;gap:10px;}
+  .field > label{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.12em;
+    text-transform:uppercase;color:var(--sumi-faint);
+  }
+  .field .hint{font-size:13px;color:var(--sumi-faint);font-weight:300;margin-top:-4px;}
+  input[type=text],input[type=email],textarea,select{
+    background:transparent;border:none;border-bottom:1px solid var(--hairline);
+    color:var(--sumi);font-family:var(--gothic);font-weight:300;font-size:15px;
+    padding:9px 2px;width:100%;border-radius:0;
+  }
+  textarea{min-height:76px;resize:vertical;border:1px solid var(--hairline);padding:12px;background:var(--panel);}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--plum);}
+  select{cursor:pointer;}
+  .radio-row,.check-row{display:flex;gap:14px 26px;flex-wrap:wrap;padding-top:2px;}
+  .radio-row label,.check-row label{
+    display:flex;align-items:center;gap:9px;font-size:14px;color:var(--sumi-soft);font-weight:300;cursor:pointer;
+  }
+  input[type=radio],input[type=checkbox]{accent-color:var(--plum);width:15px;height:15px;}
+  #conditional-media{display:none;}
+  #conditional-media.show{display:grid;gap:30px;}
+
+  button.submit{
+    justify-self:start;margin-top:4px;
+    background:transparent;color:var(--sumi);
+    border:1px solid var(--plum);padding:15px 42px;
+    font-family:var(--mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+    cursor:pointer;transition:background .3s,color .3s;
+  }
+  button.submit:hover{background:var(--plum);color:#fff;}
+  .submit-note{font-family:var(--mono);font-size:11px;letter-spacing:0.03em;color:var(--sumi-faint);}
+
+  /* FOOTER */
+  footer{padding:60px 0 70px;border-top:1px solid var(--hairline-soft);}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;align-items:baseline;}
+  footer .f-mark{font-family:var(--mincho);font-size:16px;letter-spacing:0.1em;}
+  footer .f-sys{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--sumi-faint);margin:26px 0 0;padding-top:22px;border-top:1px solid var(--hairline-soft);
+  }
+  footer .f-links{display:flex;gap:24px;}
+  footer a{text-decoration:none;color:var(--sumi-soft);font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;transition:color .25s;}
+  footer a:hover{color:var(--plum);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="nav-mark">Miriam<span>.</span></span>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#formacao">Formação</a>
+      <a href="#projetos">Projetos</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="detect-tag">detectando · inovação tecnológica</span>
+    <div class="detect-frame">
+      <span class="c tl"></span><span class="c tr"></span><span class="c bl"></span><span class="c br"></span>
+      <span class="scanline"></span>
+      <h1 class="hero-name">Miriam</h1>
+    </div>
+    <div class="detect-meta">
+      <span>class: <b>ai · computer vision</b></span>
+      <span>conf: <b>0.99</b></span>
+      <span>status: <b>building</b></span>
+    </div>
+    <p class="hero-sub">Visão computacional e inteligência artificial aplicadas a problemas reais — da indústria à saúde, transformando imagens e dados em soluções que geram impacto.</p>
+    <div class="hero-links">
+      <a href="https://github.com/eumoas" target="_blank" rel="noopener">github.com/eumoas</a>
+      <a href="https://www.linkedin.com/in/miriamaguiarsobral" target="_blank" rel="noopener">linkedin.com/in/miriamaguiarsobral</a>
+      <a href="mailto:eumoas@gmail.com">eumoas@gmail.com</a>
+    </div>
+  </div>
+</header>
+
+<section id="sobre">
+  <div class="wrap rail">
+    <div class="rail-head">
+      <span class="rail-idx">01</span>
+      <h2 class="rail-title">Sobre</h2>
+    </div>
+    <div>
+      <div class="about-block tech">
+        <div class="lbl">Tecnologia</div>
+        <p>Cientista de dados e residente em IA no SENAI/FIESC (Santa Catarina), atuando com visão computacional industrial, automações com LLMs e chatbots educacionais. Especializanda em IA Aplicada e em Informação Quântica.</p>
+      </div>
+      <div class="about-block policy">
+        <div class="lbl">Políticas Públicas</div>
+        <p>Mestre em Gestão e Políticas Públicas pela FGV, com atuação na área de educação. Uma trajetória que une rigor técnico e sensibilidade para o impacto social de cada solução.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formacao">
+  <div class="wrap rail">
+    <div class="rail-head">
+      <span class="rail-idx">02</span>
+      <h2 class="rail-title">Formação</h2>
+    </div>
+    <div>
+      <div class="edu-row">
+        <h3>Especialização em Inteligência Artificial Aplicada</h3>
+        <div class="meta"><span class="inst">UniSENAI · SC</span><span class="status">em andamento</span></div>
+      </div>
+      <div class="edu-row">
+        <h3>Especialização em Informação Quântica</h3>
+        <div class="meta"><span class="inst">SENAI CIMATEC</span><span class="status">em andamento</span></div>
+      </div>
+      <div class="edu-row">
+        <h3>Mestrado em Gestão e Políticas Públicas</h3>
+        <div class="meta"><span class="inst">FGV</span><span class="status done">concluído</span></div>
+      </div>
+      <div class="edu-row">
+        <h3>Bacharelado em Sistemas de Informação</h3>
+        <div class="meta"><span class="status done">concluído</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projetos">
+  <div class="wrap rail">
+    <div class="rail-head">
+      <span class="rail-idx">03</span>
+      <h2 class="rail-title">Projetos</h2>
+    </div>
+    <div>
+      <div class="proj">
+        <span class="proj-num">01</span>
+        <div>
+          <h3 class="proj-name">FiniBot</h3>
+          <p>Aplicativo de educação financeira para jovens de 15 a 21 anos, via Telegram — trabalho de conclusão de curso no IFSULDEMINAS.</p>
+          <div class="proj-tags"><span>Telegram Bot</span><span>Educação Financeira</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <span class="proj-num">02</span>
+        <div>
+          <h3 class="proj-name">Gestar</h3>
+          <p>Aplicativo de acompanhamento gestacional, com localizador de unidades de Banco de Leite Humano (491 unidades geocodificadas), calendário de vacinação e notificações via WhatsApp.</p>
+          <div class="proj-tags"><span>Saúde da Mulher</span><span>Geolocalização</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <span class="proj-num">03</span>
+        <div>
+          <h3 class="proj-name">Trava</h3>
+          <p>Aplicativo multiplataforma para barrar o acesso a sites e apps de jogos de aposta. Arquitetura de três camadas de LLM, com módulo de notificação via WhatsApp.</p>
+          <div class="proj-tags"><span>Android/iOS</span><span>Extensão</span><span>n8n</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <span class="proj-num">04</span>
+        <div>
+          <h3 class="proj-name">SafeLock</h3>
+          <p>Aplicativo de segurança industrial: detecção de cadeados abertos/fechados para conformidade com NR-12/LOTO, do dataset ao treinamento (mAP50 de 0,10 a 0,42).</p>
+          <div class="proj-tags"><span>Visão Computacional</span><span>Segurança Industrial</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <span class="proj-num">05</span>
+        <div>
+          <h3 class="proj-name">EASESPOT</h3>
+          <p>Plataforma de classificação de defeitos no setor têxtil, com dashboard, controle de usuários e retreino do modelo, além do pipeline de visão computacional cobrindo 18 classes de defeitos.</p>
+          <div class="proj-tags"><span>YOLOv8</span><span>SAHI</span><span>AWS</span><span>Dashboard</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <span class="proj-num">06</span>
+        <div>
+          <h3 class="proj-name">Agente para Restaurante <span class="fict">fictício</span></h3>
+          <p>Agente conversacional de IA para atendimento em restaurantes: reserva de mesas, consulta de cardápio, pedidos e dúvidas frequentes.</p>
+          <div class="proj-tags"><span>Agente de IA</span><span>Atendimento</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="premio">
+  <div class="wrap rail">
+    <div class="rail-head">
+      <span class="rail-idx">04</span>
+      <h2 class="rail-title">Reconhecimento</h2>
+    </div>
+    <div class="award">
+      <span class="a-mark">1º lugar</span>
+      <div class="award-body">
+        <h3>Industry for Her</h3>
+        <p>Accenture · VDI — solução de automação logística para a indústria alemã.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="f-mark">Miriam<span style="color:var(--plum)">.</span></span>
+    <div class="f-links">
+      <a href="https://github.com/eumoas" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/miriamaguiarsobral" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:eumoas@gmail.com">E-mail</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="f-sys">© 2026 · desenvolvimento de inovação tecnológica · visão computacional & ia · santa catarina, br</p>
+  </div>
+</footer>
+
+</body>
+</html>

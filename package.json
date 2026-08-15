@@ -1,0 +1,14 @@
+{
+  "name": "residencia-ia-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Residência Inteligência Artificial · Hub de Inovação Industrial · UniSENAI SC",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/genai": "^2.17.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}

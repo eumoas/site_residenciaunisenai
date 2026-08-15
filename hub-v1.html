@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<!-- Primeira direção visual preservada antes do reposicionamento premium do Hub. -->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub de Diagnóstico em IA Industrial · Residência UniSENAI SC</title>
+<meta name="description" content="Diagnóstico de maturidade em inteligência artificial para a indústria, baseado em cases reais da Residência em IA do UniSENAI SC.">
+<meta name="theme-color" content="#080c17">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080c17;
+  --bg-2:#0d1324;
+  --bg-3:#121a30;
+  --ink:#eef1f8;
+  --ink-dim:#97a3c2;
+  --ink-faint:#7c89aa;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.14);
+  --magenta:#e248d6;
+  --violet:#8b5cf6;
+  --cyan:#38d4e8;
+  --blue:#1c74bc;
+  --grad:linear-gradient(90deg,#1c6da9,#6848bd);
+  --grad-soft:linear-gradient(135deg,rgba(28,116,188,.18),rgba(139,92,246,.16));
+  --maxw:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,canvas,video{max-width:100%;display:block}
+.skip-link{position:fixed;top:12px;left:12px;z-index:1000;background:#fff;color:#080c17;padding:10px 16px;border-radius:8px;transform:translateY(-150%);transition:transform .2s}
+.skip-link:focus{transform:none}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"∞";color:var(--magenta);font-size:1.1em;letter-spacing:0}
+h1,h2,h3{font-family:'Sora',sans-serif;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.beam{height:1px;width:100%;background:linear-gradient(90deg,transparent,var(--cyan),transparent);position:relative;opacity:.5}
+.beam::after{content:"";position:absolute;inset:-3px 0;background:linear-gradient(90deg,transparent,rgba(56,212,232,.35),transparent);filter:blur(6px)}
+
+/* topbar / nav — same family as the residency site */
+.topbar{background:#060912;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em}
+.topbar .wrap{display:flex;justify-content:space-between;gap:22px;padding-top:9px;padding-bottom:9px;flex-wrap:wrap;color:var(--ink-faint)}
+.topbar a{color:var(--ink-faint);transition:color .2s}
+.topbar a:hover{color:var(--cyan)}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(8,12,23,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav{position:relative;display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Sora',sans-serif;font-weight:600;font-size:1.02rem;letter-spacing:.02em}
+.brand .inf{font-size:1.5rem;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--ink-faint);font-weight:400}
+.navlinks{display:flex;gap:30px;align-items:center}
+.navlinks a{font-size:.9rem;color:var(--ink-dim);transition:color .2s}
+.navlinks a:hover{color:var(--ink)}
+.btn{font-family:'Sora',sans-serif;font-weight:600;font-size:.88rem;padding:11px 22px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#fff;border:none;cursor:pointer;transition:transform .2s, box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(28,116,188,.35)}
+.btn-ghost{background:transparent;border:1px solid var(--line-2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--cyan);box-shadow:none}
+.menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;background:var(--bg-3);border:1px solid var(--line-2);border-radius:12px;color:var(--ink);cursor:pointer}
+.menu-toggle span,.menu-toggle::before,.menu-toggle::after{content:"";display:block;width:19px;height:1.5px;background:currentColor;transition:transform .2s,opacity .2s}
+.menu-toggle span{margin:5px 0}
+.menu-toggle[aria-expanded="true"] span{opacity:0}
+.menu-toggle[aria-expanded="true"]::before{transform:translateY(6.5px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"]::after{transform:translateY(-6.5px) rotate(-45deg)}
+
+/* hero */
+.hero{position:relative;padding:64px 0 60px;overflow:hidden}
+.hero-glow{position:absolute;top:-14%;left:55%;transform:translateX(-50%);width:1000px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.20),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero-panel{
+  position:relative; border-radius:24px; overflow:hidden; border:1px solid var(--line);
+  background:var(--bg-2) url('assets/hero/poster.jpg') center/cover no-repeat; box-shadow:0 30px 90px rgba(0,0,0,.55); min-height:420px;
+}
+.hero-panel::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(5,9,18,.94) 0%,rgba(5,9,18,.78) 45%,rgba(5,9,18,.28) 74%,rgba(5,9,18,.48) 100%);pointer-events:none}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;z-index:0;object-fit:cover;object-position:center;filter:saturate(.9) contrast(1.05)}
+#waveCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:0;transition:opacity .25s}
+.hero-panel.video-fallback #waveCanvas{opacity:1}
+.hero-panel.video-fallback .hero-video{display:none}
+.bbox-layer{position:absolute;inset:0;z-index:2;pointer-events:none;will-change:transform}
+.bbox{ position:absolute; border:1px solid rgba(56,212,232,.75); border-radius:6px; opacity:0; animation:bboxIn .7s cubic-bezier(.2,.8,.2,1) forwards; }
+.bbox.warn{ border-color:var(--magenta); }
+.bbox .tag{ position:absolute; top:-22px; left:-1px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--bg); background:var(--cyan); padding:3px 8px; border-radius:5px; white-space:nowrap; }
+.bbox.warn .tag{ background:var(--magenta); color:#fff; }
+@keyframes bboxIn{ from{opacity:0;} to{opacity:1;} }
+.hero-panel-content{position:relative;z-index:3;padding:56px 48px;max-width:800px}
+.hero-panel-content .eyebrow{ margin-bottom:22px; }
+.hero-panel-content h1{ font-size:clamp(2rem,5vw,3.4rem); max-width:14ch; }
+.hero-panel-content h1 .g{ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent; }
+.hero-tag{font-size:1.08rem;color:var(--ink-dim);max-width:56ch;margin:22px 0 32px}
+.hero-tag b{color:var(--ink);font-weight:600}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.hero-meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:34px;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--ink-faint)}
+.hero-meta span{display:flex;align-items:center;gap:8px}
+.hero-meta i{width:6px;height:6px;border-radius:50%;background:var(--cyan);font-style:normal;box-shadow:0 0 10px var(--cyan)}
+
+/* sections */
+section{padding:88px 0}
+section[id]{scroll-margin-top:88px}
+.section-head{max-width:680px;margin-bottom:48px}
+.section-head h2{font-size:clamp(1.9rem,4vw,2.7rem);margin-top:16px}
+.section-head p{color:var(--ink-dim);margin-top:18px;font-size:1.02rem}
+.sobre{background:var(--bg-2)}
+
+/* method grid — same card language as residency's benefit cards */
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mcard{background:var(--bg-3);border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .25s, border-color .25s}
+.mcard:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.mcard .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--grad-soft);border:1px solid var(--line-2);margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--cyan)}
+.mcard h3{font-size:1.06rem;font-weight:600;margin-bottom:8px}
+.mcard p{color:var(--ink-dim);font-size:.92rem}
+@media(max-width:820px){ .method-grid{grid-template-columns:1fr} }
+
+/* cases */
+.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.case{background:var(--bg-3);border:1px solid var(--line);border-radius:16px;padding:28px;transition:transform .25s, border-color .25s}
+.case:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.case .tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.case h3{font-size:1.15rem;font-weight:600;margin-bottom:10px}
+.case p{font-size:.92rem;color:var(--ink-dim);margin-bottom:20px}
+.case .metric{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink);border-top:1px solid var(--line);padding-top:14px}
+.case .metric b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:760px){ .case-grid{grid-template-columns:1fr} }
+
+/* fluxo — steps, same as residency's process steps */
+.proc{background:var(--bg-2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px;list-style:none}
+.step{background:var(--bg-3);border:1px solid var(--line);border-radius:16px;padding:26px 24px;position:relative}
+.step .n{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--magenta);letter-spacing:.1em}
+.step h3{font-size:1.02rem;font-weight:600;margin:14px 0 8px}
+.step p{color:var(--ink-dim);font-size:.88rem}
+.step::after{content:"→";position:absolute;right:-19px;top:50%;transform:translateY(-50%);color:var(--ink-faint);font-size:1.1rem;z-index:2}
+.step:last-child::after{display:none}
+@media(max-width:880px){ .steps{grid-template-columns:1fr 1fr} .step::after{display:none} }
+@media(max-width:560px){ .steps{grid-template-columns:1fr} }
+
+/* cta band */
+.ctaband{background:linear-gradient(120deg,#11091f,#0b1430);text-align:center;border-top:1px solid var(--line)}
+.ctaband h2{font-size:clamp(1.8rem,4vw,2.6rem);max-width:680px;margin:0 auto}
+.ctaband p{color:var(--ink-dim);max-width:540px;margin:18px auto 30px}
+.pill{display:inline-flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--line-2);border-radius:999px;padding:8px 16px;margin-bottom:26px}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--cyan);font-style:normal;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(56,212,232,.5)}50%{opacity:.6;box-shadow:0 0 0 7px rgba(56,212,232,0)}}
+
+/* empresas participantes */
+.logo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.logo-slot{height:112px;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;background:#fff;padding:18px;overflow:hidden;transition:transform .25s,border-color .25s}
+.logo-slot:hover{transform:translateY(-3px);border-color:var(--line-2)}
+.logo-slot img{width:100%;height:100%;object-fit:contain}
+
+/* convite para novos relatos */
+.voice-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px;background:var(--bg-3);border:1px solid var(--line);border-radius:18px;padding:32px}
+.voice-card h3{font-size:1.25rem;margin-bottom:10px}
+.voice-card p{max-width:680px;color:var(--ink-dim)}
+
+footer{background:#060912;padding:48px 0 30px;border-top:1px solid var(--line);text-align:center}
+.support-badge{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:26px}
+.support-badge span{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase}
+.support-badge a{display:inline-flex;background:#fff;border-radius:10px;padding:8px 14px}
+.support-badge img{height:38px;width:auto}
+footer .fmark{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:var(--ink-faint)}
+
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .topbar .wrap{justify-content:center;text-align:center}
+  .topbar-links{display:none!important}
+  .js .menu-toggle{display:block}
+  .navlinks{position:absolute;top:calc(100% + 1px);left:0;right:0;display:flex;flex-direction:column;align-items:stretch;gap:4px;background:#0b1020;border:1px solid var(--line);border-top:0;border-radius:0 0 16px 16px;padding:12px 16px 18px;box-shadow:0 22px 50px rgba(0,0,0,.45)}
+  .js .navlinks{display:none}
+  .js .navlinks.open{display:flex}
+  .navlinks a{padding:11px 6px}
+  .navlinks .btn{justify-content:center;margin-top:4px}
+  .logo-strip{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .wrap{padding-left:18px;padding-right:18px}
+  .brand{font-size:.9rem}
+  .brand small{font-size:.52rem;letter-spacing:.12em}
+  .hero{padding:32px 0 38px}
+  .hero-panel{min-height:600px;border-radius:18px}
+  .hero-panel::after{background:linear-gradient(180deg,rgba(5,9,18,.72),rgba(5,9,18,.94) 55%,rgba(5,9,18,.98))}
+  .hero-video{object-position:58% center}
+  .hero-panel-content{padding:38px 24px}
+  .hero-panel-content h1{font-size:2.15rem;max-width:12ch}
+  .hero-tag{font-size:.96rem;margin:18px 0 26px}
+  .hero-cta{display:grid}
+  .hero-cta .btn{width:100%;white-space:normal;text-align:center;justify-content:center}
+  .hero-meta{gap:12px;margin-top:25px;font-size:.64rem;letter-spacing:.04em}
+  .bbox-layer{display:none}
+  section{padding:68px 0}
+  .section-head{margin-bottom:34px}
+  .logo-strip{grid-template-columns:1fr 1fr;gap:10px}
+  .logo-slot{height:92px;padding:12px}
+  .voice-card{grid-template-columns:1fr;padding:24px}
+  .voice-card .btn{justify-self:start}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .hero-video{display:none}
+  .bbox-layer{display:none}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>RESIDÊNCIA EM IA · HUB DE DIAGNÓSTICO INDUSTRIAL</span>
+    <span class="topbar-links" style="display:flex;gap:22px;">
+      <a href="https://www.fiesc.com.br/pt-br" target="_blank" rel="noopener noreferrer">FIESC</a>
+      <a href="https://www.sc.senai.br/pt-br" target="_blank" rel="noopener noreferrer">SENAI SC</a>
+      <a href="https://unisenaisc.com.br/" target="_blank" rel="noopener noreferrer">UniSENAI</a>
+    </span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav aria-label="Navegação principal">
+      <a class="brand" href="#topo">
+        <span class="inf" aria-hidden="true">∞</span>
+        <span>Hub de Diagnóstico<small>RESIDÊNCIA EM IA · UNISENAI SC</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu"><span></span></button>
+      <div class="navlinks" id="menu-principal">
+        <a href="#metodo">Método</a>
+        <a href="#cases">Cases</a>
+        <a href="#fluxo">Fluxo</a>
+        <a href="#participantes">Empresas</a>
+        <a class="btn" href="#diagnostico">Iniciar diagnóstico</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="conteudo">
+<section class="hero" id="topo">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-panel">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero/poster.jpg" aria-hidden="true">
+        <source src="assets/hero/video.mp4" type="video/mp4">
+      </video>
+      <canvas id="waveCanvas" aria-hidden="true"></canvas>
+      <div class="bbox-layer" id="bboxLayer" aria-hidden="true"></div>
+      <div class="hero-panel-content">
+        <div class="eyebrow">LEITURA DE SINAL EM TEMPO REAL</div>
+        <h1>Decisão de IA com <span class="g">dado</span>, não com slide.</h1>
+        <p class="hero-tag">Diagnóstico de maturidade, cases reais com métrica auditável e proposta de arquitetura — construídos a partir dos projetos que a Residência em IA do UniSENAI SC já entregou em fábrica.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#diagnostico">Fazer diagnóstico da minha empresa →</a>
+          <a class="btn btn-ghost" href="#cases">Ver cases reais</a>
+        </div>
+        <div class="hero-meta">
+          <span><i></i>mAP50 0.10 → 0.42 · SafeLock Vision</span>
+          <span><i></i>NR-12 · conformidade aplicada</span>
+          <span><i></i>4 etapas de diagnóstico</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="beam"></div>
+
+<section class="sobre" id="metodo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Método</span>
+      <h2>Três anos de laboratório, comprimidos em cinco minutos de diagnóstico</h2>
+      <p>O hub não é um formulário genérico de maturidade digital. É a experiência acumulada da residência, estruturada para responder a um problema específico de fábrica.</p>
+    </div>
+    <div class="method-grid reveal">
+      <div class="mcard"><div class="ic">01</div><h3>Ancorado em caso real</h3><p>Toda recomendação cita o case que a originou — setor, tecnologia e resultado mensurado, nunca uma resposta genérica de modelo de linguagem.</p></div>
+      <div class="mcard"><div class="ic">02</div><h3>Score, não opinião</h3><p>Maturidade calculada por dimensão — dados, infraestrutura, equipe, governança, conformidade — com peso e critério documentados.</p></div>
+      <div class="mcard"><div class="ic">03</div><h3>Saída acionável</h3><p>O relatório final entrega próximos passos concretos, prontos para abrir a primeira conversa técnica com a equipe da residência.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Cases</span>
+      <h2>Cases com métrica, não com adjetivo</h2>
+      <p>Cada case documentado alimenta o motor de recomendação do diagnóstico com dado verificável.</p>
+    </div>
+    <div class="case-grid reveal">
+      <div class="case"><div class="tag">Visão computacional · Segurança</div><h3>SafeLock Vision</h3><p>Detecção de cadeado aberto/fechado para conformidade com NR-12/LOTO, do dataset ao modelo treinado.</p><div class="metric">mAP50: <b>0.10 → 0.42</b></div></div>
+      <div class="case"><div class="tag">Séries temporais · Energia</div><h3>Sensoriamento em usina hidrelétrica</h3><p>Detecção de anomalias em dados de sensores para antecipar falhas operacionais.</p><div class="metric">Setor: <b>Energia</b></div></div>
+      <div class="case"><div class="tag">Saúde ocupacional</div><h3>Análise de afastamento — INSS</h3><p>Pipeline em AWS (S3, Glue, Lambda, Athena, Bedrock) para analisar afastamentos relacionados à saúde mental.</p><div class="metric">Stack: <b>AWS full pipeline</b></div></div>
+      <div class="case"><div class="tag">Visão computacional · Têxtil</div><h3>Detecção de defeitos em tecido</h3><p>YOLOv8 + SAHI rodando em AWS para inspeção industrial de qualidade têxtil.</p><div class="metric">Modelo: <b>YOLOv8 + SAHI</b></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="proc" id="fluxo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Fluxo</span>
+      <h2>Um fluxo, não três formulários soltos</h2>
+      <p>Cada etapa usa o resultado da anterior. No final, um relatório executivo pronto para a primeira conversa comercial.</p>
+    </div>
+    <ol class="steps reveal">
+      <li class="step"><div class="n">01</div><h3>Diagnóstico</h3><p>Score por dimensão, com nível geral e recomendações objetivas.</p></li>
+      <li class="step"><div class="n">02</div><h3>Cases</h3><p>Recomendação dos cases reais mais próximos do setor, com justificativa.</p></li>
+      <li class="step"><div class="n">03</div><h3>Arquitetura</h3><p>Tecnologia, dados necessários e stack sugerida, ancoradas no case escolhido.</p></li>
+      <li class="step"><div class="n">04</div><h3>Relatório</h3><p>Resumo, score, riscos e próximos passos, pronto para a decisão interna.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="participantes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Quem participa</span>
+      <h2>Empresas conectadas à Residência em IA</h2>
+      <p>Organizações que aproximam desafios reais da indústria do desenvolvimento aplicado em inteligência artificial.</p>
+    </div>
+    <div class="logo-strip reveal">
+      <div class="logo-slot"><img src="assets/companies/legacy/cia-canoinhas.png" alt="Cia Canoinhas" loading="lazy"></div>
+      <div class="logo-slot"><img src="assets/companies/legacy/joinville-implementos.png" alt="Joinville Implementos Rodoviários" loading="lazy"></div>
+      <div class="logo-slot"><img src="assets/companies/legacy/dynamox.jpeg" alt="Dynamox" loading="lazy"></div>
+      <div class="logo-slot"><img src="assets/companies/legacy/madepar.jpeg" alt="Madepar" loading="lazy"></div>
+      <div class="logo-slot"><img src="assets/companies/legacy/multicolor.jpeg" alt="Multicolor" loading="lazy"></div>
+      <div class="logo-slot"><img src="assets/companies/legacy/be-at-ease.jpeg" alt="Be at Ease" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="depoimentos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Próximas conexões</span>
+      <h2>Seu desafio pode ser o próximo case</h2>
+      <p>A Residência aproxima especialistas e indústria para transformar um problema concreto em diagnóstico, arquitetura e experimento mensurável.</p>
+    </div>
+    <div class="voice-card reveal">
+      <div>
+        <h3>Converse com a equipe da Residência</h3>
+        <p>Conte o contexto, os dados disponíveis e o resultado que sua empresa precisa alcançar. Essa conversa orienta o primeiro recorte técnico.</p>
+      </div>
+      <a class="btn btn-ghost" href="mailto:eumoas@gmail.com?subject=Diagn%C3%B3stico%20de%20IA%20Industrial">Apresentar um desafio →</a>
+    </div>
+  </div>
+</section>
+
+<section class="ctaband" id="diagnostico">
+  <div class="wrap">
+    <span class="pill"><i></i>Comece pelo diagnóstico</span>
+    <h2>Cinco minutos para saber onde sua indústria está</h2>
+    <p>Apresente o desafio da sua indústria para iniciar o enquadramento técnico com a equipe da Residência em IA.</p>
+    <a class="btn" href="mailto:eumoas@gmail.com?subject=Diagn%C3%B3stico%20de%20IA%20Industrial&amp;body=Empresa%3A%0ASetor%3A%0ADesafio%20que%20queremos%20resolver%3A%0ADados%20dispon%C3%ADveis%3A">Iniciar diagnóstico →</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="support-badge">
+      <span>Programa fomentado por</span>
+      <a href="https://unisenaisc.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Acessar o site do UniSENAI SC"><img src="assets/brand/unisenai.png" alt="UniSENAI"></a>
+    </div>
+    <div class="fmark">RESIDÊNCIA EM IA · UNISENAI SANTA CATARINA · HUB CONSTRUÍDO A PARTIR DE PROJETOS REAIS</div>
+  </div>
+</footer>
+
+<script>
+const menuButton = document.querySelector('.menu-toggle');
+const menu = document.getElementById('menu-principal');
+function closeMenu(){
+  menu.classList.remove('open');
+  menuButton.setAttribute('aria-expanded', 'false');
+  menuButton.setAttribute('aria-label', 'Abrir menu');
+}
+menuButton.addEventListener('click', ()=>{
+  const willOpen = !menu.classList.contains('open');
+  menu.classList.toggle('open', willOpen);
+  menuButton.setAttribute('aria-expanded', String(willOpen));
+  menuButton.setAttribute('aria-label', willOpen ? 'Fechar menu' : 'Abrir menu');
+});
+menu.querySelectorAll('a').forEach(link=>link.addEventListener('click', closeMenu));
+window.addEventListener('resize', ()=>{ if(window.innerWidth > 900) closeMenu(); });
+document.addEventListener('keydown', event=>{
+  if(event.key === 'Escape' && menu.classList.contains('open')){
+    closeMenu();
+    menuButton.focus();
+  }
+});
+
+const els = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.12});
+  els.forEach(el=>io.observe(el));
+}else{
+  els.forEach(el=>el.classList.add('in'));
+}
+
+const canvas = document.getElementById('waveCanvas');
+const ctx = canvas.getContext('2d');
+const heroPanel = document.querySelector('.hero-panel');
+const heroVideo = document.querySelector('.hero-video');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+function resize(){ canvas.width = canvas.offsetWidth*devicePixelRatio; canvas.height = canvas.offsetHeight*devicePixelRatio; ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+resize(); window.addEventListener('resize', resize);
+const lines = [
+  {amp:22, freq:0.011, speed:0.014, phase:0,   yFrac:0.34, color:'56,212,232', width:1.3, alpha:0.5},
+  {amp:16, freq:0.017, speed:0.020, phase:2.1, yFrac:0.52, color:'226,72,214', width:1.2, alpha:0.4},
+  {amp:28, freq:0.008, speed:0.010, phase:4.4, yFrac:0.68, color:'139,92,246', width:1.3, alpha:0.4}
+];
+let tt = 0;
+let scrollEnergy = 0;
+function drawWaves(){
+  if(!heroPanel.classList.contains('video-fallback') || reduceMotion.matches) return;
+  const w = canvas.offsetWidth, h = canvas.offsetHeight;
+  ctx.clearRect(0,0,w,h);
+  tt += 1 + scrollEnergy*0.05;
+  lines.forEach(ln=>{
+    ctx.beginPath();
+    const baseY = h*ln.yFrac;
+    for(let x=0; x<=w; x+=4){
+      const y = baseY + Math.sin(x*ln.freq + tt*ln.speed + ln.phase)*ln.amp + Math.sin(x*ln.freq*2.3 + tt*ln.speed*1.6)*ln.amp*0.25;
+      if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = `rgba(${ln.color},${ln.alpha})`;
+    ctx.lineWidth = ln.width; ctx.shadowColor = `rgba(${ln.color},0.5)`; ctx.shadowBlur = 8;
+    ctx.stroke();
+  });
+  requestAnimationFrame(drawWaves);
+}
+function useCanvasFallback(){
+  if(heroPanel.classList.contains('video-fallback')) return;
+  heroPanel.classList.add('video-fallback');
+  drawWaves();
+}
+heroVideo.addEventListener('error', useCanvasFallback);
+heroVideo.addEventListener('stalled', useCanvasFallback);
+heroVideo.play().catch(()=>{ /* o poster permanece visível se o navegador bloquear autoplay */ });
+
+const layer = document.getElementById('bboxLayer');
+const boxSets = [
+  [{x:'68%',y:'18%',w:'13%',h:'22%',tag:'CADEADO · LOCKED 96.7%'},{x:'83%',y:'52%',w:'12%',h:'20%',tag:'PEÇA_04 · 98.2%'}],
+  [{x:'70%',y:'54%',w:'13%',h:'20%',tag:'AMOSTRA_TÊXTIL · 91.4%'},{x:'75%',y:'17%',w:'14%',h:'19%',tag:'ANOMALIA · SENSOR_07',warn:true}],
+  [{x:'68%',y:'48%',w:'13%',h:'20%',tag:'TURBINA · NOMINAL'},{x:'82%',y:'20%',w:'13%',h:'20%',tag:'PAINEL_02 · 97.5%'}]
+];
+let bi = 0;
+function cycleBoxes(){
+  layer.innerHTML = '';
+  boxSets[bi].forEach((b,i)=>{
+    const el = document.createElement('div');
+    el.className = 'bbox' + (b.warn ? ' warn' : '');
+    el.style.left = b.x; el.style.top = b.y; el.style.width = b.w; el.style.height = b.h;
+    el.style.animationDelay = (i*0.18)+'s';
+    el.innerHTML = `<span class="tag">${b.tag}</span>`;
+    layer.appendChild(el);
+  });
+}
+if(!reduceMotion.matches) cycleBoxes();
+
+// Efeito ligado ao scroll: os bounding boxes "descem" e trocam de conjunto
+// conforme o usuário rola a página; as ondas ganham energia extra no gesto.
+let lastScrollBucket = 0;
+function onScroll(){
+  if(reduceMotion.matches) return;
+  const y = window.scrollY;
+  layer.style.transform = `translateY(${Math.min(y * 0.18, 70)}px)`;
+  layer.style.transition = 'transform .25s ease-out';
+
+  const bucket = Math.floor(y / 260) % boxSets.length;
+  if(bucket !== lastScrollBucket){
+    lastScrollBucket = bucket;
+    bi = bucket;
+    cycleBoxes();
+  }
+  scrollEnergy = Math.min(scrollEnergy + 4, 40);
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+
+// Repouso: se o usuário ficar parado, mantém um ciclo lento por conta própria
+setInterval(()=>{
+  if(!reduceMotion.matches && scrollEnergy <= 0){ bi = (bi+1) % boxSets.length; cycleBoxes(); }
+  scrollEnergy = Math.max(scrollEnergy - 8, 0);
+}, 3600);
+</script>
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Visão executiva da Residência Inteligência Artificial Hub de Inovação Industrial: desafios industriais transformados em soluções aplicadas com valor mensurável.">
+  <meta name="theme-color" content="#020712">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Residência Inteligência Artificial · Hub de Inovação Industrial">
+  <meta property="og:description" content="Conecte um desafio crítico da sua indústria a um ciclo de IA aplicada, mentoria especializada e validação em contexto real.">
+  <meta property="og:image" content="assets/hero/poster.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Residência Inteligência Artificial · Hub de Inovação Industrial</title>
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Manrope:wght@300;400;500;600;700&amp;family=Syne:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --carbon:#020712;
+      --carbon-2:#050b18;
+      --panel:#071222;
+      --ice:#f3f7fb;
+      --titanium:#a3b1c3;
+      --line:rgba(126,164,222,.16);
+      --brand-blue:#154295;
+      --ion:#4f8cff;
+      --blue:var(--brand-blue);
+      --signal:#e9490f;
+      --display:'Syne',Arial,sans-serif;
+      --body:'Manrope',Arial,sans-serif;
+      --mono:'IBM Plex Mono','Courier New',monospace;
+      --pad:clamp(32px,6vw,96px);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{background:var(--carbon);scroll-behavior:smooth;scroll-snap-type:y mandatory}
+    body{min-width:320px;background:var(--carbon);color:var(--ice);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    button{border:0;color:inherit;font:inherit}
+    button,a{touch-action:manipulation}
+    img,video,svg{display:block;max-width:100%}
+    ::selection{background:var(--ion);color:var(--carbon)}
+    :focus-visible{outline:2px solid var(--ion);outline-offset:5px}
+
+    .skip-link{position:fixed;z-index:1000;top:12px;left:12px;padding:10px 14px;background:var(--ice);color:var(--carbon);transform:translateY(-160%)}
+    .skip-link:focus{transform:none}
+    .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+    .print-only{display:none}
+
+    .deck-header{position:fixed;z-index:90;top:0;left:0;right:0;height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 clamp(20px,3.5vw,56px);border-bottom:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(2,4,6,.74),transparent);pointer-events:none}
+    .deck-brand,.deck-actions{pointer-events:auto}
+    .deck-brand{display:flex;align-items:center;gap:13px}
+    .brand-mark{width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--ion);color:var(--ion);font-family:var(--display);transform:rotate(45deg)}
+    .brand-mark span{transform:rotate(-45deg)}
+    .brand-copy{display:grid;gap:1px}
+    .brand-copy strong{font-family:var(--display);font-size:.78rem;letter-spacing:.03em}
+    .brand-copy small{color:#aebdc3;font-family:var(--mono);font-size:.51rem;letter-spacing:.17em;text-transform:uppercase}
+    .deck-actions{display:flex;align-items:center;gap:8px}
+    .control{min-width:44px;height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 13px;border:1px solid rgba(255,255,255,.2);background:rgba(2,4,6,.56);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);cursor:pointer;color:#dce7e9;font-family:var(--mono);font-size:.57rem;letter-spacing:.09em;text-transform:uppercase;transition:.2s ease}
+    .control:hover{border-color:var(--ion);color:var(--ion)}
+    .control svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.5}
+
+    .progress{position:fixed;z-index:100;top:0;left:0;width:100%;height:2px;background:var(--ion);box-shadow:0 0 16px rgba(79,140,255,.75);transform:scaleX(.125);transform-origin:left;transition:transform .4s ease}
+    .slide-nav{position:fixed;z-index:80;right:clamp(15px,2.4vw,38px);top:50%;display:grid;gap:12px;transform:translateY(-50%)}
+    .slide-dot{position:relative;width:32px;height:12px;display:flex;align-items:center;justify-content:flex-end}
+    .slide-dot::after{content:"";width:10px;height:1px;background:rgba(255,255,255,.45);transition:width .25s,background .25s}
+    .slide-dot:hover::after,.slide-dot[aria-current="page"]::after{width:28px;background:var(--ion)}
+    .deck-footer{position:fixed;z-index:80;left:clamp(20px,3.5vw,56px);right:clamp(20px,3.5vw,56px);bottom:18px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;color:#a4b3b8;font-family:var(--mono);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase}
+    .deck-footer>*{pointer-events:auto}
+    .slide-controls{display:flex;gap:5px}
+    .arrow-control{width:38px;height:34px;border:1px solid rgba(255,255,255,.18);background:rgba(2,4,6,.45);cursor:pointer;color:#dce7e9}
+    .arrow-control:hover{color:var(--ion);border-color:var(--ion)}
+
+    .slide{position:relative;min-height:100svh;padding:clamp(112px,12vh,148px) var(--pad) clamp(80px,9vh,108px);display:grid;align-items:center;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;isolation:isolate}
+    .slide-inner{position:relative;z-index:5;width:min(100%,1500px);margin:auto}
+    .slide-no{position:absolute;z-index:5;top:102px;right:var(--pad);color:rgba(255,255,255,.46);font-family:var(--mono);font-size:.56rem;letter-spacing:.15em}
+    .eyebrow{display:flex;align-items:center;gap:12px;color:var(--ion);font-family:var(--mono);font-size:.63rem;letter-spacing:.2em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:22px;height:1px;background:currentColor}
+    .slide h1,.slide h2{font-family:var(--display);font-weight:600;letter-spacing:-.06em;line-height:.94;text-wrap:balance}
+    .slide h2{font-size:clamp(3rem,5.8vw,6.5rem)}
+    .lead{max-width:770px;color:#b8c5ca;font-size:clamp(1rem,1.35vw,1.28rem);font-weight:300;line-height:1.72}
+    .button{min-height:52px;display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:0 22px;border:1px solid var(--ion);background:var(--ion);color:var(--carbon);font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.22s ease}
+    .button:hover{background:var(--ice);border-color:var(--ice);transform:translateY(-2px)}
+    .button-ghost{background:transparent;color:var(--ice);border-color:rgba(255,255,255,.3)}
+    .button-ghost:hover{background:var(--ice);color:var(--carbon)}
+    .micro{color:#75858d;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase}
+
+    /* 01 — apenas a promessa sobre o vídeo */
+    .cover{align-items:end;padding-bottom:clamp(90px,12vh,130px);background:#061124}
+    .cover-video,.cover-poster{position:absolute;z-index:-3;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+    .cover-poster{z-index:-4}
+    .cover::before{content:"";position:absolute;z-index:-2;inset:0;background:linear-gradient(90deg,rgba(1,4,6,.82) 0%,rgba(1,4,6,.26) 52%,rgba(1,4,6,.05) 76%),linear-gradient(0deg,rgba(1,4,6,.88) 0%,rgba(1,4,6,.05) 58%,rgba(1,4,6,.44) 100%)}
+    .cover::after{content:"";position:absolute;z-index:-1;left:var(--pad);bottom:0;width:1px;height:30%;background:linear-gradient(transparent,var(--ion))}
+    .cover-content{max-width:1180px;margin:0}
+    .cover h1{max-width:11ch;margin-top:25px;font-size:clamp(4.2rem,7.8vw,8.8rem);line-height:.86}
+    .cover h1 em{color:var(--ion);font-style:normal}
+    .cover .lead{max-width:690px;margin-top:28px;color:#dae3e5}
+    .cover-action{margin-top:34px}
+    .cover-status{position:absolute;z-index:5;right:var(--pad);bottom:34px;display:flex;align-items:center;gap:12px;color:#b9c7cc;font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase}
+    .cover-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ion);box-shadow:0 0 14px var(--ion)}
+
+    /* 02 — valor */
+    .value-slide{background:var(--ice);color:var(--carbon)}
+    .value-slide .eyebrow{color:var(--brand-blue)}
+    .value-slide .slide-no{color:#52636a}
+    .value-slide .slide-inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(520px,.95fr);gap:clamp(55px,8vw,130px);align-items:end}
+    .value-slide h2{font-size:clamp(3.3rem,6vw,7.2rem)}
+    .value-intro p{max-width:640px;margin-top:28px;color:#435159;font-size:clamp(1rem,1.35vw,1.22rem);line-height:1.7}
+    .value-grid{border-top:1px solid #bcc8cb}
+    .value-item{display:grid;grid-template-columns:58px 1fr auto;gap:20px;align-items:center;padding:21px 0;border-bottom:1px solid #bcc8cb}
+    .value-item>span{color:var(--brand-blue);font-family:var(--mono);font-size:.58rem;letter-spacing:.12em}
+    .value-item h3{font-family:var(--display);font-size:clamp(1.2rem,1.7vw,1.65rem);font-weight:600;letter-spacing:-.035em}
+    .value-item p{max-width:210px;color:#4a595f;font-family:var(--mono);font-size:.58rem;letter-spacing:.04em;text-align:right;text-transform:uppercase}
+    .value-note{grid-column:1/-1;display:flex;justify-content:space-between;gap:24px;margin-top:24px;color:#2c3a40;font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase}
+
+    /* 03 — proposta */
+    .system-slide{background:radial-gradient(circle at 78% 44%,rgba(20,92,255,.16),transparent 29%),var(--carbon)}
+    .system-slide::before{content:"";position:absolute;z-index:-1;inset:0;opacity:.12;background-image:linear-gradient(rgba(79,140,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(79,140,255,.12) 1px,transparent 1px);background-size:95px 95px}
+    .system-head{display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:50px;margin-bottom:clamp(52px,7vh,78px)}
+    .system-head .lead{justify-self:end}
+    .system-flow{display:grid;grid-template-columns:1fr 84px 1fr 84px 1fr;align-items:stretch}
+    .system-node{min-height:235px;padding:28px;border:1px solid var(--line);background:rgba(6,13,17,.78);display:flex;flex-direction:column;justify-content:space-between}
+    .system-node.featured{border-color:rgba(79,140,255,.58);box-shadow:inset 0 0 45px rgba(79,140,255,.05)}
+    .node-top{display:flex;justify-content:space-between;color:#84949b;font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase}
+    .system-node h3{font-family:var(--display);font-size:clamp(1.55rem,2.2vw,2.25rem);font-weight:600;letter-spacing:-.04em}
+    .system-node p{color:#95a5ac;font-size:.9rem;line-height:1.65}
+    .flow-arrow{display:grid;place-items:center;color:var(--ion);font-family:var(--mono);font-size:1.3rem}
+    .program-fact{display:flex;justify-content:space-between;align-items:center;gap:28px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line);color:#a5b4ba;font-family:var(--mono);font-size:.59rem;letter-spacing:.07em;text-transform:uppercase}
+    .program-fact strong{color:var(--ion);font-weight:500}
+    .program-fact a{border-bottom:1px solid rgba(79,140,255,.4)}
+
+    /* 04 — método */
+    .method-slide{background:#091426}
+    .method-head{display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:clamp(46px,6vh,74px)}
+    .method-head h2{max-width:11ch}
+    .method-head .lead{max-width:480px}
+    .method-line{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(79,140,255,.38)}
+    .phase{position:relative;min-height:280px;padding:32px 26px 20px 0;border-right:1px solid var(--line)}
+    .phase:not(:first-child){padding-left:26px}
+    .phase::before{content:"";position:absolute;top:-5px;left:-1px;width:9px;height:9px;background:var(--ion);transform:rotate(45deg)}
+    .phase>span{color:var(--ion);font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase}
+    .phase h3{margin-top:40px;font-family:var(--display);font-size:clamp(1.45rem,2vw,2rem);font-weight:600;letter-spacing:-.04em}
+    .phase p{margin-top:14px;color:#8f9fa6;font-size:.91rem;line-height:1.68}
+    .phase-output{position:absolute;bottom:18px;left:0;color:#dce5e7!important;font-family:var(--mono);font-size:.57rem!important;letter-spacing:.08em;text-transform:uppercase}
+    .phase:not(:first-child) .phase-output{left:26px}
+
+    /* 05 — projetos */
+    .proof-slide{background:var(--carbon)}
+    .proof-head{display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:clamp(38px,5vh,58px)}
+    .proof-head h2{max-width:9ch}
+    .proof-head p{max-width:540px;color:#9babb1;font-size:1rem;line-height:1.7}
+    .cases{display:grid;grid-template-columns:1.1fr .95fr .95fr;border:1px solid var(--line)}
+    .case{position:relative;min-height:310px;padding:28px;display:flex;flex-direction:column;border-right:1px solid var(--line);overflow:hidden}
+    .case:last-child{border-right:0}
+    .case::after{content:"";position:absolute;right:-35px;bottom:-65px;width:150px;height:150px;border:1px solid rgba(79,140,255,.12);border-radius:50%;box-shadow:0 0 0 24px rgba(79,140,255,.025),0 0 0 48px rgba(79,140,255,.018)}
+    .case-status{display:flex;justify-content:space-between;gap:16px;color:#84959c;font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase}
+    .case-status b{color:var(--ion);font-weight:500}
+    .case h3{max-width:12ch;margin-top:auto;font-family:var(--display);font-size:clamp(1.55rem,2.3vw,2.3rem);font-weight:600;letter-spacing:-.045em;line-height:1.05}
+    .case p{max-width:390px;margin-top:14px;color:#97a7ad;font-size:.87rem;line-height:1.6}
+    .case-metric{margin-top:22px;padding-top:15px;border-top:1px solid var(--line);color:#e5edef;font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase}
+    .case-metric strong{display:block;color:var(--ion);font-family:var(--display);font-size:1.55rem;letter-spacing:-.03em;text-transform:none}
+    .logo-strip{display:grid;grid-template-columns:repeat(6,1fr);margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .logo-strip figure{height:68px;display:grid;place-items:center;padding:13px;border-right:1px solid var(--line);background:#edf2f2}
+    .logo-strip figure:last-child{border-right:0}
+    .logo-strip img{max-height:39px;max-width:115px;filter:grayscale(1);mix-blend-mode:multiply}
+
+    /* 06 — capacidades */
+    .capability-slide{background:radial-gradient(circle at 12% 18%,rgba(20,92,255,.2),transparent 26%),#050b18}
+    .capability-layout{display:grid;grid-template-columns:minmax(330px,.8fr) minmax(560px,1.2fr);gap:clamp(65px,9vw,145px);align-items:center}
+    .capability-copy h2{margin-top:22px}
+    .capability-copy .lead{margin-top:28px}
+    .capability-map{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+    .capability{min-height:146px;padding:22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .2s}
+    .capability:hover{background:rgba(79,140,255,.045)}
+    .capability span{color:var(--ion);font-family:var(--mono);font-size:.53rem;letter-spacing:.12em}
+    .capability h3{margin-top:20px;font-family:var(--display);font-size:1.15rem;font-weight:600;letter-spacing:-.03em}
+    .capability p{margin-top:7px;color:#82939a;font-size:.8rem;line-height:1.55}
+
+    /* 07 — parceria */
+    .partnership-slide{background:#dfe7e8;color:var(--carbon)}
+    .partnership-slide .eyebrow{color:var(--brand-blue)}
+    .partnership-slide .slide-no{color:#526369}
+    .partnership-head{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end;margin-bottom:clamp(40px,5vh,60px)}
+    .partnership-head p{color:#405056;font-size:1.03rem;line-height:1.7}
+    .partnership-grid{display:grid;grid-template-columns:1fr 1fr;border:1px solid #aebcbf}
+    .party{padding:30px 34px}
+    .party+ .party{border-left:1px solid #aebcbf}
+    .party-label{color:var(--brand-blue);font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+    .party h3{margin-top:13px;font-family:var(--display);font-size:clamp(1.35rem,2vw,2rem);font-weight:600;letter-spacing:-.04em}
+    .party ul{list-style:none;margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+    .party li{position:relative;padding-left:16px;color:#344249;font-size:.88rem}
+    .party li::before{content:"";position:absolute;top:.64em;left:0;width:5px;height:5px;background:var(--brand-blue);transform:rotate(45deg)}
+    .investment{display:grid;grid-template-columns:1fr auto;align-items:center;gap:30px;margin-top:22px;padding:22px 26px;background:var(--carbon);color:var(--ice)}
+    .investment strong{font-family:var(--display);font-size:clamp(1.15rem,1.8vw,1.7rem);font-weight:600;letter-spacing:-.03em}
+    .investment p{max-width:680px;color:#a2b1b6;font-size:.78rem;line-height:1.55}
+    .investment span{color:var(--ion);font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase}
+
+    /* 08 — cartão do gerente */
+    .decision-slide{background:#050b18}
+    .decision-slide::before{content:"";position:absolute;z-index:-2;inset:0;background:url('assets/hero/poster.jpg') center/cover no-repeat;opacity:.19;filter:saturate(.65)}
+    .decision-slide::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,rgba(2,7,18,.98) 0%,rgba(2,7,18,.8) 58%,rgba(2,7,18,.55)),linear-gradient(0deg,#020712,transparent 65%)}
+    .decision-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(70px,10vw,160px);align-items:center}
+    .decision-copy h2{margin-top:25px;font-size:clamp(3.5rem,6.6vw,7.6rem)}
+    .decision-copy .lead{margin-top:28px}
+    .decision-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+    .manager-card{position:relative;padding:34px;border:1px solid rgba(79,140,255,.38);background:rgba(4,10,24,.74);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 30px 90px rgba(0,0,0,.35)}
+    .manager-card::before,.manager-card::after{content:"";position:absolute;width:24px;height:24px;border-color:var(--ion)}
+    .manager-card::before{top:-1px;left:-1px;border-top:1px solid;border-left:1px solid}
+    .manager-card::after{right:-1px;bottom:-1px;border-right:1px solid;border-bottom:1px solid}
+    .manager-card-top{display:flex;align-items:center;gap:18px;padding-bottom:27px;border-bottom:1px solid var(--line)}
+    .manager-avatar{width:56px;height:56px;display:grid;place-items:center;border:1px solid var(--ion);color:var(--ion);font-family:var(--display);font-size:1.35rem;transform:rotate(45deg)}
+    .manager-avatar span{transform:rotate(-45deg)}
+    .manager-card h3{font-family:var(--display);font-size:clamp(1.3rem,2vw,1.9rem);font-weight:600;letter-spacing:-.04em}
+    .manager-card-top p{margin-top:5px;color:#91a2a9;font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;text-transform:uppercase}
+    .manager-contact{display:grid;gap:12px;margin-top:25px}
+    .manager-contact a,.manager-contact span{display:flex;justify-content:space-between;gap:20px;padding-bottom:11px;border-bottom:1px solid var(--line);color:#dce5e7;font-size:.82rem}
+    .manager-contact small{color:#75878e;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase}
+    .manager-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:26px}
+    .manager-actions .button{padding:0 12px;font-size:.55rem}
+    .share-status{min-height:1.4em;margin-top:15px;color:#8fa1a7;font-family:var(--mono);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase}
+    .card-note{margin-top:22px;color:#71838a;font-family:var(--mono);font-size:.52rem;line-height:1.6;letter-spacing:.05em;text-transform:uppercase}
+
+    @media (max-width:1100px){
+      .control .label{display:none}
+      .control{padding:0;width:44px}
+      .value-slide .slide-inner,.system-head,.partnership-head,.decision-layout{grid-template-columns:1fr;gap:35px}
+      .value-grid{display:grid;grid-template-columns:1fr 1fr;border-left:1px solid #bcc8cb}
+      .value-item{grid-template-columns:45px 1fr;padding:18px;border-right:1px solid #bcc8cb}
+      .value-item p{grid-column:2;text-align:left}
+      .value-note{grid-column:1/-1}
+      .system-flow{grid-template-columns:1fr 45px 1fr 45px 1fr}
+      .method-head,.proof-head{display:grid;gap:25px}
+      .capability-layout{grid-template-columns:.72fr 1.28fr;gap:45px}
+      .decision-layout{grid-template-columns:1.05fr .95fr;gap:45px}
+    }
+
+    @media (max-width:760px){
+      html{scroll-snap-type:none}
+      .deck-header{height:68px;padding:0 18px;background:rgba(2,4,6,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+      .brand-copy small{display:none}
+      .deck-actions .print-button,.deck-actions .fullscreen-button{display:none}
+      .slide-nav,.deck-footer{display:none}
+      .slide{min-height:auto;padding:104px 22px 70px;overflow:visible;scroll-snap-align:none}
+      .cover{min-height:100svh;padding-bottom:74px;overflow:hidden}
+      .cover-video,.cover-poster{object-position:center}
+      .cover::before{background:linear-gradient(0deg,rgba(1,4,6,.94) 0%,rgba(1,4,6,.42) 70%,rgba(1,4,6,.42) 100%)}
+      .cover h1{font-size:clamp(3.5rem,15vw,5.4rem);line-height:.88}
+      .cover .lead{font-size:1rem;line-height:1.6}
+      .cover-status,.slide-no{display:none}
+      .slide h2{font-size:clamp(2.8rem,13vw,4.3rem)}
+      .value-slide .slide-inner,.system-head,.partnership-head,.decision-layout,.capability-layout{grid-template-columns:1fr}
+      .value-grid{grid-template-columns:1fr}
+      .value-note{display:grid}
+      .system-flow{grid-template-columns:1fr}
+      .flow-arrow{height:44px;transform:rotate(90deg)}
+      .system-node{min-height:200px}
+      .program-fact{display:grid}
+      .method-line,.cases,.logo-strip{grid-template-columns:1fr}
+      .phase{min-height:240px;padding:28px 0;border-right:0;border-bottom:1px solid var(--line)}
+      .phase:not(:first-child){padding-left:0}
+      .phase:not(:first-child) .phase-output{left:0}
+      .case{min-height:285px;border-right:0;border-bottom:1px solid var(--line)}
+      .case:last-child{border-bottom:0}
+      .logo-strip{grid-template-columns:repeat(3,1fr)}
+      .logo-strip figure{border-bottom:1px solid var(--line)}
+      .capability-map{grid-template-columns:1fr}
+      .partnership-grid{grid-template-columns:1fr}
+      .party+.party{border-left:0;border-top:1px solid #aebcbf}
+      .party ul{grid-template-columns:1fr}
+      .investment{grid-template-columns:1fr}
+      .decision-links,.manager-actions{grid-template-columns:1fr;display:grid}
+      .manager-card{padding:27px 22px}
+    }
+
+    @page{size:A4 landscape;margin:0}
+    @media print{
+      html,body{width:297mm;background:var(--carbon);scroll-snap-type:none}
+      body{font-size:10pt}
+      .screen-only,.deck-header,.slide-nav,.deck-footer,.progress,video{display:none!important}
+      .print-only{display:block!important}
+      .slide{box-sizing:border-box;width:297mm;height:210mm;min-height:210mm;padding:17mm 18mm 14mm;overflow:hidden;break-after:page;page-break-after:always;scroll-snap-align:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .slide:last-child{break-after:auto;page-break-after:auto}
+      .slide-inner{width:100%;max-width:none}
+      .slide-no{display:block;top:14mm;right:18mm}
+      .slide h2{font-size:36pt}
+      .cover{padding-bottom:19mm}
+      .cover h1{font-size:55pt}
+      .cover-video{display:none!important}
+      .cover-poster{display:block!important}
+      .cover .lead{font-size:12pt}
+      .value-slide .slide-inner{grid-template-columns:1fr 1fr;gap:18mm}
+      .value-slide h2{font-size:39pt}
+      .value-item{padding:4mm 0}
+      .system-head{margin-bottom:10mm}
+      .system-flow{grid-template-columns:1fr 13mm 1fr 13mm 1fr}
+      .system-node{min-height:59mm;padding:6mm}
+      .method-head{margin-bottom:10mm}
+      .method-line{grid-template-columns:repeat(4,1fr)}
+      .phase{min-height:74mm;padding-top:8mm}
+      .proof-head{margin-bottom:7mm}
+      .cases{grid-template-columns:1.1fr .95fr .95fr}
+      .case{min-height:77mm;padding:6mm}
+      .logo-strip figure{height:14mm}
+      .capability-layout{grid-template-columns:.72fr 1.28fr;gap:18mm}
+      .capability{min-height:28mm;padding:3.5mm}
+      .capability h3{margin-top:2.5mm;font-size:11pt}
+      .capability p{margin-top:1mm;font-size:7.5pt}
+      .partnership-head{gap:12mm;margin-bottom:5mm}
+      .partnership-head h2{font-size:29pt}
+      .partnership-head p{font-size:9pt;line-height:1.5}
+      .party{padding:4mm 5mm}
+      .party h3{margin-top:2mm;font-size:14pt}
+      .party ul{margin-top:3mm;gap:2mm 5mm}
+      .party li{font-size:8pt}
+      .investment{margin-top:4mm;padding:4mm 5mm}
+      .investment strong{font-size:13pt}
+      .investment p{font-size:7pt}
+      .manager-card{padding:8mm}
+      .decision-layout{grid-template-columns:1.1fr .9fr;gap:20mm}
+      a{text-decoration:none}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto;scroll-snap-type:none}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+      .cover-video{display:none}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link screen-only" href="#visao">Ir para a apresentação</a>
+  <div class="progress screen-only" id="progress" aria-hidden="true"></div>
+
+  <header class="deck-header screen-only">
+    <a class="deck-brand" href="index.html" aria-label="Abrir o site completo do Hub">
+      <span class="brand-mark" aria-hidden="true"><span>∞</span></span>
+      <span class="brand-copy"><strong>Residência Inteligência Artificial</strong><small>Hub de Inovação Industrial · UniSENAI SC</small></span>
+    </a>
+    <div class="deck-actions">
+      <button class="control share-button" type="button" data-share aria-label="Compartilhar apresentação">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5"/></svg><span class="label">Compartilhar</span>
+      </button>
+      <button class="control print-button" id="printButton" type="button" aria-label="Imprimir ou salvar em PDF">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7z"/></svg><span class="label">PDF</span>
+      </button>
+      <button class="control fullscreen-button" id="fullscreenButton" type="button" aria-label="Entrar em tela cheia" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg><span class="label">Tela cheia</span>
+      </button>
+      <a class="control" href="index.html" aria-label="Abrir site completo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="label">Site</span>
+      </a>
+    </div>
+  </header>
+
+  <nav class="slide-nav screen-only" aria-label="Navegação entre telas">
+    <a class="slide-dot" href="#visao" aria-label="Tela 1 — Visão" aria-current="page"></a>
+    <a class="slide-dot" href="#valor" aria-label="Tela 2 — Valor industrial"></a>
+    <a class="slide-dot" href="#proposta" aria-label="Tela 3 — Proposta"></a>
+    <a class="slide-dot" href="#metodo" aria-label="Tela 4 — Método"></a>
+    <a class="slide-dot" href="#provas" aria-label="Tela 5 — Projetos"></a>
+    <a class="slide-dot" href="#capacidades" aria-label="Tela 6 — Capacidades"></a>
+    <a class="slide-dot" href="#parceria" aria-label="Tela 7 — Parceria"></a>
+    <a class="slide-dot" href="#decisao" aria-label="Tela 8 — Próximo passo"></a>
+  </nav>
+
+  <main id="deck">
+    <section class="slide cover" id="visao" aria-labelledby="visao-title">
+      <img class="cover-poster" src="assets/hero/poster.jpg" alt="">
+      <video class="cover-video screen-only" id="coverVideo" autoplay muted loop playsinline preload="metadata" poster="assets/hero/poster.jpg" aria-hidden="true"><source src="assets/hero/video.mp4" type="video/mp4"></video>
+      <span class="slide-no" aria-hidden="true">01 / 08</span>
+      <div class="slide-inner cover-content">
+        <p class="eyebrow">Residência Inteligência Artificial · Hub de Inovação Industrial</p>
+        <h1 id="visao-title">A próxima vantagem industrial será construída sobre o <em>seu desafio.</em></h1>
+        <p class="lead">Inteligência artificial aplicada, especialistas e engenharia para transformar uma prioridade real em capacidade que a empresa possa medir.</p>
+        <a class="button cover-action screen-only" href="#valor">Iniciar visão executiva <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="cover-status" aria-hidden="true">Industrial AI · Applied innovation</span>
+    </section>
+
+    <section class="slide value-slide" id="valor" aria-labelledby="valor-title">
+      <span class="slide-no" aria-hidden="true">02 / 08</span>
+      <div class="slide-inner">
+        <div class="value-intro">
+          <p class="eyebrow">Valor industrial</p>
+          <h2 id="valor-title">IA que entra na operação. Valor que aparece no indicador.</h2>
+          <p>O Hub começa onde existe perda, risco ou capacidade bloqueada — e liga tecnologia ao resultado que a indústria precisa entregar.</p>
+        </div>
+        <div class="value-grid">
+          <article class="value-item"><span>V.01</span><h3>Capacidade</h3><p>OEE · throughput · ciclo</p></article>
+          <article class="value-item"><span>V.02</span><h3>Disponibilidade</h3><p>Paradas · MTBF · MTTR</p></article>
+          <article class="value-item"><span>V.03</span><h3>Qualidade</h3><p>FPY · scrap · PPM</p></article>
+          <article class="value-item"><span>V.04</span><h3>Decisão</h3><p>Margem · energia · risco</p></article>
+          <p class="value-note"><span>Um desafio prioritário</span><span>Um indicador de sucesso</span><span>Uma hipótese explícita de valor</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide system-slide" id="proposta" aria-labelledby="proposta-title">
+      <span class="slide-no" aria-hidden="true">03 / 08</span>
+      <div class="slide-inner">
+        <header class="system-head">
+          <div><p class="eyebrow">Mecanismo de inovação</p><h2 id="proposta-title">Um desafio real entra. Uma tese mensurável de solução sai.</h2></div>
+          <p class="lead">A empresa não compra uma promessa genérica de IA. Ela conecta sua realidade operacional a um ciclo contínuo de construção, validação e aprendizagem.</p>
+        </header>
+        <div class="system-flow" aria-label="Fluxo de criação de uma solução no Hub">
+          <article class="system-node"><div class="node-top"><span>Input 01</span><span>Empresa</span></div><h3>Prioridade industrial</h3><p>Desafio, processo, contexto, dados, ponto focal e patrocínio.</p></article>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <article class="system-node featured"><div class="node-top"><span>Engine 02</span><span>Hub</span></div><h3>Capacidade aplicada</h3><p>Residentes, mentores, especialistas, método e ambiente tecnológico.</p></article>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <article class="system-node"><div class="node-top"><span>Output 03</span><span>Decisão</span></div><h3>Evidência para avançar</h3><p>Solução testada, indicador acompanhado e recomendação de evolução ou escala.</p></article>
+        </div>
+        <div class="program-fact"><span><strong>12 meses</strong> de Residência Inteligência Artificial, com formação Lato Sensu e desafios reais de empresas.</span><a data-program-link href="https://sites.google.com/edu.sc.senai.br/residencia-ia" target="_blank" rel="noopener noreferrer">Base institucional ↗</a></div>
+      </div>
+    </section>
+
+    <section class="slide method-slide" id="metodo" aria-labelledby="metodo-title">
+      <span class="slide-no" aria-hidden="true">04 / 08</span>
+      <div class="slide-inner">
+        <header class="method-head">
+          <div><p class="eyebrow">Ciclo de construção</p><h2 id="metodo-title">Do problema à decisão de escala.</h2></div>
+          <p class="lead">Cada fase reduz uma incerteza e deixa uma entrega objetiva para a liderança.</p>
+        </header>
+        <ol class="method-line">
+          <li class="phase"><span>Sprint 01</span><h3>Enquadrar</h3><p>Processo, restrições, dados, cenário atual e ponto de partida.</p><p class="phase-output">Saída · mapa de prontidão</p></li>
+          <li class="phase"><span>Sprint 02</span><h3>Construir</h3><p>Arquitetura, modelos, integrações e experimentos.</p><p class="phase-output">Saída · protótipo aplicado</p></li>
+          <li class="phase"><span>Sprint 03</span><h3>Validar</h3><p>Desempenho técnico e efeito observado no indicador.</p><p class="phase-output">Saída · evidência mensurável</p></li>
+          <li class="phase"><span>Sprint 04</span><h3>Decidir</h3><p>Riscos, retorno observado e condições do próximo estágio.</p><p class="phase-output">Saída · recomendação executiva</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="slide proof-slide" id="provas" aria-labelledby="provas-title">
+      <span class="slide-no" aria-hidden="true">05 / 08</span>
+      <div class="slide-inner">
+        <header class="proof-head">
+          <div><p class="eyebrow">Projetos aplicados</p><h2 id="provas-title">Tecnologia que já saiu do conceito.</h2></div>
+          <p>As provas abaixo mostram capacidade técnica em diferentes contextos. Indicadores econômicos só serão publicados depois de validação e autorização das empresas.</p>
+        </header>
+        <div class="cases">
+          <article class="case"><div class="case-status"><span>Segurança industrial</span><b>Validação experimental</b></div><h3>SafeLock Vision</h3><p>Visão computacional para detectar cadeados abertos e fechados e apoiar conformidade NR-12/LOTO.</p><div class="case-metric"><strong>0.10 → 0.42</strong>Métrica técnica mAP50 · impacto operacional ainda não publicado</div></article>
+          <article class="case"><div class="case-status"><span>Ativos de energia</span><b>Prova de conceito</b></div><h3>Anomalias em hidrelétrica</h3><p>Séries temporais de sensores para antecipar desvios e apoiar análise de ativos.</p><div class="case-metric">Indicador acompanhado · detecção de anomalias</div></article>
+          <article class="case"><div class="case-status"><span>Qualidade</span><b>Validação técnica</b></div><h3>Inspeção têxtil inteligente</h3><p>YOLOv8 e SAHI para localizar e classificar defeitos em grandes superfícies de tecido.</p><div class="case-metric">Indicador acompanhado · desempenho de detecção</div></article>
+        </div>
+        <div class="logo-strip" aria-label="Empresas conectadas aos desafios do programa">
+          <figure><img src="assets/companies/legacy/cia-canoinhas.png" alt="Cia Canoinhas"></figure>
+          <figure><img src="assets/companies/legacy/joinville-implementos.png" alt="Joinville Implementos Rodoviários"></figure>
+          <figure><img src="assets/companies/legacy/dynamox.jpeg" alt="Dynamox"></figure>
+          <figure><img src="assets/companies/legacy/madepar.jpeg" alt="Madepar"></figure>
+          <figure><img src="assets/companies/legacy/multicolor.jpeg" alt="Multicolor"></figure>
+          <figure><img src="assets/companies/legacy/be-at-ease.jpeg" alt="Be at Ease"></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide capability-slide" id="capacidades" aria-labelledby="capacidades-title">
+      <span class="slide-no" aria-hidden="true">06 / 08</span>
+      <div class="slide-inner capability-layout">
+        <div class="capability-copy">
+          <p class="eyebrow">Núcleo tecnológico</p>
+          <h2 id="capacidades-title">Da percepção à decisão. Do experimento à operação.</h2>
+          <p class="lead">Tecnologia não entra como catálogo. Cada competência é mobilizada porque resolve uma etapa do desafio.</p>
+        </div>
+        <div class="capability-map">
+          <article class="capability"><span>C-01</span><h3>Visão computacional</h3><p>Inspeção, segurança e rastreabilidade.</p></article>
+          <article class="capability"><span>C-02</span><h3>Sistemas preditivos</h3><p>Anomalias, falhas, demanda e processo.</p></article>
+          <article class="capability"><span>C-03</span><h3>Digital twins</h3><p>Simulação, otimização e cenários.</p></article>
+          <article class="capability"><span>C-04</span><h3>IA generativa industrial</h3><p>Conhecimento, assistência e decisão.</p></article>
+          <article class="capability"><span>C-05</span><h3>IoT &amp; Edge AI</h3><p>Sensoriamento e resposta no processo.</p></article>
+          <article class="capability"><span>C-06</span><h3>Dados &amp; MLOps</h3><p>Integração, cloud, governança e escala.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide partnership-slide" id="parceria" aria-labelledby="parceria-title">
+      <span class="slide-no" aria-hidden="true">07 / 08</span>
+      <div class="slide-inner">
+        <header class="partnership-head">
+          <div><p class="eyebrow">Construção conjunta</p><h2 id="parceria-title">A empresa entra com a prioridade. O Hub mobiliza a capacidade.</h2></div>
+          <p>O compromisso de ambos os lados cria contexto suficiente para a tecnologia ser testada na realidade — e não isolada dela.</p>
+        </header>
+        <div class="partnership-grid">
+          <article class="party"><span class="party-label">A empresa conecta</span><h3>Realidade operacional</h3><ul><li>Desafio relevante para o negócio</li><li>Patrocínio executivo</li><li>Ponto focal técnico</li><li>Acesso governado a contexto e dados</li></ul></article>
+          <article class="party"><span class="party-label">O Hub mobiliza</span><h3>Capacidade de construção</h3><ul><li>Residentes selecionados</li><li>Mentoria especializada</li><li>IA, dados e engenharia</li><li>Método e ambiente de experimentação</li></ul></article>
+        </div>
+        <div class="investment"><div><strong>O caminho é construído em conjunto. O valor é acompanhado.</strong><p>Objetivos, indicadores, responsabilidades e critérios de sucesso são alinhados antes da construção, dando clareza para cada etapa.</p></div><span>Diagnóstico → próximos passos</span></div>
+      </div>
+    </section>
+
+    <section class="slide decision-slide" id="decisao" aria-labelledby="decisao-title">
+      <span class="slide-no" aria-hidden="true">08 / 08</span>
+      <div class="slide-inner decision-layout">
+        <div class="decision-copy">
+          <p class="eyebrow">Próximo movimento</p>
+          <h2 id="decisao-title">Qual desafio merece os próximos 12 meses?</h2>
+          <p class="lead">Traga a prioridade, o processo e o indicador que precisa mudar. A primeira conversa enquadra oportunidade, condições técnicas e a melhor rota para avançar.</p>
+          <div class="decision-links screen-only"><a class="button" data-contact-link href="mailto:eumoas@gmail.com">Agendar conversa executiva <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="index.html#ferramentas">Fazer diagnóstico</a></div>
+        </div>
+        <aside class="manager-card" aria-label="Cartão de contato da gerência do programa">
+          <div class="manager-card-top"><div class="manager-avatar" aria-hidden="true"><span>∞</span></div><div><h3 data-manager-name>Gerência do Programa</h3><p data-manager-role>Residência Inteligência Artificial · Hub de Inovação Industrial · UniSENAI SC</p></div></div>
+          <div class="manager-contact">
+            <a data-email-link href="mailto:eumoas@gmail.com"><small>E-mail</small><span data-manager-email>eumoas@gmail.com</span></a>
+            <a data-phone-row hidden><small>Contato</small><span data-manager-phone></span></a>
+            <a data-calendar-row target="_blank" rel="noopener noreferrer" hidden><small>Agenda</small><span>Escolher horário ↗</span></a>
+          </div>
+          <div class="manager-actions screen-only"><button class="button share-button" type="button" data-share>Compartilhar link</button><button class="button button-ghost" id="vcardButton" type="button">Salvar contato</button></div>
+          <p class="share-status" id="shareStatus" role="status" aria-live="polite"></p>
+          <p class="card-note">Objetivos e indicadores são alinhados após o diagnóstico executivo do desafio.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="deck-footer screen-only" aria-hidden="true">
+    <span id="slideCounter">01 / 08 · Visão</span>
+    <div class="slide-controls"><button class="arrow-control" id="previousSlide" type="button" aria-label="Tela anterior">←</button><button class="arrow-control" id="nextSlide" type="button" aria-label="Próxima tela">→</button></div>
+    <span>Setas para navegar · F para tela cheia</span>
+  </div>
+
+  <p class="sr-only" id="globalStatus" role="status" aria-live="polite"></p>
+  <script src="hub-config.js"></script>
+  <script>
+    (()=>{
+      const config=window.HUB_CONFIG||{};
+      const slides=[...document.querySelectorAll('.slide')];
+      const dots=[...document.querySelectorAll('.slide-dot')];
+      const names=['Visão','Valor industrial','Proposta','Método','Projetos','Capacidades','Parceria','Próximo passo'];
+      const progress=document.getElementById('progress');
+      const counter=document.getElementById('slideCounter');
+      const status=document.getElementById('globalStatus');
+      const shareStatus=document.getElementById('shareStatus');
+      const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+      let currentIndex=0;
+
+      const setText=(selector,value)=>document.querySelectorAll(selector).forEach(el=>{if(value)el.textContent=value;});
+      setText('[data-manager-name]',config.managerName);
+      setText('[data-manager-role]',config.managerRole);
+      setText('[data-manager-email]',config.contactEmail);
+      setText('[data-manager-phone]',config.phoneDisplay);
+
+      const email=config.contactEmail||'eumoas@gmail.com';
+      const subject=encodeURIComponent('Conversa executiva · Residência Inteligência Artificial');
+      const body=encodeURIComponent('Olá, quero conversar sobre um desafio industrial com potencial para a Residência Inteligência Artificial Hub de Inovação Industrial.\n\nEmpresa:\nÁrea/processo:\nDesafio prioritário:\nIndicador que queremos mover:');
+      let contactUrl=`mailto:${email}?subject=${subject}&body=${body}`;
+      if(config.whatsapp){
+        const digits=String(config.whatsapp).replace(/\D/g,'');
+        const message=encodeURIComponent('Olá, quero conversar sobre um desafio industrial com potencial para a Residência Inteligência Artificial Hub de Inovação Industrial.');
+        if(digits)contactUrl=`https://wa.me/${digits}?text=${message}`;
+      }else if(config.calendarUrl){contactUrl=config.calendarUrl;}
+      document.querySelectorAll('[data-contact-link]').forEach(link=>{link.href=contactUrl;if(contactUrl.startsWith('http')){link.target='_blank';link.rel='noopener noreferrer';}});
+      document.querySelectorAll('[data-email-link]').forEach(link=>link.href=`mailto:${email}`);
+      if(config.phoneDisplay||config.whatsapp){
+        const row=document.querySelector('[data-phone-row]');
+        row.hidden=false;row.href=config.whatsapp?`https://wa.me/${String(config.whatsapp).replace(/\D/g,'')}`:`tel:${String(config.phoneDisplay).replace(/[^\d+]/g,'')}`;
+      }
+      if(config.calendarUrl){const row=document.querySelector('[data-calendar-row]');row.hidden=false;row.href=config.calendarUrl;}
+      if(config.programUrl)document.querySelectorAll('[data-program-link]').forEach(link=>link.href=config.programUrl);
+
+      function setCurrent(index,updateHash=false){
+        currentIndex=Math.max(0,Math.min(slides.length-1,index));
+        dots.forEach((dot,i)=>i===currentIndex?dot.setAttribute('aria-current','page'):dot.removeAttribute('aria-current'));
+        progress.style.transform=`scaleX(${(currentIndex+1)/slides.length})`;
+        counter.textContent=`${String(currentIndex+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')} · ${names[currentIndex]}`;
+        if(updateHash&&history.replaceState)history.replaceState(null,'',`#${slides[currentIndex].id}`);
+      }
+      function goTo(index){setCurrent(index,true);slides[currentIndex].scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth',block:'start'});}
+
+      if('IntersectionObserver' in window){
+        const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)setCurrent(slides.indexOf(entry.target),true);}),{threshold:.56});
+        slides.forEach(slide=>observer.observe(slide));
+      }
+      const initialIndex=slides.findIndex(slide=>`#${slide.id}`===location.hash);
+      if(initialIndex>=0)setCurrent(initialIndex);else setCurrent(0);
+
+      document.getElementById('previousSlide').addEventListener('click',()=>goTo(currentIndex-1));
+      document.getElementById('nextSlide').addEventListener('click',()=>goTo(currentIndex+1));
+      document.addEventListener('keydown',event=>{
+        if(event.target.closest('a,button,input,textarea,select'))return;
+        const nextKeys=['ArrowDown','ArrowRight','PageDown',' '];
+        const previousKeys=['ArrowUp','ArrowLeft','PageUp'];
+        if(nextKeys.includes(event.key)){event.preventDefault();goTo(currentIndex+1);}
+        else if(previousKeys.includes(event.key)){event.preventDefault();goTo(currentIndex-1);}
+        else if(event.key==='Home'){event.preventDefault();goTo(0);}
+        else if(event.key==='End'){event.preventDefault();goTo(slides.length-1);}
+        else if(event.key.toLowerCase()==='f')toggleFullscreen();
+      });
+
+      const fullscreenButton=document.getElementById('fullscreenButton');
+      async function toggleFullscreen(){
+        try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}
+        catch(error){announce('A tela cheia não está disponível neste navegador.');}
+      }
+      fullscreenButton.addEventListener('click',toggleFullscreen);
+      document.addEventListener('fullscreenchange',()=>{
+        const active=Boolean(document.fullscreenElement);
+        fullscreenButton.setAttribute('aria-pressed',String(active));
+        fullscreenButton.setAttribute('aria-label',active?'Sair da tela cheia':'Entrar em tela cheia');
+        const label=fullscreenButton.querySelector('.label');if(label)label.textContent=active?'Sair':'Tela cheia';
+      });
+      document.getElementById('printButton').addEventListener('click',()=>window.print());
+
+      function announce(message){status.textContent='';shareStatus.textContent='';requestAnimationFrame(()=>{status.textContent=message;shareStatus.textContent=message;});}
+      function fallbackCopy(value){
+        const field=document.createElement('textarea');field.value=value;field.setAttribute('readonly','');field.style.position='fixed';field.style.opacity='0';document.body.appendChild(field);field.select();
+        const copied=document.execCommand('copy');field.remove();return copied;
+      }
+      async function shareDeck(){
+        const url=config.publicSiteUrl?new URL('apresentacao.html',config.publicSiteUrl).href:location.href;
+        const data={title:'Residência Inteligência Artificial · Hub de Inovação Industrial',text:'Conheça a visão executiva da Residência Inteligência Artificial para empresas.',url};
+        try{
+          if(navigator.share)await navigator.share(data);
+          else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);announce('Link copiado.');}
+          else if(fallbackCopy(url))announce('Link copiado.');
+          else announce('Copie o endereço exibido no navegador.');
+        }catch(error){if(error.name!=='AbortError')announce('Não foi possível compartilhar este link.');}
+      }
+      document.querySelectorAll('[data-share]').forEach(button=>button.addEventListener('click',shareDeck));
+
+      document.getElementById('vcardButton').addEventListener('click',()=>{
+        const lines=['BEGIN:VCARD','VERSION:3.0',`FN:${config.managerName||'Gerência do Programa'}`,`ORG:UniSENAI SC`,`TITLE:${config.managerRole||'Residência Inteligência Artificial · Hub de Inovação Industrial'}`,`EMAIL:${email}`];
+        if(config.phoneDisplay||config.whatsapp)lines.push(`TEL:${config.whatsapp||config.phoneDisplay}`);
+        if(config.publicSiteUrl)lines.push(`URL:${config.publicSiteUrl}`);
+        lines.push('END:VCARD');
+        const blob=new Blob([lines.join('\r\n')],{type:'text/vcard;charset=utf-8'});
+        const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='contato-residencia-ia.vcf';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1000);announce('Contato preparado para salvar.');
+      });
+
+      const video=document.getElementById('coverVideo');
+      if(reduceMotion.matches)video.pause();
+      video.addEventListener('error',()=>video.style.display='none');
+    })();
+  </script>
+</body>
+</html>
