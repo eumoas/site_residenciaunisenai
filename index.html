@@ -1650,7 +1650,7 @@
       const data=new FormData(event.currentTarget);
       const status=document.getElementById('startupStatus');
       try{await postForm('/api/startup-inquiry',{startup:data.get('startup'),name:data.get('name'),email:data.get('email'),website:data.get('website'),solution:data.get('solution'),challenge:data.get('challenge'),consent:event.currentTarget.querySelector('input[type="checkbox"]').checked});status.textContent='Apresentação registrada. A equipe entrará em contato.';event.currentTarget.reset();}
-      catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
+      catch(err){status.textContent=`Falha ao salvar: ${err.message.slice(0,120)}`;}
     });
 
     document.getElementById('residentInterestForm').addEventListener('submit',async event=>{
@@ -1666,7 +1666,7 @@
       const data=new FormData(event.currentTarget);
       const status=document.getElementById('leadStatus');
       try{await postForm('/api/lead',{name:data.get('name'),role:data.get('role'),company:data.get('company'),email:data.get('email'),priority:data.get('priority'),stage:data.get('stage'),challenge:data.get('challenge'),consent:event.currentTarget.querySelector('input[type="checkbox"]').checked});status.textContent='Desafio registrado. A equipe entrará em contato.';event.currentTarget.reset();}
-      catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
+      catch(err){status.textContent=`Falha ao salvar: ${err.message.slice(0,120)}`;}
     });
   </script>
 </body>
