@@ -24,6 +24,15 @@ export const QUESTIONS = [
   { id: 'energy.scale', category: 'energy', dimension: 'value', text: 'O consumo energético é medido por processo ou ativo?', type: 'choice', options: [['none','Não',0],['site','Somente no total da unidade',1],['area','Por área ou linha',2],['asset','Por ativo ou processo',3]] },
 ];
 
+export const ROUTE_LABELS = {
+  CONVERSA_ESPECIALISTA: 'Conversar com especialista do Hub',
+  REVISAO_ESPECIALIZADA: 'Revisão especializada antes de avançar',
+  AVALIACAO_DADOS: 'Preparar dados e integrações',
+  SPRINT_DESCOBERTA: 'Sprint de descoberta do problema',
+  ENCAMINHAMENTO_OU_NUTRICAO: 'Encaminhar ou nutrir a oportunidade',
+  ESTRUTURAR_PILOTO: 'Estruturar um piloto mensurável',
+};
+
 export function classifyChallenge(challenge) {
   const normalized = challenge.toLocaleLowerCase('pt-BR');
   let best = 'other'; let bestHits = 0;
@@ -64,5 +73,44 @@ export function scoreOpportunity(category, answers = {}) {
 export function previewFor(category, scorecard) {
   const strengths = Object.entries(scorecard.dimensions).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([key]) => key);
   const gaps = Object.entries(scorecard.dimensions).sort((a, b) => a[1] - b[1]).slice(0, 2).map(([key]) => key);
-  return { category, category_label: CATEGORIES[category]?.label || CATEGORIES.other.label, strengths, gaps, route: scorecard.route, confidence: scorecard.confidence };
+  return { category, category_label: CATEGORIES[category]?.label || CATEGORIES.other.label, strengths, gaps, route: scorecard.route, route_label: ROUTE_LABELS[scorecard.route] || scorecard.route, confidence: scorecard.confidence };
+}
+
+export function executiveMapFor(category, challenge, answers, scorecard) {
+  const definition = CATEGORIES[category] || CATEGORIES.other;
+  const dimensions = scorecard.dimensions;
+  const indicatorByCategory = {
+    maintenance: 'horas de parada não planejada por mês e MTBF/MTTR',
+    quality: 'taxa de defeitos ou refugo por lote',
+    energy: 'consumo de energia por unidade produzida',
+    safety: 'incidentes, quase acidentes e exposição a risco',
+    productivity: 'tempo de ciclo, produção por hora ou OEE',
+    planning: 'aderência ao plano e tempo de atravessamento',
+    knowledge: 'tempo para localizar informação e taxa de resolução',
+    data: 'completude, atualização e tempo para uma decisão',
+    other: 'indicador operacional diretamente ligado ao impacto descrito',
+  };
+  const evidence = Object.entries(answers || {}).filter(([, answer]) => answer !== undefined && answer !== null).map(([questionId, answer]) => ({ question_id: questionId, answer }));
+  const dataNeeded = dimensions.technical_feasibility < 60
+    ? ['fonte de dados ou registros existentes', 'frequência e histórico mínimo', 'responsável por acesso e qualidade']
+    : ['amostra representativa para validar a hipótese', 'definição do indicador de sucesso', 'acesso seguro ao ambiente de teste'];
+  const experiment = dimensions.value_potential >= 65
+    ? 'Selecionar uma linha, ativo ou processo e comparar a referência atual com uma intervenção controlada por 2–4 semanas.'
+    : 'Fazer uma descoberta curta para confirmar o problema, a linha de base e o indicador antes de construir tecnologia.';
+  return {
+    summary: challenge,
+    priority_opportunity: `Explorar ${definition.label.toLocaleLowerCase('pt-BR')} com evidência operacional mensurável.`,
+    suggested_indicator: indicatorByCategory[category] || indicatorByCategory.other,
+    value_estimation: dimensions.value_potential >= 65 ? 'Há sinais suficientes para estimar impacto após validar a linha de base.' : 'Impacto ainda não estimável; faltam evidências e referência operacional.',
+    dimensions,
+    confidence: scorecard.confidence,
+    evidence,
+    hypotheses_gaps: ['A frequência e o impacto relatados precisam ser confirmados com dados da operação.', 'A disponibilidade de um ponto focal pode alterar a velocidade do piloto.'],
+    required_data: dataNeeded,
+    technology_approach: dimensions.technical_feasibility < 45 ? 'Começar por integração, qualidade de dados e observabilidade; evitar escolher tecnologia antes da evidência.' : 'Avaliar uma solução de dados/IA aplicada ao processo, com segurança, governança e trilha de auditoria.',
+    experiment,
+    success_criterion: `Definir uma meta para ${indicatorByCategory[category] || indicatorByCategory.other} e demonstrar melhoria sem aumentar risco ou retrabalho.`,
+    risks: ['Não transformar hipótese em promessa financeira sem medição.', 'Preservar dados sensíveis e validar segurança, privacidade e responsabilidade humana.'],
+    next_step: ROUTE_LABELS[scorecard.route] || 'Revisar a oportunidade com o Hub',
+  };
 }

@@ -589,6 +589,34 @@
     .score-options label:has(input:checked){border-color:var(--ion);background:rgba(79,140,255,.07);color:var(--ice)}
     .diagnostic-question textarea{width:100%;margin-top:18px;background:transparent;border:1px solid var(--line);color:var(--ice);padding:14px;font-family:inherit;font-size:.92rem;resize:vertical}
     .diagnostic-question textarea:focus{outline:none;border-color:var(--ion)}
+    .opportunity-form{gap:28px}
+    .opportunity-step{display:grid;gap:18px}
+    .opportunity-step[hidden]{display:none}
+    .diagnostic-question-label{font-family:var(--display);font-size:1.45rem;font-weight:500}
+    .opportunity-step textarea,.opportunity-identity input{width:100%;border:1px solid var(--line-strong);background:rgba(2,7,18,.35);color:var(--ice);padding:14px;font:inherit;font-size:.92rem}
+    .opportunity-step textarea:focus,.opportunity-identity input:focus{outline:none;border-color:var(--ion)}
+    .field-hint{color:var(--titanium);font-size:.83rem;line-height:1.55}
+    .opportunity-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+    .opportunity-progress{color:var(--ion);font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+    #opportunityQuestionText{font-family:var(--display);font-size:clamp(1.7rem,3vw,2.8rem);font-weight:500;letter-spacing:-.04em;line-height:1.05}
+    #opportunityAnswer{display:grid;gap:10px}
+    .opportunity-option{display:flex;align-items:center;gap:12px;border:1px solid var(--line);padding:14px 16px;color:var(--titanium);cursor:pointer}
+    .opportunity-option:has(input:checked){border-color:var(--ion);background:rgba(79,140,255,.1);color:var(--ice)}
+    .opportunity-option input{accent-color:var(--ion)}
+    .opportunity-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
+    .opportunity-columns ul{display:grid;gap:8px;margin-top:10px;padding-left:18px;color:var(--titanium);font-size:.85rem}
+    .opportunity-identity{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .opportunity-identity .form-consent{grid-column:1/-1;color:var(--titanium);font-size:.78rem;line-height:1.45}
+    .opportunity-full-map{display:grid;gap:14px;border-top:1px solid var(--line);margin-top:26px;padding-top:22px}
+    .opportunity-full-map[hidden]{display:none}
+    .opportunity-full-map h4{font-family:var(--display);font-size:1.55rem;font-weight:500}
+    .opportunity-full-map p,.opportunity-full-map li{color:var(--titanium);font-size:.86rem;line-height:1.6}
+    .opportunity-full-map ul{display:grid;gap:6px;padding-left:18px}
+    .opportunity-map-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .opportunity-map-block{border:1px solid var(--line);padding:14px}
+    .opportunity-map-block .micro{display:block;margin-bottom:7px}
+    @media(max-width:760px){.opportunity-columns,.opportunity-identity{grid-template-columns:1fr}.opportunity-identity .form-consent{grid-column:1}}
+    @media(max-width:760px){.opportunity-map-grid{grid-template-columns:1fr}}
     .diagnostic-result{display:none;border:1px solid var(--line-strong);padding:30px;margin-top:36px;background:#071216}
     .diagnostic-result.show{display:block}
     .result-score{font-family:var(--display);font-size:clamp(3rem,8vw,6rem);font-weight:500;color:var(--ion);letter-spacing:-.06em;line-height:1}
@@ -1283,19 +1311,16 @@
   </footer>
 
   <dialog id="diagnosticDialog" aria-labelledby="diagnosticTitle">
-    <div class="dialog-head"><strong>Innovation OS · Diagnóstico de prontidão</strong><button class="dialog-close" type="button" aria-label="Fechar diagnóstico">×</button></div>
+    <div class="dialog-head"><strong>Opportunity Twin · T-01</strong><button class="dialog-close" type="button" aria-label="Fechar diagnóstico">×</button></div>
     <div class="diagnostic-body">
-      <div class="diagnostic-intro"><p class="kicker">Ferramenta T-01</p><h2 id="diagnosticTitle">Sua empresa está pronta para transformar um desafio em piloto?</h2><p>Responda cinco perguntas. O resultado organiza a conversa; não substitui a avaliação técnica do Hub.</p></div>
-      <form class="diagnostic-form" id="diagnosticForm">
-        <fieldset class="diagnostic-question"><legend>1. O problema operacional está claramente definido?</legend><div class="score-options"><label><input type="radio" name="q1" value="0" required>Ainda não</label><label><input type="radio" name="q1" value="1">Parcialmente</label><label><input type="radio" name="q1" value="2">Sim, sem referência atual</label><label><input type="radio" name="q1" value="3">Sim, com referência atual</label></div></fieldset>
-        <fieldset class="diagnostic-question"><legend>2. Existem dados, imagens ou sinais acessíveis?</legend><div class="score-options"><label><input type="radio" name="q2" value="0" required>Não sabemos</label><label><input type="radio" name="q2" value="1">Existem, dispersos</label><label><input type="radio" name="q2" value="2">Acesso parcial</label><label><input type="radio" name="q2" value="3">Acesso estruturado</label></div></fieldset>
-        <fieldset class="diagnostic-question"><legend>3. Há um indicador capaz de demonstrar retorno?</legend><div class="score-options"><label><input type="radio" name="q3" value="0" required>Não</label><label><input type="radio" name="q3" value="1">Em discussão</label><label><input type="radio" name="q3" value="2">Indicador definido</label><label><input type="radio" name="q3" value="3">Indicador e meta</label></div></fieldset>
-        <fieldset class="diagnostic-question"><legend>4. Operação, engenharia e liderança apoiam o piloto?</legend><div class="score-options"><label><input type="radio" name="q4" value="0" required>Ainda não</label><label><input type="radio" name="q4" value="1">Um patrocinador</label><label><input type="radio" name="q4" value="2">Áreas alinhando</label><label><input type="radio" name="q4" value="3">Time comprometido</label></div></fieldset>
-        <fieldset class="diagnostic-question"><legend>5. A empresa consegue disponibilizar tempo técnico para o projeto?</legend><div class="score-options"><label><input type="radio" name="q5" value="0" required>Não agora</label><label><input type="radio" name="q5" value="1">Muito limitado</label><label><input type="radio" name="q5" value="2">Ponto focal</label><label><input type="radio" name="q5" value="3">Equipe disponível</label></div></fieldset>
-        <fieldset class="diagnostic-question"><legend>6. Descreva rapidamente o desafio da sua operação (opcional)</legend><textarea name="desafio" rows="3" maxlength="600" placeholder="Ex.: paradas não programadas na linha de envase, sem sinal de alerta antes da quebra."></textarea></fieldset>
-        <button class="button" type="submit">Calcular prontidão <span class="arrow" aria-hidden="true">→</span></button>
+      <div class="diagnostic-intro"><p class="kicker">Mapeamento de oportunidade</p><h2 id="diagnosticTitle">Onde sua indústria está perdendo capacidade, margem ou segurança?</h2><p>Descreva um desafio real. O T-01 fará apenas as perguntas necessárias para organizar uma primeira rota de oportunidade — não é um laudo técnico.</p></div>
+      <form class="diagnostic-form opportunity-form" id="diagnosticForm">
+        <p class="form-status" id="opportunityStatus" aria-live="polite"></p>
+        <div class="opportunity-step" id="opportunityStart"><label class="diagnostic-question-label" for="opportunityChallenge">Conte o desafio da sua operação</label><p class="field-hint">Inclua processo ou ativo, comportamento observado, frequência e consequência. Não informe segredos industriais.</p><textarea id="opportunityChallenge" name="challenge" rows="5" minlength="30" maxlength="2000" required placeholder="Ex.: paradas não programadas na linha de envase interrompem a produção duas vezes por semana e a manutenção só identifica a causa depois da quebra."></textarea><button class="button" id="startOpportunity" type="submit">Mapear oportunidade <span class="arrow" aria-hidden="true">→</span></button></div>
+        <div class="opportunity-step" id="opportunityConfirm" hidden><p class="kicker">Leitura inicial</p><h3 id="interpretationSummary"></h3><p class="field-hint">Essa interpretação está correta?</p><div class="opportunity-actions"><button class="button" id="confirmInterpretation" type="button">Sim, continuar <span class="arrow" aria-hidden="true">→</span></button><button class="text-link" id="editInterpretation" type="button">Corrigir descrição</button></div></div>
+        <div class="opportunity-step" id="opportunityQuestion" hidden><div class="opportunity-progress" id="opportunityProgress"></div><p class="kicker">Uma pergunta por vez</p><h3 id="opportunityQuestionText"></h3><div id="opportunityAnswer"></div><button class="button" id="submitOpportunityAnswer" type="button">Continuar <span class="arrow" aria-hidden="true">→</span></button></div>
+        <div class="opportunity-step" id="opportunityPreview" hidden><p class="kicker">Leitura preliminar</p><h3 id="opportunityCategory"></h3><p id="opportunityPreviewText"></p><div class="opportunity-columns"><div><span class="micro">Forças</span><ul id="opportunityStrengths"></ul></div><div><span class="micro">Lacunas</span><ul id="opportunityGaps"></ul></div></div><p class="field-hint">Receba o mapa completo e permita que a equipe do Hub dê continuidade à análise.</p><div class="opportunity-identity"><input name="name" type="text" placeholder="Nome e sobrenome"><input name="email" type="email" placeholder="E-mail corporativo"><input name="company" type="text" placeholder="Empresa"><input name="role" type="text" placeholder="Cargo ou área"><label class="form-consent"><input id="opportunityConsent" type="checkbox"> Autorizo o contato da equipe sobre esta oportunidade.</label></div><button class="button" id="completeOpportunity" type="button">Receber mapa completo <span class="arrow" aria-hidden="true">↗</span></button><div class="opportunity-full-map" id="opportunityFullMap" hidden><h4>Mapa executivo da oportunidade</h4><div class="opportunity-map-grid"><div class="opportunity-map-block"><span class="micro">Oportunidade prioritária</span><p id="mapPriority"></p></div><div class="opportunity-map-block"><span class="micro">Indicador sugerido</span><p id="mapIndicator"></p></div><div class="opportunity-map-block"><span class="micro">Valor e evidência</span><p id="mapValue"></p></div><div class="opportunity-map-block"><span class="micro">Abordagem tecnológica</span><p id="mapTechnology"></p></div></div><div><span class="micro">Experimento recomendado</span><p id="mapExperiment"></p></div><div><span class="micro">Critério inicial de sucesso</span><p id="mapSuccess"></p></div><div><span class="micro">Dados necessários</span><ul id="mapData"></ul></div><div><span class="micro">Riscos e cuidados</span><ul id="mapRisks"></ul></div></div></div>
       </form>
-      <div class="diagnostic-result" id="diagnosticResult" aria-live="polite"><div class="result-score" id="resultScore">00/15</div><h3 id="resultTitle"></h3><p id="resultText"></p><p class="result-meta" id="resultCase" hidden></p><p class="result-meta" id="resultNextStep" hidden></p><button class="button" id="resultCta" type="button">Levar resultado para o Hub <span class="arrow" aria-hidden="true">↗</span></button></div>
     </div>
   </dialog>
 
@@ -1560,8 +1585,6 @@
     });
 
     const dialog=document.getElementById('diagnosticDialog');
-    const diagnosticForm=document.getElementById('diagnosticForm');
-    const diagnosticResult=document.getElementById('diagnosticResult');
     document.querySelectorAll('[data-open-diagnostic]').forEach(button=>button.addEventListener('click',openDiagnostic));
     dialog.querySelector('.dialog-close').addEventListener('click',closeDiagnostic);
     dialog.addEventListener('click',event=>{if(event.target===dialog)closeDiagnostic();});
@@ -1573,70 +1596,6 @@
       if(!dialog.open)return;
       dialog.close();body.classList.remove('modal-open');
     }
-    function localFallback(score){
-      if(score<=5)return{title:'Estágio de exploração',text:'O melhor próximo passo é enquadrar o problema, localizar dados e escolher um indicador de valor antes de desenhar tecnologia.'};
-      if(score<=10)return{title:'Pronto para estruturar um piloto',text:'Há elementos importantes disponíveis. O Hub pode ajudar a fechar lacunas, formular a hipótese de retorno e desenhar um experimento mensurável.'};
-      return{title:'Pronto para acelerar',text:'O desafio reúne boa parte das condições de um piloto. A próxima conversa deve validar viabilidade, arquitetura, investimento e critério de escala.'};
-    }
-    diagnosticForm.addEventListener('submit',async event=>{
-      event.preventDefault();
-      const data=new FormData(diagnosticForm);
-      const score=['q1','q2','q3','q4','q5'].reduce((sum,key)=>sum+Number(data.get(key)),0);
-      const resultTitleEl=document.getElementById('resultTitle');
-      const resultTextEl=document.getElementById('resultText');
-      const resultCaseEl=document.getElementById('resultCase');
-      const resultNextStepEl=document.getElementById('resultNextStep');
-      document.getElementById('resultScore').textContent=String(score).padStart(2,'0')+'/15';
-      resultTitleEl.textContent='Gerando diagnóstico personalizado…';
-      resultTextEl.textContent='';
-      resultCaseEl.hidden=true;
-      resultNextStepEl.hidden=true;
-      diagnosticResult.classList.add('show');
-      diagnosticResult.scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth',block:'center'});
-
-      let result;
-      let timeoutId;
-      try{
-        const controller=new AbortController();
-        timeoutId=setTimeout(()=>controller.abort(),6000);
-        const response=await fetch('/api/diagnostico',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          signal:controller.signal,
-          body:JSON.stringify({
-            q1:Number(data.get('q1')),q2:Number(data.get('q2')),q3:Number(data.get('q3')),
-            q4:Number(data.get('q4')),q5:Number(data.get('q5')),
-            desafio:data.get('desafio')||''
-          })
-        });
-        if(!response.ok)throw new Error('request failed');
-        result=await response.json();
-      }catch(err){
-        result=localFallback(score);
-      }finally{
-        clearTimeout(timeoutId);
-      }
-
-      resultTitleEl.textContent=result.title;
-      resultTextEl.textContent=result.text;
-      if(result.recommendedCase){
-        resultCaseEl.replaceChildren(Object.assign(document.createElement('strong'),{textContent:'Case parecido: '}),document.createTextNode(`${result.recommendedCase} — ${result.recommendedReason}`));
-        resultCaseEl.hidden=false;
-      }
-      if(result.nextStep){
-        resultNextStepEl.replaceChildren(Object.assign(document.createElement('strong'),{textContent:'Próximo passo: '}),document.createTextNode(result.nextStep));
-        resultNextStepEl.hidden=false;
-      }
-      diagnosticResult.dataset.summary=`Diagnóstico de prontidão: ${score}/15 — ${result.title}. ${result.text}`;
-    });
-    document.getElementById('resultCta').addEventListener('click',()=>{
-      const challenge=document.getElementById('leadChallenge');
-      challenge.value=(diagnosticResult.dataset.summary||'Resultado do diagnóstico concluído.')+'\n\nNosso desafio: ';
-      closeDiagnostic();
-      document.getElementById('conectar').scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth'});
-      setTimeout(()=>challenge.focus(),500);
-    });
-
     async function postForm(endpoint,payload){
       const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       if(!response.ok){let detail='storage request failed';try{const body=await response.json();if(body.detail)detail=body.detail;}catch(err){}throw new Error(detail);}
@@ -1677,6 +1636,28 @@
       try{await postForm('/api/lead',{name:data.get('name'),role:data.get('role'),company:data.get('company'),email:data.get('email'),priority:data.get('priority'),stage:data.get('stage'),challenge:data.get('challenge'),consent:form.querySelector('input[type="checkbox"]').checked});status.textContent='Desafio registrado. A equipe entrará em contato.';form.reset();}
       catch(err){status.textContent=`Falha ao salvar: ${err.message.slice(0,120)}`;}
     });
+  </script>
+  <script>
+  (()=>{
+    const form=document.getElementById('diagnosticForm');
+    const start=document.getElementById('opportunityStart');
+    const confirm=document.getElementById('opportunityConfirm');
+    const question=document.getElementById('opportunityQuestion');
+    const preview=document.getElementById('opportunityPreview');
+    const opportunityDialog=document.getElementById('diagnosticDialog');
+    const status=document.getElementById('opportunityStatus');
+    const state={sessionId:null,current:null};
+    const show=step=>[start,confirm,question,preview].forEach(item=>item.hidden=item!==step);
+    const request=async(path,options={})=>{const response=await fetch(path,{headers:{'Content-Type':'application/json'},...options});const payload=await response.json().catch(()=>({}));if(!response.ok){const messages={storage_unavailable:'Não foi possível salvar agora. Tente novamente.',session_unavailable:'A sessão expirou. Recomece o diagnóstico.',answer_unavailable:'Não foi possível registrar essa resposta.',preview_unavailable:'Não foi possível gerar a leitura preliminar.',identity_unavailable:'Não foi possível registrar seus dados.',completion_unavailable:'Não foi possível gerar o mapa completo.'};throw new Error(payload.message||messages[payload.error]||'Não foi possível continuar.');}return payload;};
+    form.addEventListener('submit',async event=>{event.preventDefault();const challenge=document.getElementById('opportunityChallenge').value.trim();const button=document.getElementById('startOpportunity');button.disabled=true;button.textContent='Lendo oportunidade…';status.textContent='';try{const result=await request('/api/v2/opportunities/sessions',{method:'POST',body:JSON.stringify({challenge,entry_channel:'hub_web'})});state.sessionId=result.session_id;document.getElementById('interpretationSummary').textContent=result.interpretation.summary;show(confirm);}catch(error){status.textContent=error.message;}finally{button.disabled=false;button.innerHTML='Mapear oportunidade <span class="arrow" aria-hidden="true">→</span>';}});
+    document.getElementById('confirmInterpretation').addEventListener('click',async()=>{const button=document.getElementById('confirmInterpretation');button.disabled=true;status.textContent='';try{await request('/api/v2/opportunities/sessions/'+state.sessionId+'/confirm',{method:'POST',body:JSON.stringify({confirmed:true})});await next();}catch(error){status.textContent=error.message;}finally{button.disabled=false;}});
+    document.getElementById('editInterpretation').addEventListener('click',()=>show(start));
+    async function next(){const result=await request('/api/v2/opportunities/sessions/'+state.sessionId+'/next-question');if(result.done)return finishPreview();state.current=result.question;document.getElementById('opportunityProgress').textContent='Pergunta '+(result.progress.answered+1)+' · ainda faltam cerca de '+result.progress.estimated_remaining;document.getElementById('opportunityQuestionText').textContent=result.question.text;const answer=document.getElementById('opportunityAnswer');answer.replaceChildren();if(result.question.type==='text'){const input=document.createElement('textarea');input.rows=3;input.required=true;input.placeholder='Escreva uma resposta curta';input.dataset.answer='text';answer.append(input);}else{result.question.options.forEach(([value,label,score])=>{const option=document.createElement('label');option.className='opportunity-option';const radio=document.createElement('input');radio.type='radio';radio.name='opportunity-answer';radio.value=value;radio.dataset.score=score;const span=document.createElement('span');span.textContent=label;option.append(radio,span);answer.append(option);});}show(question);}
+    document.getElementById('submitOpportunityAnswer').addEventListener('click',async()=>{const input=document.querySelector('#opportunityAnswer textarea,#opportunityAnswer input:checked');if(!input){status.textContent='Escolha uma resposta para continuar.';return;}const answer=input.dataset.answer==='text'?{value:input.value.trim()}:{value:Number(input.dataset.score||0)};if(input.dataset.answer==='text'&&!answer.value){status.textContent='Descreva uma resposta curta para continuar.';return;}const button=document.getElementById('submitOpportunityAnswer');button.disabled=true;status.textContent='';try{await request('/api/v2/opportunities/sessions/'+state.sessionId+'/answers',{method:'POST',body:JSON.stringify({question_id:state.current.id,answer})});await next();}catch(error){status.textContent=error.message;}finally{button.disabled=false;}});
+    async function finishPreview(){const result=await request('/api/v2/opportunities/sessions/'+state.sessionId+'/preview');const labels={value_potential:'Potencial de valor',technical_feasibility:'Viabilidade técnica',organizational_readiness:'Prontidão organizacional',evidence_velocity:'Velocidade para evidência',hub_fit:'Aderência ao Hub',urgency:'Urgência'};document.getElementById('opportunityCategory').textContent=result.preview.category_label;document.getElementById('opportunityPreviewText').textContent='Rota sugerida: '+(result.preview.route_label||result.preview.route)+'. Confiança inicial: '+result.scorecard.confidence+'%.';document.getElementById('opportunityStrengths').replaceChildren(...result.preview.strengths.map(key=>{const item=document.createElement('li');item.textContent=labels[key]||key;return item;}));document.getElementById('opportunityGaps').replaceChildren(...result.preview.gaps.map(key=>{const item=document.createElement('li');item.textContent=labels[key]||key;return item;}));show(preview);}
+    document.getElementById('completeOpportunity').addEventListener('click',async()=>{if(!form.reportValidity())return;const data=new FormData(form);const identity={name:String(data.get('name')||'').trim(),email:String(data.get('email')||'').trim(),company:String(data.get('company')||'').trim(),role:String(data.get('role')||'').trim(),consent:document.getElementById('opportunityConsent').checked};if(!identity.name||!identity.email||!identity.company||!identity.role||!identity.email.includes('@')||!identity.consent){status.textContent='Preencha os dados e autorize o contato para receber o mapa completo.';return;}const button=document.getElementById('completeOpportunity');button.disabled=true;status.textContent='';try{await request('/api/v2/opportunities/sessions/'+state.sessionId+'/identity',{method:'POST',body:JSON.stringify(identity)});const result=await request('/api/v2/opportunities/sessions/'+state.sessionId+'/complete',{method:'POST'});status.textContent=(result.next_action&&result.next_action.label)||'Oportunidade registrada. A equipe entrará em contato.';if(result.executive_map){const map=result.executive_map;document.getElementById('mapPriority').textContent=map.priority_opportunity;document.getElementById('mapIndicator').textContent=map.suggested_indicator;document.getElementById('mapValue').textContent=map.value_estimation+' Confiança: '+map.confidence+'%.';document.getElementById('mapTechnology').textContent=map.technology_approach;document.getElementById('mapExperiment').textContent=map.experiment;document.getElementById('mapSuccess').textContent=map.success_criterion;document.getElementById('mapData').replaceChildren(...map.required_data.map(value=>{const item=document.createElement('li');item.textContent=value;return item;}));document.getElementById('mapRisks').replaceChildren(...map.risks.map(value=>{const item=document.createElement('li');item.textContent=value;return item;}));document.getElementById('opportunityFullMap').hidden=false;}}catch(error){status.textContent=error.message;}finally{button.disabled=false;}});
+    opportunityDialog.addEventListener('close',()=>{form.reset();state.sessionId=null;state.current=null;status.textContent='';document.getElementById('opportunityFullMap').hidden=true;show(start);});
+  })();
   </script>
 </body>
 </html>

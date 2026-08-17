@@ -1,4 +1,4 @@
-import { classifyChallenge, CATEGORIES, QUESTIONS, questionsFor, scoreOpportunity, previewFor } from './opportunity-rules.js';
+import { classifyChallenge, CATEGORIES, QUESTIONS, questionsFor, scoreOpportunity, previewFor, executiveMapFor } from './opportunity-rules.js';
 
 const fallback = (score) => score <= 5
   ? { title: 'Estágio de exploração', text: 'O melhor próximo passo é enquadrar o problema, localizar dados e escolher um indicador de valor antes de desenhar tecnologia.' }
@@ -12,6 +12,17 @@ async function insert(env, table, row) {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Supabase não configurado');
   const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${table}`, {
     method: 'POST', headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row),
+  });
+  if (!response.ok) {
+    const detail = (await response.text()).replace(/\s+/g, ' ').slice(0, 240);
+    throw new Error(`Supabase ${response.status}: ${detail}`);
+  }
+}
+
+async function upsert(env, table, row) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Supabase não configurado');
+  const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${table}`, {
+    method: 'POST', headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json', Prefer: 'resolution=merge-duplicates, return=minimal' }, body: JSON.stringify(row),
   });
   if (!response.ok) {
     const detail = (await response.text()).replace(/\s+/g, ' ').slice(0, 240);
@@ -65,20 +76,20 @@ async function api(request, env) {
   const nextMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/next-question$/);
   if (nextMatch && request.method === 'GET') {
     try {
-      const sessions = await selectRows(env, 'diagnostic_sessions', `select=id,challenge& id=eq.${encodeURIComponent(nextMatch[1])}`.replace('challenge& ', 'challenge&'));
+      const sessions = await selectRows(env, 'diagnostic_sessions', `select=id,challenge&id=eq.${encodeURIComponent(nextMatch[1])}`);
       if (!sessions[0]) return Response.json({ error: 'session_not_found' }, { status: 404 });
       const profiles = await selectRows(env, 'opportunity_profiles', `select=category&session_id=eq.${encodeURIComponent(nextMatch[1])}`);
       const answers = await selectRows(env, 'diagnostic_answers', `select=question_id&session_id=eq.${encodeURIComponent(nextMatch[1])}`);
       const questions = questionsFor(profiles[0]?.category || classifyChallenge(sessions[0].challenge).category, answers.map(answer => answer.question_id));
       const question = questions[0];
       if (!question) return Response.json({ done: true, progress: { answered: answers.length, estimated_remaining: 0 } });
-      return Response.json({ question, progress: { answered: answers.length, estimated_remaining: Math.max(0, questions.length - 1) } });
+      return Response.json({ question: { ...question, answer_type: question.type }, progress: { answered: answers.length, estimated_remaining: Math.max(0, questions.length - 1) } });
     } catch (error) { console.error(error); return Response.json({ error: 'session_unavailable' }, { status: 503 }); }
   }
   const answerMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/answers$/);
   if (answerMatch && request.method === 'POST') {
     const questionId = text(body.question_id, 120); if (!questionId || body.answer === undefined) return Response.json({ error: 'invalid_answer' }, { status: 400 });
-    try { await insert(env, 'diagnostic_answers', { session_id: answerMatch[1], question_id: questionId, answer: body.answer }); return Response.json({ ok: true }); }
+    try { await upsert(env, 'diagnostic_answers', { session_id: answerMatch[1], question_id: questionId, answer: body.answer }); return Response.json({ ok: true }); }
     catch (error) { console.error(error); return Response.json({ error: 'answer_unavailable' }, { status: 503 }); }
   }
   const previewMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/preview$/);
@@ -87,9 +98,31 @@ async function api(request, env) {
       const profiles = await selectRows(env, 'opportunity_profiles', `select=category&session_id=eq.${encodeURIComponent(previewMatch[1])}`);
       const answersRows = await selectRows(env, 'diagnostic_answers', `select=question_id,answer&session_id=eq.${encodeURIComponent(previewMatch[1])}`);
       const answers = Object.fromEntries(answersRows.map(row => [row.question_id, row.answer])); const category = profiles[0]?.category || 'other'; const scorecard = scoreOpportunity(category, answers);
-      await insert(env, 'scorecards', { session_id: previewMatch[1], rubric_version: scorecard.rubric_version, dimensions: scorecard.dimensions, confidence: scorecard.confidence, route: scorecard.route });
+      await upsert(env, 'scorecards', { session_id: previewMatch[1], rubric_version: scorecard.rubric_version, dimensions: scorecard.dimensions, confidence: scorecard.confidence, route: scorecard.route });
       return Response.json({ scorecard, preview: previewFor(category, scorecard) });
     } catch (error) { console.error(error); return Response.json({ error: 'preview_unavailable' }, { status: 503 }); }
+  }
+  const identityMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/identity$/);
+  if (identityMatch && request.method === 'POST') {
+    const identity = { session_id: identityMatch[1], name: text(body.name, 160), email: text(body.email, 240), company: text(body.company, 200), role: text(body.role, 160), consent: body.consent === true, consent_text_version: 'lead-contact-1.0' };
+    if (!identity.name || !identity.email || !identity.company || !identity.role || !identity.consent) return Response.json({ code: 'identity_required', message: 'Preencha os dados e autorize o contato.' }, { status: 400 });
+    try { await upsert(env, 'lead_identities', identity); await updateRow(env, 'diagnostic_sessions', `id=eq.${encodeURIComponent(identityMatch[1])}`, { status: 'contacted' }); await insert(env, 'diagnostic_events', { session_id: identityMatch[1], event_name: 'identity_completed', metadata: {} }); return Response.json({ ok: true }); }
+    catch (error) { console.error(error); return Response.json({ error: 'identity_unavailable' }, { status: 503 }); }
+  }
+  const completeMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/complete$/);
+  if (completeMatch && request.method === 'POST') {
+    try {
+      const cards = await selectRows(env, 'scorecards', `select=dimensions,confidence,route,rubric_version&session_id=eq.${encodeURIComponent(completeMatch[1])}`);
+      const profiles = await selectRows(env, 'opportunity_profiles', `select=category&session_id=eq.${encodeURIComponent(completeMatch[1])}`);
+      const sessions = await selectRows(env, 'diagnostic_sessions', `select=challenge,interpretation&id=eq.${encodeURIComponent(completeMatch[1])}`);
+      const answersRows = await selectRows(env, 'diagnostic_answers', `select=question_id,answer&session_id=eq.${encodeURIComponent(completeMatch[1])}`);
+      const scorecard = cards[0]; const category = profiles[0]?.category || 'other';
+      const answers = Object.fromEntries(answersRows.map(row => [row.question_id, row.answer]));
+      const executiveMap = scorecard ? executiveMapFor(category, sessions[0]?.challenge || '', answers, scorecard) : null;
+      if (sessions[0] && executiveMap) await updateRow(env, 'diagnostic_sessions', `id=eq.${encodeURIComponent(completeMatch[1])}`, { interpretation: { ...(sessions[0].interpretation || {}), executive_map: executiveMap } });
+      await updateRow(env, 'diagnostic_sessions', `id=eq.${encodeURIComponent(completeMatch[1])}`, { status: 'completed' });
+      return Response.json({ scorecard, executive_map: executiveMap, preview: scorecard ? previewFor(category, scorecard) : null, route: scorecard?.route || null, next_action: { type: 'request_conversation', label: executiveMap?.next_step || 'Conversar com especialista do Hub' } });
+    } catch (error) { console.error(error); return Response.json({ error: 'completion_unavailable' }, { status: 503 }); }
   }
   if (url.pathname === '/api/diagnostico') {
     const values = ['q1', 'q2', 'q3', 'q4', 'q5'].map(key => Number(body[key]));

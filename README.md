@@ -64,9 +64,9 @@ O arquivo supabase/schema.sql cria as tabelas diagnostics, company_leads, startu
 
 ### Opportunity Twin (T-01)
 
-O SDD do T-01 está em [`SDD_T01_Opportunity_Twin.md`](SDD_T01_Opportunity_Twin.md). A evolução é incremental: a captação atual permanece, enquanto `supabase/migrations/001_opportunity_twin.sql` adiciona sessões, perfil de oportunidade, respostas, scorecard, identidade consentida e eventos. A primeira camada determinística está em `opportunity-rules.js`; ela classifica o desafio, seleciona perguntas e calcula as seis dimensões do SDD sem delegar decisões de negócio ao Gemini.
+O SDD do T-01 está em [`SDD_T01_Opportunity_Twin.md`](SDD_T01_Opportunity_Twin.md). A jornada agora começa com um desafio livre, confirma a interpretação, aplica de três a sete perguntas adaptativas, mostra uma leitura preliminar sem pedir contato e só então libera o mapa executivo. A primeira camada determinística está em `opportunity-rules.js`: ela classifica o desafio, seleciona perguntas e calcula as seis dimensões do SDD sem delegar scoring ou roteamento ao Gemini.
 
-Para habilitar a nova API, execute a migração no SQL Editor do Supabase. Os endpoints v2 começam em `/api/v2/opportunities/sessions` e não substituem a T-01 atual até a validação da jornada.
+Para habilitar a jornada, execute `supabase/migrations/001_opportunity_twin.sql` no SQL Editor do Supabase. A API v2 persiste sessões, perfil, respostas, scorecards, identidade consentida e eventos. O endpoint legado `/api/diagnostico` continua disponível para rollback e compatibilidade; a interface principal usa `/api/v2/opportunities/sessions`.
 
 ## Stack
 
@@ -109,7 +109,7 @@ No Supabase, abra o SQL Editor, execute supabase/schema.sql e inicie:
 
 ### Cloudflare
 
-O arquivo `.assetsignore` impede que `node_modules`, segredos e arquivos de servidor sejam publicados como assets. Isso é necessário quando o deploy usa Workers Static Assets a partir da raiz do repositório; o Cloudflare recomenda um `.assetsignore` com sintaxe equivalente ao `.gitignore` para excluir arquivos não públicos. Para manter as APIs em produção, migre as rotas Express para Pages Functions.
+O arquivo `.assetsignore` impede que `node_modules`, segredos e arquivos de servidor sejam publicados como assets. O `worker.js` publica as rotas de produção no mesmo Worker dos assets estáticos; as variáveis `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` devem ser cadastradas como secrets, nunca no navegador. Depois de cada alteração, execute `npx wrangler deploy` e valide `https://SEU_WORKER.workers.dev/api/health`.
 
 ## API
 
@@ -123,6 +123,13 @@ O arquivo `.assetsignore` impede que `node_modules`, segredos e arquivos de serv
 | POST | /api/admin/login | inicia sessão da coordenação |
 | POST | /api/admin/logout | encerra sessão |
 | GET | /api/admin/overview | retorna registros para o painel |
+| POST | /api/v2/opportunities/sessions | inicia o Opportunity Twin |
+| POST | /api/v2/opportunities/sessions/{id}/confirm | confirma a interpretação |
+| GET | /api/v2/opportunities/sessions/{id}/next-question | obtém a próxima pergunta |
+| POST | /api/v2/opportunities/sessions/{id}/answers | salva uma resposta |
+| GET | /api/v2/opportunities/sessions/{id}/preview | mostra a leitura preliminar |
+| POST | /api/v2/opportunities/sessions/{id}/identity | registra identidade e consentimento |
+| POST | /api/v2/opportunities/sessions/{id}/complete | gera o mapa executivo e a rota |
 
 O endpoint de diagnóstico valida as respostas, limita o texto livre e nunca expõe a chave do provedor de IA.
 
