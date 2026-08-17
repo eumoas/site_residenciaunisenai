@@ -153,3 +153,10 @@ Depoimentos e resultados reais devem entrar em área separada, com identificaç�
 ## Licença e uso
 
 Projeto institucional desenvolvido para a Residência Inteligência Artificial · Hub de Inovação Industrial · UniSENAI SC. O uso de marcas, fotografias, dados empresariais e depoimentos deve respeitar as autorizações correspondentes.
+
+## Desenvolvimento
+
+Desenvolvido por **Miriam Aguiar Sobral**.
+
+- GitHub: [@eumoas](https://github.com/eumoas)
+- LinkedIn: [miriamaguiarsobral](https://www.linkedin.com/in/miriamaguiarsobral)
