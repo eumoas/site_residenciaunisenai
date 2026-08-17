@@ -1639,33 +1639,37 @@
     }
     document.getElementById('newsletterForm').addEventListener('submit',async event=>{
       event.preventDefault();
+      const form=event.currentTarget;
       const email=document.getElementById('newsletterEmail').value.trim();
       const status=document.getElementById('newsletterStatus');
-      try{await postForm('/api/newsletter',{email});status.textContent='Inscrição registrada. Obrigado.';event.currentTarget.reset();}
+      try{await postForm('/api/newsletter',{email});status.textContent='Inscrição registrada. Obrigado.';form.reset();}
       catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
     });
 
     document.getElementById('startupForm').addEventListener('submit',async event=>{
       event.preventDefault();
-      const data=new FormData(event.currentTarget);
+      const form=event.currentTarget;
+      const data=new FormData(form);
       const status=document.getElementById('startupStatus');
-      try{await postForm('/api/startup-inquiry',{startup:data.get('startup'),name:data.get('name'),email:data.get('email'),website:data.get('website'),solution:data.get('solution'),challenge:data.get('challenge'),consent:event.currentTarget.querySelector('input[type="checkbox"]').checked});status.textContent='Apresentação registrada. A equipe entrará em contato.';event.currentTarget.reset();}
+      try{await postForm('/api/startup-inquiry',{startup:data.get('startup'),name:data.get('name'),email:data.get('email'),website:data.get('website'),solution:data.get('solution'),challenge:data.get('challenge'),consent:form.querySelector('input[type="checkbox"]').checked});status.textContent='Apresentação registrada. A equipe entrará em contato.';form.reset();}
       catch(err){status.textContent=`Falha ao salvar: ${err.message.slice(0,120)}`;}
     });
 
     document.getElementById('residentInterestForm').addEventListener('submit',async event=>{
       event.preventDefault();
+      const form=event.currentTarget;
       const email=document.getElementById('residentEmail').value.trim();
       const status=document.getElementById('residentInterestStatus');
-      try{await postForm('/api/resident-interest',{email});status.textContent='Interesse registrado. Avisaremos sobre as próximas turmas.';event.currentTarget.reset();}
+      try{await postForm('/api/resident-interest',{email});status.textContent='Interesse registrado. Avisaremos sobre as próximas turmas.';form.reset();}
       catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
     });
 
     document.getElementById('leadForm').addEventListener('submit',async event=>{
       event.preventDefault();
-      const data=new FormData(event.currentTarget);
+      const form=event.currentTarget;
+      const data=new FormData(form);
       const status=document.getElementById('leadStatus');
-      try{await postForm('/api/lead',{name:data.get('name'),role:data.get('role'),company:data.get('company'),email:data.get('email'),priority:data.get('priority'),stage:data.get('stage'),challenge:data.get('challenge'),consent:event.currentTarget.querySelector('input[type="checkbox"]').checked});status.textContent='Desafio registrado. A equipe entrará em contato.';event.currentTarget.reset();}
+      try{await postForm('/api/lead',{name:data.get('name'),role:data.get('role'),company:data.get('company'),email:data.get('email'),priority:data.get('priority'),stage:data.get('stage'),challenge:data.get('challenge'),consent:form.querySelector('input[type="checkbox"]').checked});status.textContent='Desafio registrado. A equipe entrará em contato.';form.reset();}
       catch(err){status.textContent=`Falha ao salvar: ${err.message.slice(0,120)}`;}
     });
   </script>
