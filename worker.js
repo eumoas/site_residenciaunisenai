@@ -17,6 +17,17 @@ async function insert(env, table, row) {
 async function api(request, env) {
   const url = new URL(request.url);
   const body = request.method === 'POST' ? await request.json() : {};
+  if (url.pathname === '/api/health' && request.method === 'GET') {
+    const configured = Boolean(env.SUPABASE_URL && env.SUPABASE_SERVICE_ROLE_KEY);
+    let database = 'not_configured';
+    if (configured) {
+      try {
+        const probe = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/company_leads?select=id&limit=1`, { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}` } });
+        database = probe.ok ? 'ok' : `error_${probe.status}`;
+      } catch (error) { database = 'unreachable'; }
+    }
+    return Response.json({ worker: 'ok', supabase: configured ? 'configured' : 'missing', database });
+  }
   if (url.pathname === '/api/diagnostico') {
     const values = ['q1', 'q2', 'q3', 'q4', 'q5'].map(key => Number(body[key]));
     if (values.some(value => !Number.isInteger(value) || value < 0 || value > 3)) return Response.json({ error: 'invalid_answers' }, { status: 400 });
