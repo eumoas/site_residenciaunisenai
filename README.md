@@ -109,7 +109,7 @@ No Supabase, abra o SQL Editor, execute supabase/schema.sql e inicie:
 
 ### Cloudflare
 
-O arquivo `.assetsignore` impede que `node_modules`, segredos e arquivos de servidor sejam publicados como assets. O `worker.js` publica as rotas de produção no mesmo Worker dos assets estáticos; as variáveis `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` devem ser cadastradas como secrets, nunca no navegador. Depois de cada alteração, execute `npx wrangler deploy` e valide `https://SEU_WORKER.workers.dev/api/health`.
+O arquivo `.assetsignore` impede que `node_modules`, segredos e arquivos de servidor sejam publicados como assets. O `worker.js` publica as APIs públicas do site no mesmo Worker dos assets estáticos; as variáveis `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` devem ser cadastradas como secrets, nunca no navegador. Depois de cada alteração, execute `npx wrangler deploy` e valide `https://SEU_WORKER.workers.dev/api/health`. O painel administrativo continua dependente do servidor Node/Express até sua migração específica.
 
 ## API
 
