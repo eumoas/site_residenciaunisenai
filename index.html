@@ -390,7 +390,8 @@
     .project-stack{margin-top:auto;padding-top:34px;color:#bcc9cd;font-family:var(--mono);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase}
 
     /* Ferramentas e diagnóstico */
-    .tools{background:var(--carbon)}
+    .tools{background:radial-gradient(circle at 8% 18%,rgba(79,140,255,.14),transparent 34%),var(--carbon)}
+    .tools .kicker{color:var(--ion)}
     .tool-list{border-top:1px solid var(--line)}
     .tool-row{display:grid;grid-template-columns:90px 1fr 1fr auto;align-items:center;gap:30px;min-height:150px;border-bottom:1px solid var(--line);padding:24px 8px;transition:background .25s}
     .tool-row:hover{background:rgba(79,140,255,.025)}
@@ -399,6 +400,11 @@
     .tool-row p{color:var(--titanium);max-width:54ch}
     .tool-action{width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--line-strong);background:transparent;font-size:1.15rem;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
     .tool-action:hover{background:var(--ion);color:var(--carbon);border-color:var(--ion)}
+    .tool-row:first-child{position:relative;border-left:3px solid var(--ion);padding-left:calc(8px - 3px);background:linear-gradient(90deg,rgba(79,140,255,.13),rgba(79,140,255,.025) 58%,transparent)}
+    .tool-row:first-child .tool-id{color:#c6dcff}
+    .tool-row:first-child h3{color:#fff}
+    .tool-row:first-child .tool-action{background:var(--ion);border-color:var(--ion);color:var(--carbon);box-shadow:0 0 22px rgba(79,140,255,.18)}
+    .tool-row:first-child .tool-action:hover{background:#9cc1ff;border-color:#9cc1ff}
 
     /* Conteúdo editorial e mídia — pronto para receber materiais reais */
     .content-hub{background:var(--ice);color:var(--carbon)}
@@ -1041,7 +1047,7 @@
     <section class="section tools" id="ferramentas" aria-labelledby="tools-title">
       <div class="wrap">
         <header class="section-head reveal">
-          <p class="kicker">Innovation OS / ferramentas</p>
+          <p class="kicker">Capítulo 01 / entrada principal</p>
           <h2 class="section-title" id="tools-title">Entre pelo caminho certo.</h2>
           <p class="section-copy">O diagnóstico organiza a primeira conversa. O projeto começa de verdade quando os especialistas do Hub conectam o resultado ao contexto da sua operação.</p>
         </header>
