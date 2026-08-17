@@ -101,6 +101,10 @@ No Supabase, abra o SQL Editor, execute supabase/schema.sql e inicie:
 - site: http://localhost:3000
 - painel: http://localhost:3000/admin.html
 
+### Cloudflare
+
+O arquivo `.assetsignore` impede que `node_modules`, segredos e arquivos de servidor sejam publicados como assets. Isso é necessário quando o deploy usa Workers Static Assets a partir da raiz do repositório; o Cloudflare recomenda um `.assetsignore` com sintaxe equivalente ao `.gitignore` para excluir arquivos não públicos. Para manter as APIs em produção, migre as rotas Express para Pages Functions.
+
 ## API
 
 | Método | Rota | Uso |

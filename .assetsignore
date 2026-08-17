@@ -1,0 +1,16 @@
+# Dependências e arquivos de desenvolvimento nunca são assets públicos.
+**/node_modules
+**/.git
+**/.agents
+**/.codex
+.env
+.env.*
+server.js
+package.json
+package-lock.json
+README.md
+supabase
+*.md
+wrangler.toml
+wrangler.json
+wrangler.jsonc
