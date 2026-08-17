@@ -87,17 +87,17 @@
     /* Navegação cinematográfica */
     .site-header{position:absolute;z-index:100;top:0;left:0;width:100%;border-bottom:1px solid rgba(255,255,255,.12);transition:background .3s,border-color .3s,transform .3s}
     .site-header.fixed{position:fixed;background:rgba(2,4,6,.88);border-color:var(--line);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-    .nav{height:84px;display:flex;align-items:center;justify-content:space-between;gap:32px}
+    .nav{height:84px;display:flex;align-items:center;justify-content:space-between;gap:clamp(32px,3vw,48px)}
     .brand{display:flex;align-items:center;gap:14px;min-width:max-content}
     .brand-owner{display:flex;align-items:center;padding-right:17px;border-right:1px solid rgba(255,255,255,.22)}
     .brand-owner-logo{width:116px;height:auto;filter:brightness(0) invert(1);opacity:.96}
     .brand-copy{display:grid;gap:2px}
     .brand-copy strong{font-family:var(--display);font-size:1rem;font-weight:600;letter-spacing:.03em}
     .brand-copy small{color:var(--titanium);font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
-    .nav-links{display:flex;align-items:center;gap:clamp(18px,2vw,30px);margin-left:auto}
-    .nav-links>a:not(.nav-cta){color:#d3dde1;font-family:var(--mono);font-size:.96rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+    .nav-links{display:flex;align-items:center;gap:clamp(16px,1.65vw,26px);margin-left:auto}
+    .nav-links>a:not(.nav-cta){color:#d3dde1;font-family:var(--mono);font-size:.78rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;transition:color .2s}
     .nav-links>a:not(.nav-cta):hover{color:var(--ion)}
-    .nav-cta{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.3);padding:11px 16px;font-family:var(--mono);font-size:.92rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:background .2s,color .2s,border-color .2s}
+    .nav-cta{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.3);padding:11px 16px;font-family:var(--mono);font-size:.78rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;transition:background .2s,color .2s,border-color .2s}
     .nav-cta:hover{background:var(--ion);color:var(--carbon);border-color:var(--ion)}
     .menu-button{display:none;width:46px;height:46px;border:1px solid var(--line-strong);background:rgba(2,4,6,.45);cursor:pointer;place-content:center;gap:6px}
     .menu-button span{display:block;width:20px;height:1px;background:currentColor;transition:transform .25s,opacity .25s}
@@ -128,6 +128,32 @@
     @keyframes blink{50%{opacity:.35}}
     .hero-scroll{position:absolute;z-index:5;bottom:24px;left:clamp(28px,6vw,96px);display:flex;align-items:center;gap:14px;color:#b7c3c8;font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
     .hero-scroll::before{content:"";width:42px;height:1px;background:var(--ion)}
+
+    /* Quem somos — identidade e modelo de colaboração */
+    .about{overflow:hidden;background:var(--ice);color:var(--carbon)}
+    .about::before{content:"WHO / BUILDS";position:absolute;right:-.04em;top:.08em;color:rgba(21,66,149,.035);font-family:var(--display);font-size:clamp(8rem,19vw,21rem);font-weight:700;letter-spacing:-.08em;white-space:nowrap;pointer-events:none}
+    .about-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr);gap:clamp(52px,9vw,138px);align-items:center}
+    .about-intro{display:grid;gap:28px}
+    .about .kicker{color:var(--brand-blue)}
+    .about-title{max-width:12ch;font-family:var(--display);font-size:clamp(3rem,5.8vw,6.3rem);font-weight:600;letter-spacing:-.065em;line-height:.93;text-wrap:balance}
+    .about-copy{display:grid;gap:18px;max-width:760px;color:#43535d;font-size:clamp(1rem,1.3vw,1.17rem);line-height:1.75}
+    .about-copy strong{color:var(--carbon);font-weight:600}
+    .about-copy .button{justify-self:start;margin-top:8px}
+    .about-model{position:relative;min-height:520px;display:flex;flex-direction:column;justify-content:center;padding:clamp(34px,4.5vw,62px);border:1px solid #bfcbd5;background:linear-gradient(145deg,#061326,#154295);color:var(--ice);overflow:hidden}
+    .about-model::before{content:"";position:absolute;left:50%;top:48%;width:260px;aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid rgba(79,140,255,.32);border-radius:50%;box-shadow:0 0 0 42px rgba(79,140,255,.05),0 0 0 84px rgba(79,140,255,.025);pointer-events:none}
+    .about-model-label{position:relative;z-index:1;color:#a9c9ff}
+    .about-core{position:relative;z-index:1;display:grid;gap:5px;margin:24px 0 30px;padding:24px;border:1px solid rgba(255,255,255,.24);background:rgba(2,7,18,.48)}
+    .about-core strong{font-family:var(--display);font-size:clamp(1.55rem,2.4vw,2.6rem);font-weight:600;letter-spacing:-.04em;line-height:1}
+    .about-core span{color:#9fb2d1;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+    .about-actors{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;list-style:none;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.16)}
+    .about-actors li{min-height:88px;display:grid;align-content:center;gap:4px;padding:16px 18px;background:rgba(3,10,24,.76)}
+    .about-actors strong{font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#dbe7fa}
+    .about-actors span{color:#8297b7;font-size:.78rem;line-height:1.4}
+    .about-pillars{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);margin-top:clamp(52px,7vw,88px);border-top:1px solid #bcc8d1;border-left:1px solid #bcc8d1}
+    .about-pillar{min-height:230px;display:flex;flex-direction:column;justify-content:space-between;gap:30px;padding:30px;border-right:1px solid #bcc8d1;border-bottom:1px solid #bcc8d1;background:rgba(255,255,255,.34)}
+    .about-pillar span{color:var(--brand-blue);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+    .about-pillar h3{font-family:var(--display);font-size:clamp(1.35rem,2vw,2.15rem);font-weight:600;letter-spacing:-.04em;line-height:1.04}
+    .about-pillar p{color:#52626c;font-size:.9rem}
 
     /* Empresas participantes — palco tecnológico com seletor em carrossel */
     .trust{position:relative;background:radial-gradient(circle at 80% 30%,rgba(20,92,255,.14),transparent 31%),#05090d;color:var(--ice);border:0;padding:clamp(88px,9vw,138px) 0;scroll-margin-top:82px;overflow:hidden}
@@ -231,7 +257,7 @@
 
     /* Manifesto / programa */
     .manifesto{overflow:hidden}
-    .manifesto::before{content:"01";position:absolute;right:-.06em;top:.04em;color:rgba(79,140,255,.035);font-family:var(--display);font-size:clamp(18rem,40vw,44rem);font-weight:700;line-height:.8;pointer-events:none}
+    .manifesto::before{content:"02";position:absolute;right:-.06em;top:.04em;color:rgba(79,140,255,.035);font-family:var(--display);font-size:clamp(18rem,40vw,44rem);font-weight:700;line-height:.8;pointer-events:none}
     .manifesto-grid{position:relative;display:grid;grid-template-columns:minmax(180px,.4fr) minmax(0,1.6fr);gap:clamp(40px,8vw,140px)}
     .rail-label{position:sticky;top:120px;align-self:start;display:grid;gap:18px}
     .rail-index{font-family:var(--mono);font-size:.82rem;color:var(--ion);letter-spacing:.12em}
@@ -288,6 +314,7 @@
     .persona-context .simulation{border-color:rgba(79,140,255,.4);color:var(--ion)}
     .persona-story h3{font-family:var(--display);font-size:clamp(2.8rem,5.2vw,5.6rem);font-weight:600;letter-spacing:-.06em;line-height:.9}
     .persona-role{color:#8fa0a7;font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+    .persona-role::before{content:"Pessoa e empresa fictícias · ";color:var(--ion)}
     .persona-quote{position:relative;max-width:800px;padding:26px 0 0 30px;border-top:1px solid var(--line);color:#dbe6e8;font-family:var(--display);font-size:clamp(1.35rem,2.2vw,2.25rem);font-weight:500;letter-spacing:-.035em;line-height:1.3}
     .persona-quote::before{content:"“";position:absolute;left:0;top:17px;color:var(--ion);font-family:var(--display);font-size:2.5rem;line-height:1}
     .persona-data{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -416,6 +443,28 @@
     .journey-step h3{font-family:var(--display);font-size:clamp(1.5rem,2.25vw,2.35rem);font-weight:500;letter-spacing:-.04em;line-height:1.08;margin:34px 0 20px}
     .journey-step p{color:var(--titanium)}
     .journey-step .output{position:absolute;left:34px;right:34px;bottom:28px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+    /* Startups — porta de entrada para soluções aplicáveis à indústria */
+    .startups{overflow:hidden;background:radial-gradient(circle at 82% 22%,rgba(79,140,255,.16),transparent 30%),#071222}
+    .startups::after{content:"STARTUPS";position:absolute;right:-.04em;bottom:-.22em;color:rgba(79,140,255,.035);font-family:var(--display);font-size:clamp(10rem,27vw,29rem);font-weight:700;letter-spacing:-.08em;line-height:1;pointer-events:none}
+    .startup-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,.88fr) minmax(480px,1.12fr);gap:clamp(58px,9vw,138px);align-items:start}
+    .startup-intro{position:sticky;top:120px;display:grid;justify-items:start;gap:27px}
+    .startup-title{max-width:10ch;font-family:var(--display);font-size:clamp(3.1rem,5.8vw,6.2rem);font-weight:600;letter-spacing:-.065em;line-height:.92;text-wrap:balance}
+    .startup-intro .section-copy{color:#aab8c8}
+    .startup-status{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-left:2px solid var(--ion);background:rgba(79,140,255,.06);color:#8fa3bc;font-size:.82rem;line-height:1.55}
+    .startup-status strong{display:block;color:#d9e7fb;font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+    .startup-flow{list-style:none;border-top:1px solid var(--line-strong)}
+    .startup-step{position:relative;display:grid;grid-template-columns:72px minmax(150px,.72fr) minmax(0,1fr);gap:24px;align-items:center;min-height:176px;padding:28px 4px;border-bottom:1px solid var(--line-strong)}
+    .startup-step::before{content:attr(data-step);display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(79,140,255,.5);color:var(--ion);font-family:var(--mono);font-size:.72rem;letter-spacing:.08em}
+    .startup-step h3{font-family:var(--display);font-size:clamp(1.35rem,2.2vw,2.35rem);font-weight:500;letter-spacing:-.04em;line-height:1.05}
+    .startup-step p{color:#98a9ba;font-size:.94rem}
+    .startup-action{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}
+    .startup-action input,.startup-action textarea{width:100%;border:1px solid var(--line-strong);background:rgba(2,7,18,.35);color:var(--ice);padding:13px;font:inherit;font-size:.84rem}
+    .startup-action textarea{grid-column:1/-1;resize:vertical}
+    .startup-action input:focus,.startup-action textarea:focus{outline:none;border-color:var(--ion)}
+    .startup-action .form-consent{grid-column:1/-1;color:#8fa3bc;font-size:.75rem;line-height:1.4}
+    .startup-action .button{justify-self:start}
+    .startup-action .form-status{align-self:center;color:#72859b;font-size:.78rem;line-height:1.5}
 
     /* A Residência é a origem da capacidade — um capítulo complementar */
     .residency{overflow:hidden;background:radial-gradient(circle at 16% 46%,rgba(20,92,255,.12),transparent 32%),var(--carbon-2);padding:clamp(82px,8vw,122px) 0}
@@ -546,18 +595,27 @@
     .js .reveal{opacity:0;transform:translateY(35px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
     .js .reveal.in{opacity:1;transform:none}
 
-    @media(max-width:1280px){
-      .nav-links{gap:18px}
-      .nav-links>a:not(.nav-cta){display:none}
-      .nav-links>a[href="#empresas"],.nav-links>a[href="#personas"],.nav-links>a[href="#jornada"]{display:block}
+    @media(max-width:1380px){
+      .brand-copy small{display:none}
+      .nav-links{gap:16px}
     }
 
-    @media(max-width:920px){
-      .nav-links>a[href="#empresas"],.nav-links>a[href="#jornada"]{display:none}
+    @media(max-width:1280px){
+      .nav{height:76px}
+      .menu-button{display:grid}
+      .nav-links{position:absolute;top:76px;right:0;bottom:0;left:0;height:calc(100svh - 76px);display:none;flex-direction:column;align-items:stretch;justify-content:center;gap:0;background:var(--carbon);padding:28px;overflow-y:auto}
+      .nav-links.open{display:flex}
+      .nav-links>a:not(.nav-cta){display:block;font-family:var(--display);font-size:clamp(2rem,4vw,3.4rem);letter-spacing:-.04em;text-transform:none;padding:12px 0;border-bottom:1px solid var(--line)}
+      .nav-links .nav-cta{display:flex;margin-top:28px;justify-content:center;min-height:54px}
+      body.menu-open .site-header{position:fixed;height:100svh;background:var(--carbon);-webkit-backdrop-filter:none;backdrop-filter:none}
     }
 
     @media(max-width:1080px){
       .company-track{grid-auto-columns:calc((100% - 24px)/3)}
+      .about-grid{grid-template-columns:1fr}
+      .about-title{max-width:15ch}
+      .about-model{min-height:460px}
+      .about-pillars{grid-template-columns:1fr 1fr}
       .manifesto-grid{grid-template-columns:1fr}
       .rail-label{position:static;grid-template-columns:auto 1fr;align-items:center}
       .program-facts{margin-top:0}
@@ -573,6 +631,9 @@
       .journey-line{grid-template-columns:1fr 1fr}
       .journey-step:nth-child(2){border-right:0}
       .journey-step:nth-child(-n+2){border-bottom:1px solid var(--line)}
+      .startup-grid{grid-template-columns:1fr}
+      .startup-intro{position:static}
+      .startup-title{max-width:13ch}
       .residency-shell{grid-template-columns:1fr}
       .residency-visual{height:520px}
     }
@@ -609,6 +670,10 @@
       .hero-actions .text-link{align-self:flex-start}
       .hero-system{display:none}
       .hero-scroll{bottom:30px;left:24px}
+      .about-grid{gap:46px}
+      .about-model{min-height:430px;padding:34px 24px}
+      .about-pillars{grid-template-columns:1fr;margin-top:48px}
+      .about-pillar{min-height:190px;padding:26px 24px}
       .trust-head{grid-template-columns:1fr;align-items:start}
       .company-controls{justify-self:end}
       .company-track{grid-auto-columns:min(78vw,300px)}
@@ -663,6 +728,12 @@
       .journey-line{grid-template-columns:1fr}
       .journey-step{min-height:300px;border-right:0!important;border-bottom:1px solid var(--line)!important}
       .journey-step:last-child{border-bottom:0!important}
+      .startup-step{grid-template-columns:58px 1fr;gap:18px;min-height:0;padding:28px 0}
+      .startup-step p{grid-column:2}
+      .startup-step::before{width:40px;height:40px}
+      .startup-action{grid-template-columns:1fr}
+      .startup-action input,.startup-action textarea,.startup-action .form-consent{grid-column:1}
+      .startup-action .button{width:100%}
       .lead-form{grid-template-columns:1fr}
       .field.full,.form-consent,.lead-submit{grid-column:1}
       .lead-submit{align-items:stretch;flex-direction:column}
@@ -729,12 +800,12 @@
         </span>
       </a>
       <nav class="nav-links" id="mainNav" aria-label="Navegação principal">
+        <a href="#quem-somos">Quem somos</a>
         <a href="#empresas">Empresas</a>
-        <a href="#impacto">Impacto</a>
-        <a href="#personas">Vozes</a>
-        <a href="#tecnologias">Tecnologias</a>
+        <a href="#startups">Startups</a>
         <a href="#projetos">Projetos</a>
         <a href="#jornada">Como funciona</a>
+        <a href="#equipe">Quem faz</a>
         <a class="nav-cta" href="#conectar">Agendar conversa <span aria-hidden="true">↗</span></a>
       </nav>
       <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu" aria-controls="mainNav" aria-expanded="false"><span></span><span></span></button>
@@ -765,10 +836,41 @@
       <span class="hero-system" aria-hidden="true"><i></i> Vision · Predictive · Cloud · Industrial AI</span>
     </section>
 
+    <section class="section about" id="quem-somos" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="about-intro reveal">
+            <p class="kicker">Quem somos</p>
+            <h2 class="about-title" id="about-title">Uma residência construída com a indústria para transformar conhecimento em aplicação.</h2>
+            <div class="about-copy">
+              <p>A <strong>Residência Inteligência Artificial</strong> é um programa do UniSENAI SC voltado ao desenvolvimento de projetos de IA aplicada à indústria. Empresas apresentam desafios reais; residentes, especialistas e mentores trabalham em conjunto para compreender o contexto, desenvolver soluções e gerar evidências que orientem os próximos passos.</p>
+              <p>O Hub de Inovação Industrial cria o ambiente de conexão entre formação avançada, experiência técnica e realidade operacional. A tecnologia entra a serviço de um problema relevante, de um indicador e de uma possibilidade concreta de evolução.</p>
+            </div>
+          </div>
+          <aside class="about-model reveal" aria-labelledby="about-model-title">
+            <p class="micro about-model-label" id="about-model-title">Modelo de colaboração</p>
+            <div class="about-core"><strong>Residência Inteligência Artificial</strong><span>Hub de Inovação Industrial · UniSENAI SC</span></div>
+            <ul class="about-actors">
+              <li><strong>Empresas</strong><span>Contexto e desafios reais</span></li>
+              <li><strong>Residentes</strong><span>Formação aplicada</span></li>
+              <li><strong>Especialistas</strong><span>Engenharia e tecnologia</span></li>
+              <li><strong>Mentores</strong><span>Orientação e experiência</span></li>
+            </ul>
+          </aside>
+        </div>
+        <div class="about-pillars reveal" aria-label="Princípios de atuação">
+          <article class="about-pillar"><span>01 / Origem</span><div><h3>Desafios reais</h3><p>O projeto parte de uma necessidade relevante da operação.</p></div></article>
+          <article class="about-pillar"><span>02 / Método</span><div><h3>Construção conjunta</h3><p>Empresa e equipe compartilham contexto, desenvolvimento e aprendizagem.</p></div></article>
+          <article class="about-pillar"><span>03 / Formação</span><div><h3>Aprendizado aplicado</h3><p>O conhecimento evolui durante a execução dos projetos.</p></div></article>
+          <article class="about-pillar"><span>04 / Decisão</span><div><h3>Evidência para avançar</h3><p>Cada ciclo organiza resultados, aprendizados e próximos passos.</p></div></article>
+        </div>
+      </div>
+    </section>
+
     <section class="section manifesto" id="impacto" aria-labelledby="manifesto-title">
       <div class="wrap manifesto-grid">
         <aside class="rail-label">
-          <span class="rail-index">01 / O HUB</span>
+          <span class="rail-index">02 / COMO ATUAMOS</span>
           <span class="micro">UniSENAI Santa Catarina</span>
         </aside>
         <div class="manifesto-body reveal">
@@ -839,12 +941,12 @@
       </div>
     </section>
 
-    <section class="section personas" id="personas" aria-labelledby="persona-title">
+    <section class="section personas" id="personas" aria-labelledby="persona-title" aria-describedby="persona-disclaimer">
       <div class="wrap">
         <header class="section-head reveal">
-          <p class="kicker">Vozes da operação · cenários ilustrativos</p>
-          <h2 class="section-title" id="persona-title">A voz de quem vive a indústria na prática.</h2>
-          <p class="section-copy">Seis perspectivas traduzem como redução de custos, produtividade, qualidade e revisão de processos podem ganhar uma rota concreta de inteligência artificial dentro do Hub.</p>
+          <p class="kicker">Cenários ilustrativos · prévia editorial</p>
+          <h2 class="section-title" id="persona-title">Exemplos de como a IA pode atuar em desafios industriais.</h2>
+          <p class="section-copy">Os seis cenários a seguir demonstram como futuros projetos e relatos poderão ser apresentados. Nomes, empresas, falas e impactos são fictícios e não representam contratantes, projetos ou resultados reais da Residência Inteligência Artificial.</p>
         </header>
         <div class="persona-shell reveal">
           <div class="persona-stage">
@@ -882,7 +984,7 @@
             <button class="persona-tab" id="tab-patricia" role="tab" aria-selected="false" aria-controls="panel-patricia" tabindex="-1"><span class="id">06</span><span class="name">Patrícia</span><span class="area">Produção</span></button>
           </div>
         </div>
-        <p class="persona-disclaimer">Personas, empresas, falas e resultados desta seção são simulações ilustrativas de aplicação. Não representam depoimentos ou resultados reais de contratantes.</p>
+        <p class="persona-disclaimer" id="persona-disclaimer">Conteúdo de demonstração: todas as pessoas, empresas, falas e métricas desta seção são fictícias. Os números indicados como “impacto simulado” servem apenas para visualizar o formato de futuros relatos autorizados.</p>
       </div>
     </section>
 
@@ -942,12 +1044,10 @@
         <header class="section-head reveal">
           <p class="kicker">Innovation OS / ferramentas</p>
           <h2 class="section-title" id="tools-title">Entre pelo caminho certo.</h2>
-          <p class="section-copy">Ferramentas rápidas organizam a primeira conversa. O projeto começa de verdade quando os especialistas do Hub conectam o resultado ao contexto da sua operação.</p>
+          <p class="section-copy">O diagnóstico organiza a primeira conversa. O projeto começa de verdade quando os especialistas do Hub conectam o resultado ao contexto da sua operação.</p>
         </header>
         <div class="tool-list reveal">
           <article class="tool-row"><span class="tool-id">T-01</span><h3>Diagnóstico de prontidão</h3><p>Em poucos minutos, identifique o estágio atual para transformar um desafio em piloto.</p><button class="tool-action" type="button" data-open-diagnostic aria-label="Abrir diagnóstico de prontidão">↗</button></article>
-          <article class="tool-row"><span class="tool-id">T-02</span><h3>Radar de valor industrial</h3><p>Priorize frentes por impacto, dados disponíveis, viabilidade e capacidade de retorno.</p><a class="tool-action" href="#conectar" aria-label="Acessar radar de valor industrial">↗</a></article>
-          <article class="tool-row"><span class="tool-id">T-03</span><h3>Blueprint de arquitetura</h3><p>Converta o case escolhido em dados, integrações, tecnologia e próximos passos.</p><a class="tool-action" href="#conectar" aria-label="Solicitar blueprint de arquitetura">↗</a></article>
         </div>
       </div>
     </section>
@@ -1010,6 +1110,33 @@
       </div>
     </section>
 
+    <section class="section startups" id="startups" aria-labelledby="startups-title">
+      <div class="wrap startup-grid">
+        <div class="startup-intro reveal">
+          <p class="kicker">Para startups</p>
+          <h2 class="startup-title" id="startups-title">Tecnologia empreendedora conectada à realidade industrial.</h2>
+          <p class="section-copy">Startups com soluções aplicáveis à indústria podem apresentar seu trabalho à equipe da Residência Inteligência Artificial. A conversa inicial busca compreender a tecnologia, o estágio da solução e sua possível relação com desafios acompanhados pelo Hub.</p>
+          <div class="startup-status"><span><strong>Porta de entrada</strong>Uma conversa para avaliar aderência — sem pressupor seleção, contratação ou parceria.</span></div>
+          <form class="startup-action" id="startupForm">
+            <input name="startup" type="text" placeholder="Nome da startup" required>
+            <input name="name" type="text" placeholder="Seu nome e cargo" required>
+            <input name="email" type="email" placeholder="E-mail de contato" required>
+            <input name="website" type="url" placeholder="Site ou LinkedIn (opcional)">
+            <textarea name="solution" rows="3" placeholder="Que solução vocês desenvolveram?" required></textarea>
+            <textarea name="challenge" rows="3" placeholder="Que desafio industrial ela ajuda a resolver?" required></textarea>
+            <label class="form-consent"><input type="checkbox" required> Autorizo o contato da equipe sobre esta apresentação.</label>
+            <button class="button" type="submit">Apresentar uma solução <span class="arrow" aria-hidden="true">↗</span></button>
+            <p class="form-status" id="startupStatus" aria-live="polite">A equipe avaliará a aderência e retornará por e-mail.</p>
+          </form>
+        </div>
+        <ol class="startup-flow reveal" aria-label="Como apresentar uma solução">
+          <li class="startup-step" data-step="01"><h3>Apresente a solução</h3><p>Conte que tecnologia foi desenvolvida e qual problema industrial ela ajuda a resolver.</p></li>
+          <li class="startup-step" data-step="02"><h3>Mostre a maturidade</h3><p>Informe o estágio atual, experiências anteriores, integrações necessárias e evidências já disponíveis.</p></li>
+          <li class="startup-step" data-step="03"><h3>Avalie a aderência</h3><p>A equipe compreende o contexto e indica se existe um caminho possível de aproximação com a Residência.</p></li>
+        </ol>
+      </div>
+    </section>
+
     <section class="section connect" id="conectar" aria-labelledby="connect-title">
       <div class="wrap connect-grid">
         <div class="connect-intro reveal">
@@ -1052,7 +1179,7 @@
         <div class="content-panel" id="mediaPanel" role="tabpanel" aria-labelledby="mediaTab" hidden>
           <div class="media-stage">
             <div class="media-slots" aria-hidden="true"><div class="media-slot"><span>Engenharia de produção</span></div><div class="media-slot"><span>Coordenação industrial</span></div><div class="media-slot"><span>Liderança de inovação</span></div></div>
-            <div class="media-copy"><span class="micro">Experiência em primeira pessoa</span><h3>A voz de quem viveu a transformação na prática.</h3><p>Este espaço receberá fotos, entrevistas e depoimentos reais de empresas contratantes. Cada história será publicada com nome, cargo, contexto, resultado validado e autorização.</p><a class="text-link" href="#newsletter">Receber novos cases <span aria-hidden="true">↗</span></a></div>
+            <div class="media-copy"><span class="micro">Relatos reais · publicação futura</span><h3>Resultados contados por quem viveu o projeto.</h3><p>Depoimentos de empresas participantes serão publicados com nome, cargo, contexto, resultado validado e autorização. Até lá, os cenários fictícios mostram com transparência como esse formato poderá funcionar.</p><a class="text-link" href="#personas">Ver prévia ilustrativa <span aria-hidden="true">↗</span></a></div>
           </div>
         </div>
       </div>
@@ -1109,9 +1236,9 @@
     <section class="section team" id="equipe" aria-labelledby="team-title">
       <div class="wrap">
         <header class="section-head reveal">
-          <p class="kicker">Equipe · ciclo 2025/2026</p>
+          <p class="kicker">Quem faz · ciclo 2025/2026</p>
           <h2 class="section-title" id="team-title">A inteligência também é feita por gente.</h2>
-          <p class="section-copy">Quem coordena, orienta e transforma os desafios industriais em projetos aplicados dentro do Hub.</p>
+          <p class="section-copy">Conheça a equipe que coordena e desenvolve os projetos da Residência Inteligência Artificial.</p>
         </header>
         <div class="team-grid reveal" id="teamGrid" aria-label="Integrantes da equipe" hidden></div>
         <div class="team-empty reveal" id="teamEmpty">
@@ -1145,7 +1272,7 @@
             </address>
           </div>
         </div>
-        <nav class="footer-links" aria-label="Links de rodapé"><a href="apresentacao.html">Apresentação executiva ↗</a><a href="#personas">Vozes da indústria</a><a href="#conteudos">Conhecimento</a><a href="#newsletter">sensor.IA</a><a href="#residencia">Residência</a><a href="#equipe">Equipe</a><a href="https://www.fiesc.com.br/pt-br" target="_blank" rel="noopener noreferrer">FIESC ↗</a></nav>
+        <nav class="footer-links" aria-label="Links de rodapé"><a href="apresentacao.html">Apresentação executiva ↗</a><a href="#quem-somos">Quem somos</a><a href="#empresas">Empresas</a><a href="#startups">Startups</a><a href="#personas">Cenários ilustrativos</a><a href="#conteudos">Conhecimento</a><a href="#newsletter">sensor.IA</a><a href="#residencia">Residência</a><a href="#equipe">Quem faz</a><a href="https://www.fiesc.com.br/pt-br" target="_blank" rel="noopener noreferrer">FIESC ↗</a></nav>
       </div>
     </div>
   </footer>
@@ -1238,7 +1365,10 @@
     updateVisionTracking();
     window.addEventListener('scroll',updateChrome,{passive:true});
     window.addEventListener('scroll',scheduleVisionTracking,{passive:true});
-    window.addEventListener('resize',scheduleVisionTracking,{passive:true});
+    window.addEventListener('resize',()=>{
+      scheduleVisionTracking();
+      if(window.innerWidth>1280&&body.classList.contains('menu-open'))closeMenu();
+    },{passive:true});
 
     const reveals=document.querySelectorAll('.reveal');
     if('IntersectionObserver' in window&&!reduceMotion.matches){
@@ -1460,10 +1590,14 @@
       diagnosticResult.scrollIntoView({behavior:reduceMotion.matches?'auto':'smooth',block:'center'});
 
       let result;
+      let timeoutId;
       try{
+        const controller=new AbortController();
+        timeoutId=setTimeout(()=>controller.abort(),6000);
         const response=await fetch('/api/diagnostico',{
           method:'POST',
           headers:{'Content-Type':'application/json'},
+          signal:controller.signal,
           body:JSON.stringify({
             q1:Number(data.get('q1')),q2:Number(data.get('q2')),q3:Number(data.get('q3')),
             q4:Number(data.get('q4')),q5:Number(data.get('q5')),
@@ -1474,6 +1608,8 @@
         result=await response.json();
       }catch(err){
         result=localFallback(score);
+      }finally{
+        clearTimeout(timeoutId);
       }
 
       resultTitleEl.textContent=result.title;
@@ -1496,34 +1632,41 @@
       setTimeout(()=>challenge.focus(),500);
     });
 
-    document.getElementById('newsletterForm').addEventListener('submit',event=>{
+    async function postForm(endpoint,payload){
+      const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(!response.ok)throw new Error('storage request failed');
+      return response.json();
+    }
+    document.getElementById('newsletterForm').addEventListener('submit',async event=>{
       event.preventDefault();
       const email=document.getElementById('newsletterEmail').value.trim();
-      const subject=encodeURIComponent('Assinatura · sensor.IA');
-      const message=encodeURIComponent(`Olá, quero assinar a newsletter sensor.IA.\n\nE-mail: ${email}`);
-      document.getElementById('newsletterStatus').textContent='Seu aplicativo de e-mail será aberto para confirmar a assinatura.';
-      window.location.href=`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${message}`;
+      const status=document.getElementById('newsletterStatus');
+      try{await postForm('/api/newsletter',{email});status.textContent='Inscrição registrada. Obrigado.';event.currentTarget.reset();}
+      catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
     });
 
-    document.getElementById('residentInterestForm').addEventListener('submit',event=>{
-      event.preventDefault();
-      const email=document.getElementById('residentEmail').value.trim();
-      const subject=encodeURIComponent('Interesse em novas turmas · Residência Inteligência Artificial');
-      const message=encodeURIComponent(`Olá, quero receber informações sobre novas datas e processos seletivos oficiais da Residência Inteligência Artificial.\n\nE-mail: ${email}`);
-      document.getElementById('residentInterestStatus').textContent='Seu aplicativo de e-mail será aberto para registrar o interesse.';
-      window.location.href=`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${message}`;
-    });
-
-    document.getElementById('leadForm').addEventListener('submit',event=>{
+    document.getElementById('startupForm').addEventListener('submit',async event=>{
       event.preventDefault();
       const data=new FormData(event.currentTarget);
-      const subject=encodeURIComponent(`Novo desafio industrial · ${data.get('company')}`);
-      const message=encodeURIComponent([
-        'Olá, quero conectar um desafio à Residência Inteligência Artificial Hub de Inovação Industrial.',
-        '',`Nome: ${data.get('name')}`,`Cargo/área: ${data.get('role')}`,`Empresa/unidade: ${data.get('company')}`,`E-mail: ${data.get('email')}`,`Frente prioritária: ${data.get('priority')}`,`Momento atual: ${data.get('stage')}`,'',`Desafio:\n${data.get('challenge')}`
-      ].join('\n'));
-      document.getElementById('leadStatus').textContent='Abrindo seu aplicativo de e-mail para concluir o envio.';
-      window.location.href=`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${message}`;
+      const status=document.getElementById('startupStatus');
+      try{await postForm('/api/startup-inquiry',{startup:data.get('startup'),name:data.get('name'),email:data.get('email'),website:data.get('website'),solution:data.get('solution'),challenge:data.get('challenge'),consent:event.currentTarget.querySelector('input[type="checkbox"]').checked});status.textContent='Apresentação registrada. A equipe entrará em contato.';event.currentTarget.reset();}
+      catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
+    });
+
+    document.getElementById('residentInterestForm').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const email=document.getElementById('residentEmail').value.trim();
+      const status=document.getElementById('residentInterestStatus');
+      try{await postForm('/api/resident-interest',{email});status.textContent='Interesse registrado. Avisaremos sobre as próximas turmas.';event.currentTarget.reset();}
+      catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
+    });
+
+    document.getElementById('leadForm').addEventListener('submit',async event=>{
+      event.preventDefault();
+      const data=new FormData(event.currentTarget);
+      const status=document.getElementById('leadStatus');
+      try{await postForm('/api/lead',{name:data.get('name'),role:data.get('role'),company:data.get('company'),email:data.get('email'),priority:data.get('priority'),stage:data.get('stage'),challenge:data.get('challenge'),consent:event.currentTarget.querySelector('input[type="checkbox"]').checked});status.textContent='Desafio registrado. A equipe entrará em contato.';event.currentTarget.reset();}
+      catch(err){status.textContent='Não foi possível registrar agora. Tente novamente.';}
     });
   </script>
 </body>

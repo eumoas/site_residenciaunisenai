@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel da coordenação · Residência IA</title>
+  <style>
+    :root{font-family:Inter,system-ui,sans-serif;color:#e8eef8;background:#071222}*{box-sizing:border-box}body{margin:0}.shell{max-width:1200px;margin:auto;padding:40px 22px}h1{font-size:clamp(2rem,5vw,4rem);letter-spacing:-.05em;font-weight:500}.muted{color:#9aabc2}.card-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:30px 0}.card,table{border:1px solid #263a58;background:#0c1a2e}.card{padding:20px}.number{display:block;font-size:2.2rem;color:#6fa7ff;margin-top:8px}section{margin-top:38px}h2{font-size:1.4rem}table{width:100%;border-collapse:collapse;text-align:left}th,td{padding:11px;border-bottom:1px solid #263a58;vertical-align:top;font-size:.85rem}th{color:#9fc1ef}input,button{padding:13px;border:1px solid #446389;background:#0b1728;color:#fff;font:inherit}button{cursor:pointer;background:#3479db;border-color:#3479db}.login{max-width:420px;margin:15vh auto}.status{min-height:24px;color:#ffb1a8}@media(max-width:800px){.card-grid{grid-template-columns:repeat(2,1fr)}table{display:block;overflow:auto;white-space:nowrap}}
+  </style>
+</head>
+<body><main class="shell">
+  <div id="login" class="login"><p class="muted">Residência Inteligência Artificial · coordenação</p><h1>Painel do Hub</h1><form id="loginForm"><input id="password" type="password" placeholder="Senha de acesso" required><button>Entrar</button></form><p id="loginStatus" class="status"></p></div>
+  <div id="dashboard" hidden><p class="muted">Visão operacional · dados recentes</p><h1>Painel da coordenação</h1><button id="logout" type="button">Sair</button><div id="cards" class="card-grid"></div><section><h2>Entradas recentes</h2><div id="tables"></div></section></div>
+</main><script>
+const login=document.getElementById('login'),dashboard=document.getElementById('dashboard'),status=document.getElementById('loginStatus');
+document.getElementById('loginForm').addEventListener('submit',async e=>{e.preventDefault();status.textContent='';const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:document.getElementById('password').value})});if(!r.ok){status.textContent='Senha inválida ou painel não configurado.';return}await load();});
+document.getElementById('logout').onclick=async()=>{await fetch('/api/admin/logout',{method:'POST'});location.reload()};
+async function load(){const r=await fetch('/api/admin/overview');if(!r.ok){status.textContent='Configure o Supabase e a senha de administração.';return}const d=await r.json();login.hidden=true;dashboard.hidden=false;const labels={diagnostics:'Diagnósticos',leads:'Empresas',startups:'Startups',newsletter:'Newsletter',residents:'Residência'};document.getElementById('cards').innerHTML=Object.entries(labels).map(([k,v])=>`<div class="card">${v}<strong class="number">${d[k].length}</strong></div>`).join('');document.getElementById('tables').innerHTML=Object.entries(labels).map(([k,v])=>{const rows=d[k].slice(0,10);if(!rows.length)return '';const cols=Object.keys(rows[0]).filter(c=>!['id','result'].includes(c)).slice(0,6);return `<h2>${v}</h2><table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr>${cols.map(c=>`<td>${String(row[c]??'')}</td>`).join('')}</tr>`).join('')}</tbody></table>`}).join('')}
+</script></body></html>
