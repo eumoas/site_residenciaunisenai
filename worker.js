@@ -11,7 +11,10 @@ async function insert(env, table, row) {
   const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${table}`, {
     method: 'POST', headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row),
   });
-  if (!response.ok) throw new Error(`Supabase ${response.status}`);
+  if (!response.ok) {
+    const detail = (await response.text()).replace(/\s+/g, ' ').slice(0, 240);
+    throw new Error(`Supabase ${response.status}: ${detail}`);
+  }
 }
 
 async function api(request, env) {
@@ -43,7 +46,7 @@ async function api(request, env) {
   };
   const route = routes[url.pathname];
   if (!route || request.method !== 'POST') return Response.json({ error: 'not_found' }, { status: 404 });
-  try { await insert(env, route[0], route[1]); return Response.json({ ok: true }, { status: 201 }); } catch (error) { console.error(error); return Response.json({ error: 'storage_unavailable' }, { status: 503 }); }
+  try { await insert(env, route[0], route[1]); return Response.json({ ok: true }, { status: 201 }); } catch (error) { console.error(error); return Response.json({ error: 'storage_unavailable', detail: error.message }, { status: 503 }); }
 }
 
 export default { async fetch(request, env) { if (new URL(request.url).pathname.startsWith('/api/')) return api(request, env); return env.ASSETS.fetch(request); } };

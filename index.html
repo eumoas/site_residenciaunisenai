@@ -1634,7 +1634,7 @@
 
     async function postForm(endpoint,payload){
       const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-      if(!response.ok)throw new Error('storage request failed');
+      if(!response.ok){let detail='storage request failed';try{const body=await response.json();if(body.detail)detail=body.detail;}catch(err){}throw new Error(detail);}
       return response.json();
     }
     document.getElementById('newsletterForm').addEventListener('submit',async event=>{
