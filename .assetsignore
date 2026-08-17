@@ -15,3 +15,4 @@ wrangler.toml
 wrangler.json
 wrangler.jsonc
 worker.js
+opportunity-rules.js

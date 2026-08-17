@@ -62,6 +62,12 @@ O painel está disponível em /admin.html e oferece login protegido, contagem de
 
 O arquivo supabase/schema.sql cria as tabelas diagnostics, company_leads, startup_inquiries, newsletter_subscribers e resident_interests. As tabelas usam PostgreSQL e Row Level Security. A chave SUPABASE_SERVICE_ROLE_KEY fica somente no backend.
 
+### Opportunity Twin (T-01)
+
+O SDD do T-01 está em [`SDD_T01_Opportunity_Twin.md`](SDD_T01_Opportunity_Twin.md). A evolução é incremental: a captação atual permanece, enquanto `supabase/migrations/001_opportunity_twin.sql` adiciona sessões, perfil de oportunidade, respostas, scorecard, identidade consentida e eventos. A primeira camada determinística está em `opportunity-rules.js`; ela classifica o desafio, seleciona perguntas e calcula as seis dimensões do SDD sem delegar decisões de negócio ao Gemini.
+
+Para habilitar a nova API, execute a migração no SQL Editor do Supabase. Os endpoints v2 começam em `/api/v2/opportunities/sessions` e não substituem a T-01 atual até a validação da jornada.
+
 ## Stack
 
 - HTML5, CSS3 e JavaScript sem framework no frontend;

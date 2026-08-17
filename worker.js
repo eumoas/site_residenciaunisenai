@@ -1,3 +1,5 @@
+import { classifyChallenge, CATEGORIES, QUESTIONS, questionsFor, scoreOpportunity, previewFor } from './opportunity-rules.js';
+
 const fallback = (score) => score <= 5
   ? { title: 'Estágio de exploração', text: 'O melhor próximo passo é enquadrar o problema, localizar dados e escolher um indicador de valor antes de desenhar tecnologia.' }
   : score <= 10
@@ -17,6 +19,18 @@ async function insert(env, table, row) {
   }
 }
 
+async function selectRows(env, table, query) {
+  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Supabase não configurado');
+  const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${table}?${query}`, { headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}` } });
+  if (!response.ok) { const detail = (await response.text()).replace(/\s+/g, ' ').slice(0, 240); throw new Error(`Supabase ${response.status}: ${detail}`); }
+  return response.json();
+}
+
+async function updateRow(env, table, query, row) {
+  const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${table}?${query}`, { method: 'PATCH', headers: { apikey: env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) });
+  if (!response.ok) { const detail = (await response.text()).replace(/\s+/g, ' ').slice(0, 240); throw new Error(`Supabase ${response.status}: ${detail}`); }
+}
+
 async function api(request, env) {
   const url = new URL(request.url);
   const body = request.method === 'POST' ? await request.json() : {};
@@ -30,6 +44,52 @@ async function api(request, env) {
       } catch (error) { database = 'unreachable'; }
     }
     return Response.json({ worker: 'ok', supabase: configured ? 'configured' : 'missing', database });
+  }
+  if (url.pathname === '/api/v2/opportunities/sessions' && request.method === 'POST') {
+    const challenge = text(body.challenge, 2000);
+    if (challenge.length < 30) return Response.json({ code: 'challenge_too_short', message: 'Descreva o desafio com pelo menos 30 caracteres.' }, { status: 400 });
+    const sessionId = crypto.randomUUID(); const classification = classifyChallenge(challenge);
+    const interpretation = { summary: `O principal desafio parece estar relacionado a ${CATEGORIES[classification.category].label.toLocaleLowerCase('pt-BR')}.`, category: classification.category, confidence: classification.confidence, status: 'inferred' };
+    try {
+      await insert(env, 'diagnostic_sessions', { id: sessionId, challenge, interpretation, entry_channel: body.entry_channel === 'hub_web' ? 'hub_web' : 'hub_web', locale: 'pt-BR' });
+      await insert(env, 'opportunity_profiles', { session_id: sessionId, category: classification.category, profile: { category: interpretation } });
+      await insert(env, 'diagnostic_events', { session_id: sessionId, event_name: 'diagnostic_started', metadata: {} });
+      return Response.json({ session_id: sessionId, interpretation, confirmation_required: true }, { status: 201 });
+    } catch (error) { console.error(error); return Response.json({ error: 'storage_unavailable' }, { status: 503 }); }
+  }
+  const confirmMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/confirm$/);
+  if (confirmMatch && request.method === 'POST') {
+    try { await updateRow(env, 'diagnostic_sessions', `id=eq.${encodeURIComponent(confirmMatch[1])}`, { status: body.confirmed === true ? 'confirmed' : 'started' }); return Response.json({ ok: true }); }
+    catch (error) { console.error(error); return Response.json({ error: 'session_unavailable' }, { status: 503 }); }
+  }
+  const nextMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/next-question$/);
+  if (nextMatch && request.method === 'GET') {
+    try {
+      const sessions = await selectRows(env, 'diagnostic_sessions', `select=id,challenge& id=eq.${encodeURIComponent(nextMatch[1])}`.replace('challenge& ', 'challenge&'));
+      if (!sessions[0]) return Response.json({ error: 'session_not_found' }, { status: 404 });
+      const profiles = await selectRows(env, 'opportunity_profiles', `select=category&session_id=eq.${encodeURIComponent(nextMatch[1])}`);
+      const answers = await selectRows(env, 'diagnostic_answers', `select=question_id&session_id=eq.${encodeURIComponent(nextMatch[1])}`);
+      const questions = questionsFor(profiles[0]?.category || classifyChallenge(sessions[0].challenge).category, answers.map(answer => answer.question_id));
+      const question = questions[0];
+      if (!question) return Response.json({ done: true, progress: { answered: answers.length, estimated_remaining: 0 } });
+      return Response.json({ question, progress: { answered: answers.length, estimated_remaining: Math.max(0, questions.length - 1) } });
+    } catch (error) { console.error(error); return Response.json({ error: 'session_unavailable' }, { status: 503 }); }
+  }
+  const answerMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/answers$/);
+  if (answerMatch && request.method === 'POST') {
+    const questionId = text(body.question_id, 120); if (!questionId || body.answer === undefined) return Response.json({ error: 'invalid_answer' }, { status: 400 });
+    try { await insert(env, 'diagnostic_answers', { session_id: answerMatch[1], question_id: questionId, answer: body.answer }); return Response.json({ ok: true }); }
+    catch (error) { console.error(error); return Response.json({ error: 'answer_unavailable' }, { status: 503 }); }
+  }
+  const previewMatch = url.pathname.match(/^\/api\/v2\/opportunities\/sessions\/([^/]+)\/preview$/);
+  if (previewMatch && request.method === 'GET') {
+    try {
+      const profiles = await selectRows(env, 'opportunity_profiles', `select=category&session_id=eq.${encodeURIComponent(previewMatch[1])}`);
+      const answersRows = await selectRows(env, 'diagnostic_answers', `select=question_id,answer&session_id=eq.${encodeURIComponent(previewMatch[1])}`);
+      const answers = Object.fromEntries(answersRows.map(row => [row.question_id, row.answer])); const category = profiles[0]?.category || 'other'; const scorecard = scoreOpportunity(category, answers);
+      await insert(env, 'scorecards', { session_id: previewMatch[1], rubric_version: scorecard.rubric_version, dimensions: scorecard.dimensions, confidence: scorecard.confidence, route: scorecard.route });
+      return Response.json({ scorecard, preview: previewFor(category, scorecard) });
+    } catch (error) { console.error(error); return Response.json({ error: 'preview_unavailable' }, { status: 503 }); }
   }
   if (url.pathname === '/api/diagnostico') {
     const values = ['q1', 'q2', 'q3', 'q4', 'q5'].map(key => Number(body[key]));
