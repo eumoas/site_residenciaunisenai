@@ -44,7 +44,10 @@ async function updateRow(env, table, query, row) {
 
 async function api(request, env) {
   const url = new URL(request.url);
-  const body = request.method === 'POST' ? await request.json() : {};
+  let body = {};
+  if (request.method === 'POST') {
+    try { body = await request.json(); } catch (error) { body = {}; }
+  }
   if (url.pathname === '/api/health' && request.method === 'GET') {
     const configured = Boolean(env.SUPABASE_URL && env.SUPABASE_SERVICE_ROLE_KEY);
     let database = 'not_configured';
